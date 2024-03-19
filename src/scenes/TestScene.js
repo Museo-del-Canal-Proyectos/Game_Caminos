@@ -40,7 +40,7 @@ class TestScene extends BaseScene {
 
   createPersonaje() {
 
-    this.personaje = this.physics.add.sprite(824, 384, 'ha')
+    this.personaje = this.physics.add.sprite(94, 615, 'ha')
       //.setScale(0)
       .setOrigin(0);
     console.log(this.personaje)
