@@ -79,7 +79,7 @@ class TestScene extends BaseScene {
 
 
     //bloque2 vertical 5
-    this.plat.create(375, 440, 'block_2')
+    this.plat.create(366.2, 440, 'block_2')
       .setImmovable(true)
       .setOrigin(0, 0);
     //bloque2 vertical 6
@@ -95,8 +95,8 @@ class TestScene extends BaseScene {
       .setImmovable(true)
       .setOrigin(0, 0)
     //bloque4 horizontal 9
-    this.plat.create(256, 415, 'block_4')///
-      .setScale(0.5)
+    this.plat.create(363, 415, 'block_4')///
+      .setScale(0.2)
       .setImmovable(true)
       .setOrigin(0, 0)
     //bloque4 horizontal 10
