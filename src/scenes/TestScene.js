@@ -29,12 +29,13 @@ class TestScene extends BaseScene {
     this.collision();
     this.collisionEv1();
     this.collisionEv2();
+    // this.choque();
     // this.moveUp();
     // this.moveDown();
     // this.moveRight();
     // this.moveLeft();
-
-
+    this.choque=this.sound.add('choque');
+    this.choque_plat=this.sound.add('choque_plat');
 
 
   }
@@ -56,6 +57,8 @@ class TestScene extends BaseScene {
     //  this.personaje.setRotation(0);
     //  this.personaje.setPosition(824,384);
     // },500)
+    this.choque_plat.play();
+    
   }
 
   createPlatform() {
@@ -208,16 +211,25 @@ class TestScene extends BaseScene {
   }
 
   collision() {
+
     console.log(this.personaje, this.plat);
     this.physics.add.collider(this.personaje, this.plat, this.alerta, null, this);
   }
 
   //FUNCION MOISES MODAL
   nombreDeDios() {
-
+  this.choque.play();
     //anexar por moises modal
-    alert('camino Cerrado');
-    //this.personaje.setPosition(994,189)
+    Swal.fire({
+      position: "center",
+      imageUrl: "./assets/star.png",
+      imageWidth: 50,
+      imageHeight: 50,
+      imageAlt: "Custom image",
+      title: `<p style="font-size:20px;text-align:justify;">Este camino se cerró por el ataque de Morgan a <b>Nombre de Dios</b>. Se cerro en 1597 y Luego del ataque se decidió mudar la ciudad a Portobelo</p>`,
+      showConfirmButton: false,
+      timer: 5000
+    });
 
   }
 
@@ -235,9 +247,24 @@ class TestScene extends BaseScene {
   }
 
   //Moises Funcion Modal 
+<<<<<<< HEAD
+  panamaViejo(){
+    this.choque.play();
+    Swal.fire({
+      position: "center",
+      imageUrl: "./assets/star.png",
+      imageWidth: 50,
+      imageHeight: 50,
+      imageAlt: "Custom image",
+      title: `<p style="font-size:20px;text-align:justify;">Este camino se cerró en 1673 por el ataque de Morgan a <b>Panamá viejo</b>. Luego del ataque se decidió mudar la ciudad a lo que hoy conoces como Casco (Panamá) y la vieja quedó vacía</p>`,
+      showConfirmButton: false,
+      timer: 5000
+    });
+=======
   panamaViejo() {
 
     alert('camino cerrado')
+>>>>>>> 6ef4f6141157a2df6a180b4c86dd438ca614e671
 
   }
 
@@ -257,8 +284,29 @@ class TestScene extends BaseScene {
       return;
     }
 
+<<<<<<< HEAD
+    if (this.cursors.left.isDown) {
+      this.personaje.setVelocityX(-105);
+      this.moveLeft();7
+    
+    } else if (this.cursors.right.isDown) {
+      
+      this.personaje.setVelocityX(105);
+      this.moveRight();
+    } else if (this.cursors.up.isDown) {
+      this.personaje.setVelocityY(-105);
+      this.moveUp();
+      
+    } else if (this.cursors.down.isDown) {
+      this.personaje.setVelocityY(105);
+      console.log(this.personaje);
+      this.moveDown();
+      
+    } else {
+=======
     if (control.axes.length) {
       //console.log("en linea");
+>>>>>>> 6ef4f6141157a2df6a180b4c86dd438ca614e671
 
       const axisH = control.axes[0].getValue();
       const axisV = control.axes[1].getValue();
@@ -325,6 +373,7 @@ class TestScene extends BaseScene {
       repeat: -1
     })
     this.personaje.play('derecha', true);
+   
   }
 
 
