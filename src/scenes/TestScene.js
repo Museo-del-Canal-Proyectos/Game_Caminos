@@ -247,7 +247,6 @@ class TestScene extends BaseScene {
   }
 
   //Moises Funcion Modal 
-<<<<<<< HEAD
   panamaViejo(){
     this.choque.play();
     Swal.fire({
@@ -260,11 +259,6 @@ class TestScene extends BaseScene {
       showConfirmButton: false,
       timer: 5000
     });
-=======
-  panamaViejo() {
-
-    alert('camino cerrado')
->>>>>>> 6ef4f6141157a2df6a180b4c86dd438ca614e671
 
   }
 
@@ -284,29 +278,8 @@ class TestScene extends BaseScene {
       return;
     }
 
-<<<<<<< HEAD
-    if (this.cursors.left.isDown) {
-      this.personaje.setVelocityX(-105);
-      this.moveLeft();7
-    
-    } else if (this.cursors.right.isDown) {
-      
-      this.personaje.setVelocityX(105);
-      this.moveRight();
-    } else if (this.cursors.up.isDown) {
-      this.personaje.setVelocityY(-105);
-      this.moveUp();
-      
-    } else if (this.cursors.down.isDown) {
-      this.personaje.setVelocityY(105);
-      console.log(this.personaje);
-      this.moveDown();
-      
-    } else {
-=======
     if (control.axes.length) {
       //console.log("en linea");
->>>>>>> 6ef4f6141157a2df6a180b4c86dd438ca614e671
 
       const axisH = control.axes[0].getValue();
       const axisV = control.axes[1].getValue();
