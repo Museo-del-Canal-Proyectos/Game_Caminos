@@ -11,6 +11,7 @@ class TestScene extends BaseScene {
     this.plat = null;
     this.plat1 = null;
     this.plat2 = null;
+    this.control = null;
 
   }
 
@@ -232,9 +233,9 @@ class TestScene extends BaseScene {
       .setImmovable(true)
       .setOrigin(0, 0);
   }
- 
+
   //Moises Funcion Modal 
-  panamaViejo(){
+  panamaViejo() {
 
     alert('camino cerrado')
 
@@ -249,28 +250,65 @@ class TestScene extends BaseScene {
 
   update() {
 
-    this.cursors = this.input.keyboard.createCursorKeys();
+    const control = this.input.gamepad.getPad(0);
+    
+    
+    if (!control) {
+      return;
+    }
 
-    if (this.cursors.left.isDown) {
-      this.personaje.setVelocityX(-105);
-      this.moveLeft();
-    } else if (this.cursors.right.isDown) {
-      this.personaje.setVelocityX(105);
-      this.moveRight();
-    } else if (this.cursors.up.isDown) {
-      this.personaje.setVelocityY(-105);
-      this.moveUp();
-    } else if (this.cursors.down.isDown) {
-      this.personaje.setVelocityY(105);
-      console.log(this.personaje);
-      this.moveDown();
-    } else {
+    if (control.axes.length) {
+      //console.log("en linea");
 
-      this.personaje.setVelocityX(0);
-      this.personaje.setVelocityY(0);
-      this.standBy();
+      const axisH = control.axes[0].getValue();
+      const axisV = control.axes[1].getValue();
+
+      
+      if (axisH === -1) {
+        this.personaje.setVelocityX(-105);
+        console.log(axisH);
+        this.moveLeft();
+        console.log("Izquierda");
+      } else if (axisH === 1 ) {
+        this.personaje.setVelocityX(105);
+        this.moveRight();
+      }
+      else if (axisV === -1) {
+        this.personaje.setVelocityY(-105);
+        this.moveUp();
+      }else if( axisV === 1){
+        this.personaje.setVelocityY(105);
+        this.moveDown();
+      }else {
+        this.personaje.setVelocityX(0);
+        this.personaje.setVelocityY(0);
+        this.standBy();
+      }
 
     }
+
+    // this.cursors = this.input.keyboard.createCursorKeys();
+
+    // if (this.cursors.left.isDown) {
+    //   this.personaje.setVelocityX(-105);
+    //   this.moveLeft();
+    // } else if (this.cursors.right.isDown) {
+    //   this.personaje.setVelocityX(105);
+    //   this.moveRight();
+    // } else if (this.cursors.up.isDown) {
+    //   this.personaje.setVelocityY(-105);
+    //   this.moveUp();
+    // } else if (this.cursors.down.isDown) {
+    //   this.personaje.setVelocityY(105);
+    //   console.log(this.personaje);
+    //   this.moveDown();
+    // } else {
+
+    //   this.personaje.setVelocityX(0);
+    //   this.personaje.setVelocityY(0);
+    //   this.standBy();
+
+    // }
 
   }
 
