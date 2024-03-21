@@ -11,7 +11,7 @@ class PreloadScene extends Phaser.Scene {
 
     preload(){
 
-          //funciones y propiedades que podemos usar dentro de preload
+        //funciones y propiedades que podemos usar dentro de preload
           this.load.image('sky', 'assets/sky.png');//cargamos el fondo del mundo
         //   this.load.image('bird', 'assets/bird.png');//cargamos el sprite del jugador
           this.load.spritesheet('ha','assets/personaje.png',{frameWidth:48,frameHeight:68});
@@ -19,13 +19,19 @@ class PreloadScene extends Phaser.Scene {
           this.load.image('pipe', 'assets/pipe.png');//cargamos el sprite de los obstaculos
           this.load.image('pause','assets/pause.png');//cargamos boton de pausa
           this.load.image('back','assets/back.png');//cargamos boton de regresar
-          this.load.image('bg1','assets/plano1.png');
-          this.load.image('block_1','assets/1.png');
-          this.load.image('block_2','assets/2.png');
-          this.load.image('block_3','assets/3.png');
-          this.load.image('block_4','assets/4.png');
-          this.load.audio('choque', './assets/Audios/level_up.mp3');
-          this.load.audio('choque_plat', './assets/Audios/pasos.ogg');
+          this.load.image('bg1','assets/plano1.png');//BG movimiento
+          this.load.image('wordl1','assets/worlds/w1.jpg');
+
+          this.load.spritesheet('serpiente','assets/enemigos/Serpiente.png',{frameWidth:143,frameHeight:54});//enemigo
+          this.load.spritesheet('serpiente2','assets/enemigos/Serpiente.png',{frameWidth:143,frameHeight:54});//enemigo
+
+          this.load.image('block_1','assets/1.png');//bloques transparentes
+          this.load.image('block_2','assets/2.png');//bloques transparentes
+          this.load.image('block_3','assets/3.png');//bloques transparentes
+          this.load.image('block_4','assets/4.png');//bloques transparentes
+
+          this.load.audio('choque', './assets/Audios/level_up.mp3');//audios Moi Music
+          this.load.audio('choque_plat', './assets/Audios/pasos.ogg');//audios Moi Music
 
           
 
@@ -37,7 +43,7 @@ class PreloadScene extends Phaser.Scene {
     create(){
     
     // this.scene.start('MenuScene');//enviamos la escena menu
-    this.scene.start('TestScene');
+    this.scene.start('MenuScene');
       
     }
     
