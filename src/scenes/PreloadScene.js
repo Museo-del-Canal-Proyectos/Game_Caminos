@@ -22,8 +22,17 @@ class PreloadScene extends Phaser.Scene {
           this.load.image('bg1','assets/plano1.png');//BG movimiento
           this.load.image('wordl1','assets/worlds/w1.jpg');
 
+
           this.load.spritesheet('serpiente','assets/enemigos/Serpiente.png',{frameWidth:143,frameHeight:54});//enemigo
           this.load.spritesheet('serpiente2','assets/enemigos/Serpiente.png',{frameWidth:143,frameHeight:54});//enemigo
+          this.load.spritesheet('mosquito','assets/enemigos/mosquito.png',{frameWidth:36,frameHeight:51});//enemigo
+          this.load.spritesheet('mosquito2','assets/enemigos/mosquito.png',{frameWidth:36,frameHeight:51});//enemigo
+          this.load.spritesheet('mosquito3','assets/enemigos/mosquito.png',{frameWidth:36,frameHeight:51});//enemigo
+          
+          this.load.spritesheet('flecha1','assets/enemigos/flecha.png',{frameWidth:36,frameHeight:51});
+          this.load.image('flecha2','assets/enemigos/flecha.png');
+          this.load.image('flecha3','assets/enemigos/flecha.png');
+
 
           this.load.image('block_1','assets/1.png');//bloques transparentes
           this.load.image('block_2','assets/2.png');//bloques transparentes
