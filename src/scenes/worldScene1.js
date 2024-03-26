@@ -7,6 +7,7 @@ class WorldScene1 extends BaseScene {
 
         super('WorldScene1', config);
         this.player = null;
+        this.flechaState= false;
         this.serpiente1 = null;
         this.serpiente2 = null;
         this.saltar = true;
@@ -168,9 +169,9 @@ class WorldScene1 extends BaseScene {
         this.physics.add.collider(this.player, this.mosquito3, this.PlayerSerpiente, null, this);
         this.physics.add.collider(this.player, this.serpiente1, this.PlayerSerpiente, null, this);
         this.physics.add.collider(this.player, this.serpiente2, this.PlayerSerpiente, null, this);
-        this.physics.add.collider(this.player, this.flecha1, this.PlayerSerpiente, null, this);
-        this.physics.add.collider(this.player, this.flecha2, this.PlayerSerpiente, null, this);
-        this.physics.add.collider(this.player, this.flecha3, this.PlayerSerpiente, null, this);
+        this.physics.add.collider(this.player, this.flecha1, this.evFlecha, null, this);
+        this.physics.add.collider(this.player, this.flecha2, this.evFlecha2, null, this);
+        this.physics.add.collider(this.player, this.flecha3, this.evFlecha3, null, this);
     }
 
     PlayerSerpiente() {
@@ -189,6 +190,36 @@ class WorldScene1 extends BaseScene {
             this.velocidadLateral = 290;
         }, 6000)
     }
+
+    evFlecha(){
+       this.player.setTint(0xff0000);
+       this.flecha1.setPosition(1960, 300);
+       this.flecha1.body.setEnable(false);
+       setTimeout(()=>{
+        this.player.clearTint();
+        this.flecha1.body.setEnable(true);
+       },2000)
+    }
+
+    evFlecha2(){
+        this.player.setTint(0xff0000);
+        this.flecha2.setPosition(1960, 300);
+        this.flecha2.body.setEnable(false);
+        setTimeout(()=>{
+         this.player.clearTint();
+         this.flecha2.body.setEnable(true);
+        },2000)
+     }
+
+     evFlecha3(){
+        this.player.setTint(0xff0000);
+        this.flecha3.setPosition(1960, 300);
+        this.flecha3.body.setEnable(false);
+        setTimeout(()=>{
+         this.player.clearTint();
+         this.flecha3.body.setEnable(true);
+        },2000)
+     }
 
     AnimacionAtaqueSerpiente() {
         this.anims.create({
