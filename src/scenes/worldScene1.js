@@ -177,10 +177,12 @@ class WorldScene1 extends BaseScene {
     PlayerSerpiente() {
         this.player.setVelocityY(-585);
         this.player.setTint(0xff0000);
-        this.AnimacionAtaqueSerpiente();
+        //this.AnimacionAtaqueSerpiente();
         this.ValidarAnimacion = true;
         this.velocidadLateral = 100;
 
+        this.playerParpadeo();
+        
         setTimeout(() => {
             this.player.clearTint();
             this.ValidarAnimacion = false;
@@ -195,30 +197,36 @@ class WorldScene1 extends BaseScene {
        this.player.setTint(0xff0000);
        this.flecha1.setPosition(1960, 300);
        this.flecha1.body.setEnable(false);
+       this.playerParpadeo();
        setTimeout(()=>{
         this.player.clearTint();
         this.flecha1.body.setEnable(true);
-       },2000)
+       },1100)
     }
+
+    
 
     evFlecha2(){
         this.player.setTint(0xff0000);
         this.flecha2.setPosition(1960, 300);
         this.flecha2.body.setEnable(false);
+        this.playerParpadeo();
         setTimeout(()=>{
          this.player.clearTint();
          this.flecha2.body.setEnable(true);
-        },2000)
+        },1100)
      }
 
      evFlecha3(){
         this.player.setTint(0xff0000);
         this.flecha3.setPosition(1960, 300);
         this.flecha3.body.setEnable(false);
+        this.playerParpadeo();
         setTimeout(()=>{
          this.player.clearTint();
          this.flecha3.body.setEnable(true);
-        },2000)
+         this.player.setAlpha(1);
+        },1100)
      }
 
     AnimacionAtaqueSerpiente() {
@@ -440,7 +448,7 @@ class WorldScene1 extends BaseScene {
 
     standBy() {
         if (this.ValidarAnimacion) {
-            this.player.play('ataque', true);
+            //this.player.play('ataque', true);
         } else {
             this.anims.create({
                 key: 'quieto',
@@ -453,7 +461,7 @@ class WorldScene1 extends BaseScene {
 
     moveRight() {
         if (this.ValidarAnimacion) {
-            this.player.play('ataque', true);
+            //this.player.play('ataque', true);
         } else {
             this.anims.create({
                 key: 'derecha',
@@ -468,7 +476,7 @@ class WorldScene1 extends BaseScene {
     moveLeft() {
         if (this.ValidarAnimacion) {
 
-            this.player.play('ataque', true);
+           // this.player.play('ataque', true);
 
         } else {
             this.anims.create({
@@ -501,6 +509,37 @@ class WorldScene1 extends BaseScene {
             this.M3value,
         );
         this.flechaAtaque(this.flecha1, this.flecha2, this.flecha3);
+    }
+
+    playerParpadeo(){
+        this.player.setAlpha(0.5);
+        setTimeout(()=>{
+         this.player.setAlpha(1);
+        },100)
+        setTimeout(()=>{
+         this.player.setAlpha(0.5);
+        },300)
+        setTimeout(()=>{
+         this.player.setAlpha(1);
+        },400)
+        setTimeout(()=>{
+         this.player.setAlpha(0.5);
+        },500)
+        setTimeout(()=>{
+         this.player.setAlpha(1);
+        },600)
+        setTimeout(()=>{
+         this.player.setAlpha(0.5);
+        },700)
+        setTimeout(()=>{
+         this.player.setAlpha(1);
+        },800)
+        setTimeout(()=>{
+         this.player.setAlpha(0.5);
+        },900)
+        setTimeout(()=>{
+            this.player.setAlpha(1);
+        },1000)
     }
 }
 export default WorldScene1
