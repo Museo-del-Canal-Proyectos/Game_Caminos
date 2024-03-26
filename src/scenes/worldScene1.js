@@ -32,7 +32,8 @@ class WorldScene1 extends BaseScene {
 
 
     create() {
-
+        this.cameras.main.setBounds(0, 0, 1920, 763);
+        this.physics.world.setBounds(0, 0, 1920, 763);
         this.add.image(0, 0, 'wordl1').setOrigin(0);
         this.createPersonaje();
         this.createSerpiente();
@@ -48,34 +49,35 @@ class WorldScene1 extends BaseScene {
         this.player = this.physics.add.sprite(0.5, 403, 'ha').setOrigin(0);
         this.player.body.setGravityY(500);
         this.player.setCollideWorldBounds(true);
+        this.cameras.main.startFollow(this.player, true);
         //this.player.setBounce(0.2);
     }
 
     createSerpiente() {
 
-        this.serpiente1 = this.physics.add.sprite(1200, 250, 'serpiente').setOrigin(0);
+        this.serpiente1 = this.physics.add.sprite(600, 600, 'serpiente').setImmovable(true).setOrigin(0);
         this.serpiente1.setFlipX(this.value1)
 
-        this.serpiente1.body.setGravityY(300);
+        
         this.serpiente1.setCollideWorldBounds(true);
         this.movimientoS1();
 
-        this.serpiente2 = this.physics.add.sprite(0, 250, 'serpiente2').setOrigin(0);
+        this.serpiente2 = this.physics.add.sprite(450, 600, 'serpiente2').setImmovable(true).setOrigin(0);
         this.serpiente2.setFlipX(this.value2);
 
-        this.serpiente2.body.setGravityY(300);
+        
         this.serpiente2.setCollideWorldBounds(true);
         this.movimientoS2();
 
     }
 
     createMosquito() {
-        this.mosquito = this.physics.add.sprite(700, 500, 'mosquito').setOrigin(0);
+        this.mosquito = this.physics.add.sprite(700, 500, 'mosquito').setImmovable(true).setOrigin(0);
         this.mosquito.setFlipX(this.mValue);
         this.mosquito.setCollideWorldBounds(true);
         this.movimientoMosquito();
 
-        this.mosquito2 = this.physics.add.sprite(1050, 500, 'mosquito2').setOrigin(0);
+        this.mosquito2 = this.physics.add.sprite(1050, 500, 'mosquito2').setImmovable(true).setOrigin(0);
         this.mosquito2.setFlipX(this.m2Value);
         this.mosquito2.setCollideWorldBounds(true);
         this.movimientoUpMosquito();
@@ -87,15 +89,15 @@ class WorldScene1 extends BaseScene {
     }
 
     createFlecha() {
-        this.flecha1 = this.physics.add.sprite(1300, 300, 'flecha2').setOrigin(0);
+        this.flecha1 = this.physics.add.sprite(1960, 300, 'flecha2').setImmovable(true).setOrigin(0);
         this.flecha1.setScale(0.5);
         this.flecha1.setVisible(this.flechaValue);
 
-        this.flecha2 = this.physics.add.sprite(1300, 465, 'flecha2').setOrigin(0);
+        this.flecha2 = this.physics.add.sprite(1960, 465, 'flecha2').setImmovable(true).setOrigin(0);
         this.flecha2.setScale(0.5);
         this.flecha2.setVisible(this.flechaValue);
 
-        this.flecha3 = this.physics.add.sprite(1300, 600, 'flecha3').setOrigin(0);
+        this.flecha3 = this.physics.add.sprite(1960, 600, 'flecha3').setImmovable(true).setOrigin(0);
         this.flecha3.setScale(0.5);
         this.flecha3.setVisible(this.flechaValue);
     }
@@ -148,15 +150,27 @@ class WorldScene1 extends BaseScene {
             .setScale(2)
             .setImmovable(true)
             .setOrigin(0, 0)
+        this.platw1.create(1000, 658, 'block_4')
+            .setScale(2)
+            .setImmovable(true)
+            .setOrigin(0, 0)
+        this.platw1.create(1148, 658, 'block_4')
+            .setScale(2)
+            .setImmovable(true)
+            .setOrigin(0, 0)
     }
 
     colision() {
         console.log(this.serpiente2, this.platw1);
         this.physics.add.collider(this.player, this.platw1, this.evSalto, null, this);
-        this.physics.add.collider(this.serpiente1, this.platw1, this.ev1, null, this);
-        this.physics.add.collider(this.serpiente2, this.platw1, this.ev1, null, this);
+        this.physics.add.collider(this.player, this.mosquito, this.PlayerSerpiente, null, this);
+        this.physics.add.collider(this.player, this.mosquito2, this.PlayerSerpiente, null, this);
+        this.physics.add.collider(this.player, this.mosquito3, this.PlayerSerpiente, null, this);
         this.physics.add.collider(this.player, this.serpiente1, this.PlayerSerpiente, null, this);
         this.physics.add.collider(this.player, this.serpiente2, this.PlayerSerpiente, null, this);
+        this.physics.add.collider(this.player, this.flecha1, this.PlayerSerpiente, null, this);
+        this.physics.add.collider(this.player, this.flecha2, this.PlayerSerpiente, null, this);
+        this.physics.add.collider(this.player, this.flecha3, this.PlayerSerpiente, null, this);
     }
 
     PlayerSerpiente() {
@@ -230,44 +244,44 @@ class WorldScene1 extends BaseScene {
 
     }
 
-    serpienteSide(x, y, value1, value2) {
-        switch (x) {
-            case 317:
+    serpienteSide(x1, y1, value1, value2) {
+        const x = Math.trunc(x1);
+        const y = Math.trunc(y1);
+        
+            if( x < 350){
                 this.value1 = true
                 this.serpiente1.setFlipX(this.value1);
-                break;
-            case 1223:
+            }
+            if (x > 1529){
                 this.value1 = false
                 this.serpiente1.setFlipX(this.value1);
-                break;
-        }
-        switch (y) {
-            case 1223:
+            }
+            if (y > 1529){
                 this.value2 = false
                 this.serpiente2.setFlipX(this.value2);
-                break;
-            case 317:
+            }
+            if (y < 390){
                 this.value2 = true
                 this.serpiente2.setFlipX(this.value2);
-                break;
-        }
+            }
+    
         switch (value1) {
             case true:
-                this.velocidad = (Math.random() * (400 - 50 + 1) + 50);
+                this.velocidad = 130;
                 this.serpiente1.setVelocityX(this.velocidad);
                 break;
             case false:
-                this.velocidad = (Math.random() * (400 - 50 + 1) + 50);
+                this.velocidad = 130;
                 this.serpiente1.setVelocityX(-this.velocidad);
                 break;
         }
         switch (value2) {
             case true:
-                this.velocidad = (Math.random() * (400 - 50 + 1) + 50);
+                this.velocidad = 130;
                 this.serpiente2.setVelocityX(this.velocidad);
                 break;
             case false:
-                this.velocidad = (Math.random() * (400 - 50 + 1) + 50);
+                this.velocidad = 130;
                 this.serpiente2.setVelocityX(-this.velocidad);
                 break;
         }
@@ -276,8 +290,9 @@ class WorldScene1 extends BaseScene {
     avanzeMosquito(x, y, valor, val) {
         const data = Math.trunc(x);
         const dataUp = Math.trunc(y);
+     
         switch (data) {
-            case 390:
+            case 377:
                 this.Mvalue = true
                 this.mosquito.setFlipX(this.Mvalue);
                 break;
@@ -318,6 +333,7 @@ class WorldScene1 extends BaseScene {
     mosquito3Circular(x, y, value) {
         const Dx = Math.trunc(x);
         const Dy = Math.trunc(y);
+  
         switch (value) {
             case false:
                 this.mosquito3.setVelocityX(-this.velocidadMX);
@@ -333,7 +349,7 @@ class WorldScene1 extends BaseScene {
             this.velocidadMY = 0;
             this.mosquito3.setFlipX(this.M3value);
         }
-        if (Dx === 1330) {
+        if (Dx > 1328) {
             this.mosquito3.setFlipX(this.M3value);
             this.velocidadMX = 0;
             this.velocidadMY = 30
@@ -346,7 +362,7 @@ class WorldScene1 extends BaseScene {
             this.velocidadMX = 600;
             this.mosquito3.setVelocityX(-this.velocidadMX);
         }
-        if (Dx === 600) {
+        if (Dx === 0) {
             setTimeout(() => {
                 this.mosquito3.setPosition(1225, 500);
                 this.velocidadMX = 100;
@@ -376,17 +392,17 @@ class WorldScene1 extends BaseScene {
         if (Math.trunc(x1.x) < -1300) {
             this.flechaValue = false;
             this.flecha1.setVisible(this.flechaValue);
-            this.flecha1.setPosition(1300, 300);
+            this.flecha1.setPosition(1960, 300);
         }
         if (Math.trunc(x2.x) < -1300) {
             this.flechaValue = false;
             this.flecha2.setVisible(this.flechaValue);
-            this.flecha2.setPosition(1300, 465);
+            this.flecha2.setPosition(1960, 465);
         }
         if (Math.trunc(x3.x) < -1300) {
             this.flechaValue = false;
             this.flecha3.setVisible(this.flechaValue);
-            this.flecha3.setPosition(1300, 600);
+            this.flecha3.setPosition(1960, 600);
         }
     }
     /*SET ANIMACIONES PERSONAJE*/
