@@ -6,7 +6,7 @@ import ScoreScene from "./scenes/ScoreScene";
 import TestScene from "./scenes/TestScene";
 import WorldScene1 from "./scenes/worldScene1";
 
-const WIDTH=1366;
+const WIDTH=800;
 const HEIGHT=768;
 
 
