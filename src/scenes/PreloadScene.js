@@ -21,6 +21,7 @@ class PreloadScene extends Phaser.Scene {
           this.load.image('back','assets/back.png');//cargamos boton de regresar
           this.load.image('bg1','assets/plano1.png');//BG movimiento
           this.load.image('wordl1','assets/worlds/w1.jpg');
+          this.load.image('mundo1','assets/worlds/mundo1.png')
 
 
           this.load.spritesheet('serpiente','assets/enemigos/Serpiente.png',{frameWidth:143,frameHeight:54});//enemigo

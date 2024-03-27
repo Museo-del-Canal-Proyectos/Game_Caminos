@@ -13,7 +13,7 @@ class PlayScene extends BaseScene {
 
     create() { 
 
-        super.create();
+        this.add.image(0, 0, 'mundo1').setOrigin(0);
 
     }
 

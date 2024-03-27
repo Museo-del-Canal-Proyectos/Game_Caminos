@@ -6,7 +6,7 @@ import ScoreScene from "./scenes/ScoreScene";
 import TestScene from "./scenes/TestScene";
 import WorldScene1 from "./scenes/worldScene1";
 
-const WIDTH=800;
+const WIDTH=1366;
 const HEIGHT=768;
 
 
@@ -33,7 +33,7 @@ const config = {
     default: 'arcade',
     arcade: {
       //gravity: { y: 400 },
-    debug: true//linea verde de velocidad PARA VER DISTACIA DE OBJETOS
+    //debug: true//linea verde de velocidad PARA VER DISTACIA DE OBJETOS
     },
   },
   // scene: [PreloadScene,new MenuScene(SHARED_CONFIG), new PlayScene(SHARED_CONFIG)]  

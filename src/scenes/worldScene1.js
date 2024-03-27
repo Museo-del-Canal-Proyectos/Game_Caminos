@@ -1,13 +1,13 @@
 import BaseScene from "./BaseScene";
-import Phaser, { Data } from "phaser";
 
 class WorldScene1 extends BaseScene {
 
     constructor(config) {
-
         super('WorldScene1', config);
+        this.monedas = 0;
+        this.texto = '';
         this.player = null;
-        this.flechaState= false;
+        this.flechaState = false;
         this.serpiente1 = null;
         this.serpiente2 = null;
         this.saltar = true;
@@ -28,14 +28,64 @@ class WorldScene1 extends BaseScene {
         this.velocidadLateral = 290;
         this.velocidadMX = 30;
         this.velocidadMY = 30;
+        this.velocidadFlecha=250;
 
+        this.dataSerpiente1={
+            cuerpoTrue:true,
+            cuerpoFalse:false,
+        }
+        this.dataSerpiente2={
+            cuerpoTrue:true,
+            cuerpoFalse:false,
+        }
+        this.dataMosquito={
+            cuerpoTrue:true,
+            cuerpoFalse:false,
+        }
+        this.dataMosquito2={
+            cuerpoTrue:true,
+            cuerpoFalse:false,
+        }
+        this.dataMosquito3={
+            cuerpoTrue:true,
+            cuerpoFalse:false,
+        }
     }
 
+    inicialPosition() {
+        this.player.setPosition(0.5, 403);
+        this.mosquito.setPosition(700, 500);
+        this.mosquito2.setPosition(1050, 500);
+        this.mosquito3.setPosition(1225, 500);
+        this.serpiente1.setPosition(600, 600);
+        this.serpiente2.setPosition(450, 600);
+        this.flecha1.setPosition(1960, 300);
+        this.flecha2.setPosition(2800, 465);
+        this.flecha3.setPosition(3600, 600);
+    }
+
+    gameOver() {
+        this.monedas -= 10;
+        this.texto.setText('😶‍🌫️Monedas: ' + this.monedas)
+      
+        if (this.monedas === 0) {
+            this.physics.pause();
+            setTimeout(()=>{
+               // this.scene.start('MenuScene');
+               this.physics.pause();
+               window.location.reload();
+            },200);
+        }
+    }
 
     create() {
+
         this.cameras.main.setBounds(0, 0, 1920, 763);
         this.physics.world.setBounds(0, 0, 1920, 763);
         this.add.image(0, 0, 'wordl1').setOrigin(0);
+        this.monedas = 100;
+        this.texto = this.add.text(0.5, 10, '😶‍🌫️Monedas: ' + this.monedas, { fontSize: '36px', fill: "#fff" }).setScrollFactor(0);
+        console.log(this.texto);
         this.createPersonaje();
         this.createSerpiente();
         this.createMosquito();
@@ -59,14 +109,14 @@ class WorldScene1 extends BaseScene {
         this.serpiente1 = this.physics.add.sprite(600, 600, 'serpiente').setImmovable(true).setOrigin(0);
         this.serpiente1.setFlipX(this.value1)
 
-        
+
         this.serpiente1.setCollideWorldBounds(true);
         this.movimientoS1();
 
         this.serpiente2 = this.physics.add.sprite(450, 600, 'serpiente2').setImmovable(true).setOrigin(0);
         this.serpiente2.setFlipX(this.value2);
 
-        
+
         this.serpiente2.setCollideWorldBounds(true);
         this.movimientoS2();
 
@@ -94,11 +144,11 @@ class WorldScene1 extends BaseScene {
         this.flecha1.setScale(0.5);
         this.flecha1.setVisible(this.flechaValue);
 
-        this.flecha2 = this.physics.add.sprite(1960, 465, 'flecha2').setImmovable(true).setOrigin(0);
+        this.flecha2 = this.physics.add.sprite(2800, 465, 'flecha2').setImmovable(true).setOrigin(0);
         this.flecha2.setScale(0.5);
         this.flecha2.setVisible(this.flechaValue);
 
-        this.flecha3 = this.physics.add.sprite(1960, 600, 'flecha3').setImmovable(true).setOrigin(0);
+        this.flecha3 = this.physics.add.sprite(3600, 600, 'flecha3').setImmovable(true).setOrigin(0);
         this.flecha3.setScale(0.5);
         this.flecha3.setVisible(this.flechaValue);
     }
@@ -162,72 +212,81 @@ class WorldScene1 extends BaseScene {
     }
 
     colision() {
-        console.log(this.serpiente2, this.platw1);
         this.physics.add.collider(this.player, this.platw1, this.evSalto, null, this);
-        this.physics.add.collider(this.player, this.mosquito, this.PlayerSerpiente, null, this);
-        this.physics.add.collider(this.player, this.mosquito2, this.PlayerSerpiente, null, this);
-        this.physics.add.collider(this.player, this.mosquito3, this.PlayerSerpiente, null, this);
-        this.physics.add.collider(this.player, this.serpiente1, this.PlayerSerpiente, null, this);
-        this.physics.add.collider(this.player, this.serpiente2, this.PlayerSerpiente, null, this);
+        this.physics.add.collider(this.player, this.mosquito, this.PlayerMosquito1, null, this);
+        this.physics.add.collider(this.player, this.mosquito2, this.PlayerMosquito2, null, this);
+        this.physics.add.collider(this.player, this.mosquito3, this.PlayerMosquito3, null, this);
+        this.physics.add.collider(this.player, this.serpiente1, this.PlayerSerpiente1, null, this);
+        this.physics.add.collider(this.player, this.serpiente2, this.PlayerSerpiente2, null, this);
         this.physics.add.collider(this.player, this.flecha1, this.evFlecha, null, this);
         this.physics.add.collider(this.player, this.flecha2, this.evFlecha2, null, this);
         this.physics.add.collider(this.player, this.flecha3, this.evFlecha3, null, this);
     }
 
-    PlayerSerpiente() {
-        this.player.setVelocityY(-585);
-        this.player.setTint(0xff0000);
-        //this.AnimacionAtaqueSerpiente();
-        this.ValidarAnimacion = true;
-        this.velocidadLateral = 100;
-
+    PlayerMosquito1() {
+        this.gameOver();
+        this.mosquito.setPosition(700, 500);
+        this.mosquito.body.setEnable(this.dataMosquito.cuerpoFalse);
         this.playerParpadeo();
-        
+        setTimeout(() => {
+            this.mosquito.body.setEnable(this.dataMosquito.cuerpoTrue);
+        }, 100)
+    }
+
+    PlayerMosquito2() {
+        this.gameOver();
+        this.mosquito2.setPosition(1050, 500);
+        this.mosquito2.body.setEnable(this.dataMosquito2.cuerpoFalse);
+        this.playerParpadeo();
+        setTimeout(() => {
+            this.mosquito2.body.setEnable(this.dataMosquito2.cuerpoTrue);
+        }, 100)
+    }
+    PlayerMosquito3() {
+        this.gameOver();
+        this.mosquito3.setPosition(1225, 500);
+        this.mosquito3.body.setEnable(this.dataMosquito3.cuerpoFalse);
+        this.playerParpadeo();
+        setTimeout(() => {
+            this.mosquito3.body.setEnable(this.dataMosquito3.cuerpoTrue);
+        }, 100)
+    }
+
+    evFlecha() {
+
+        this.gameOver();
+        this.flecha1.setPosition(1960, 300);
+        this.flecha1.body.setEnable(false);
+        this.playerParpadeo();
         setTimeout(() => {
             this.player.clearTint();
-            this.ValidarAnimacion = false;
-        }, 3000)
-
-        setTimeout(() => {
-            this.velocidadLateral = 290;
-        }, 6000)
+            this.flecha1.body.setEnable(true);
+        }, 1100)
     }
 
-    evFlecha(){
-       this.player.setTint(0xff0000);
-       this.flecha1.setPosition(1960, 300);
-       this.flecha1.body.setEnable(false);
-       this.playerParpadeo();
-       setTimeout(()=>{
-        this.player.clearTint();
-        this.flecha1.body.setEnable(true);
-       },1100)
-    }
 
-    
 
-    evFlecha2(){
-        this.player.setTint(0xff0000);
-        this.flecha2.setPosition(1960, 300);
+    evFlecha2() {
+
+        this.gameOver();
+        this.flecha2.setPosition(2800, 300);
         this.flecha2.body.setEnable(false);
         this.playerParpadeo();
-        setTimeout(()=>{
-         this.player.clearTint();
-         this.flecha2.body.setEnable(true);
-        },1100)
-     }
+        setTimeout(() => {
+            this.flecha2.body.setEnable(true);
+        }, 1100)
+    }
 
-     evFlecha3(){
-        this.player.setTint(0xff0000);
-        this.flecha3.setPosition(1960, 300);
+    evFlecha3() {
+
+        this.gameOver();
+        this.flecha3.setPosition(3600, 300);
         this.flecha3.body.setEnable(false);
         this.playerParpadeo();
-        setTimeout(()=>{
-         this.player.clearTint();
-         this.flecha3.body.setEnable(true);
-         this.player.setAlpha(1);
-        },1100)
-     }
+        setTimeout(() => {
+            this.flecha3.body.setEnable(true);
+        }, 1100)
+    }
 
     AnimacionAtaqueSerpiente() {
         this.anims.create({
@@ -257,8 +316,25 @@ class WorldScene1 extends BaseScene {
         });
         this.serpiente2.play('mover1', true);
     }
-    ev1() {
 
+    PlayerSerpiente1() {
+        this.gameOver();
+        this.serpiente1.setPosition(600, 600);
+        this.serpiente1.body.setEnable(this.dataSerpiente1.cuerpoFalse);
+        this.playerParpadeo();
+        setTimeout(() => {
+            this.serpiente1.body.setEnable(this.dataSerpiente1.cuerpoTrue);
+        }, 100)
+    }
+
+    PlayerSerpiente2() {
+        this.gameOver();
+        this.serpiente2.setPosition(450, 600);
+        this.serpiente2.body.setEnable(this.dataSerpiente2.cuerpoFalse);
+        this.playerParpadeo();
+        setTimeout(() => {
+            this.serpiente2.body.setEnable(this.dataSerpiente2.cuerpoTrue);
+        }, 100)
     }
 
     evSalto() {
@@ -286,24 +362,24 @@ class WorldScene1 extends BaseScene {
     serpienteSide(x1, y1, value1, value2) {
         const x = Math.trunc(x1);
         const y = Math.trunc(y1);
-        
-            if( x < 350){
-                this.value1 = true
-                this.serpiente1.setFlipX(this.value1);
-            }
-            if (x > 1529){
-                this.value1 = false
-                this.serpiente1.setFlipX(this.value1);
-            }
-            if (y > 1529){
-                this.value2 = false
-                this.serpiente2.setFlipX(this.value2);
-            }
-            if (y < 390){
-                this.value2 = true
-                this.serpiente2.setFlipX(this.value2);
-            }
-    
+
+        if (x < 350) {
+            this.value1 = true
+            this.serpiente1.setFlipX(this.value1);
+        }
+        if (x > 1529) {
+            this.value1 = false
+            this.serpiente1.setFlipX(this.value1);
+        }
+        if (y > 1529) {
+            this.value2 = false
+            this.serpiente2.setFlipX(this.value2);
+        }
+        if (y < 390) {
+            this.value2 = true
+            this.serpiente2.setFlipX(this.value2);
+        }
+
         switch (value1) {
             case true:
                 this.velocidad = 130;
@@ -329,7 +405,7 @@ class WorldScene1 extends BaseScene {
     avanzeMosquito(x, y, valor, val) {
         const data = Math.trunc(x);
         const dataUp = Math.trunc(y);
-     
+
         switch (data) {
             case 377:
                 this.Mvalue = true
@@ -372,7 +448,7 @@ class WorldScene1 extends BaseScene {
     mosquito3Circular(x, y, value) {
         const Dx = Math.trunc(x);
         const Dy = Math.trunc(y);
-  
+
         switch (value) {
             case false:
                 this.mosquito3.setVelocityX(-this.velocidadMX);
@@ -413,35 +489,35 @@ class WorldScene1 extends BaseScene {
     }
 
     flechaAtaque(x1, x2, x3) {
-        setTimeout(() => {
+        
             this.flechaValue = true;
             this.flecha1.setVisible(this.flechaValue);
-            this.flecha1.setVelocityX(-250);
-        }, 9000)
-        setTimeout(() => {
+            this.flecha1.setVelocityX(-this.velocidadFlecha);
+        
+   
             this.flechaValue = true;
             this.flecha2.setVisible(this.flechaValue);
-            this.flecha2.setVelocityX(-250);
-        }, 13000)
-        setTimeout(() => {
+            this.flecha2.setVelocityX(-this.velocidadFlecha);
+    
+       
             this.flechaValue = true;
             this.flecha3.setVisible(this.flechaValue);
-            this.flecha3.setVelocityX(-250);
-        }, 16000)
+            this.flecha3.setVelocityX(-this.velocidadFlecha);
+        
         if (Math.trunc(x1.x) < -1300) {
             this.flechaValue = false;
             this.flecha1.setVisible(this.flechaValue);
             this.flecha1.setPosition(1960, 300);
         }
-        if (Math.trunc(x2.x) < -1300) {
+        if (Math.trunc(x2.x) < -1600) {
             this.flechaValue = false;
             this.flecha2.setVisible(this.flechaValue);
-            this.flecha2.setPosition(1960, 465);
+            this.flecha2.setPosition(2800, 465);
         }
-        if (Math.trunc(x3.x) < -1300) {
+        if (Math.trunc(x3.x) < -1700) {
             this.flechaValue = false;
             this.flecha3.setVisible(this.flechaValue);
-            this.flecha3.setPosition(1960, 600);
+            this.flecha3.setPosition(3600, 600);
         }
     }
     /*SET ANIMACIONES PERSONAJE*/
@@ -476,7 +552,7 @@ class WorldScene1 extends BaseScene {
     moveLeft() {
         if (this.ValidarAnimacion) {
 
-           // this.player.play('ataque', true);
+            // this.player.play('ataque', true);
 
         } else {
             this.anims.create({
@@ -511,35 +587,37 @@ class WorldScene1 extends BaseScene {
         this.flechaAtaque(this.flecha1, this.flecha2, this.flecha3);
     }
 
-    playerParpadeo(){
+    playerParpadeo() {
+        this.player.setTint(0xff0000);
         this.player.setAlpha(0.5);
-        setTimeout(()=>{
-         this.player.setAlpha(1);
-        },100)
-        setTimeout(()=>{
-         this.player.setAlpha(0.5);
-        },300)
-        setTimeout(()=>{
-         this.player.setAlpha(1);
-        },400)
-        setTimeout(()=>{
-         this.player.setAlpha(0.5);
-        },500)
-        setTimeout(()=>{
-         this.player.setAlpha(1);
-        },600)
-        setTimeout(()=>{
-         this.player.setAlpha(0.5);
-        },700)
-        setTimeout(()=>{
-         this.player.setAlpha(1);
-        },800)
-        setTimeout(()=>{
-         this.player.setAlpha(0.5);
-        },900)
-        setTimeout(()=>{
+        setTimeout(() => {
             this.player.setAlpha(1);
-        },1000)
+        }, 100)
+        setTimeout(() => {
+            this.player.setAlpha(0.5);
+        }, 300)
+        setTimeout(() => {
+            this.player.setAlpha(1);
+        }, 400)
+        setTimeout(() => {
+            this.player.setAlpha(0.5);
+        }, 500)
+        setTimeout(() => {
+            this.player.setAlpha(1);
+        }, 600)
+        setTimeout(() => {
+            this.player.setAlpha(0.5);
+        }, 700)
+        setTimeout(() => {
+            this.player.setAlpha(1);
+        }, 800)
+        setTimeout(() => {
+            this.player.setAlpha(0.5);
+            this.player.clearTint();
+        }, 900)
+        setTimeout(() => {
+            this.player.setAlpha(1);
+        }, 1000)
     }
 }
 export default WorldScene1
