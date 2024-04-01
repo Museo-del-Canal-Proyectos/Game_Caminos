@@ -4,8 +4,10 @@ class WorldScene1 extends BaseScene {
 
     constructor(config) {
         super('WorldScene1', config);
+        this.tiempoRestante= 120;
         this.monedas = 0;
         this.texto = '';
+        this.tiempo = '';
         this.player = null;
         this.flechaState = false;
         this.serpiente1 = null;
@@ -16,6 +18,7 @@ class WorldScene1 extends BaseScene {
         this.flecha1 = null;
         this.flecha2 = null;
         this.flecha3 = null;
+        this.intervalo=null;
         this.flechaValue = false;
         this.ValidarAnimacion = false;
         this.platw1 = null;
@@ -28,29 +31,37 @@ class WorldScene1 extends BaseScene {
         this.velocidadLateral = 290;
         this.velocidadMX = 30;
         this.velocidadMY = 30;
-        this.velocidadFlecha=250;
+        this.velocidadFlecha = 250;
+        this.bolsa = null;
+        this.craneo = null;
+        this.diamantes = null;
+        this.casco = null;
+        this.libro = null;
 
-        this.dataSerpiente1={
-            cuerpoTrue:true,
-            cuerpoFalse:false,
+
+        this.dataSerpiente1 = {
+            cuerpoTrue: true,
+            cuerpoFalse: false,
         }
-        this.dataSerpiente2={
-            cuerpoTrue:true,
-            cuerpoFalse:false,
+        this.dataSerpiente2 = {
+            cuerpoTrue: true,
+            cuerpoFalse: false,
         }
-        this.dataMosquito={
-            cuerpoTrue:true,
-            cuerpoFalse:false,
+        this.dataMosquito = {
+            cuerpoTrue: true,
+            cuerpoFalse: false,
         }
-        this.dataMosquito2={
-            cuerpoTrue:true,
-            cuerpoFalse:false,
+        this.dataMosquito2 = {
+            cuerpoTrue: true,
+            cuerpoFalse: false,
         }
-        this.dataMosquito3={
-            cuerpoTrue:true,
-            cuerpoFalse:false,
+        this.dataMosquito3 = {
+            cuerpoTrue: true,
+            cuerpoFalse: false,
         }
     }
+
+  
 
     inicialPosition() {
         this.player.setPosition(0.5, 403);
@@ -67,24 +78,31 @@ class WorldScene1 extends BaseScene {
     gameOver() {
         this.monedas -= 10;
         this.texto.setText('😶‍🌫️Monedas: ' + this.monedas)
-      
+
         if (this.monedas === 0) {
+            this.inicialPosition();
             this.physics.pause();
-            setTimeout(()=>{
-               // this.scene.start('MenuScene');
-               this.physics.pause();
-               window.location.reload();
-            },200);
+            setTimeout(() => {
+                this.tiempoRestante=120;
+                this.scene.start('MenuScene');
+            }, 200);
         }
     }
 
     create() {
-
         this.cameras.main.setBounds(0, 0, 1920, 763);
         this.physics.world.setBounds(0, 0, 1920, 763);
         this.add.image(0, 0, 'wordl1').setOrigin(0);
+        //iconos y gadget
+        this.bolsa = this.add.image(330, 25, 'bolsa').setScrollFactor(0);
+        this.craneo = this.add.image(380, 25, 'fin').setScrollFactor(0);
+        this.diamantes = this.add.image(430, 25, 'diamantes').setScrollFactor(0);
+        this.casco = this.add.image(475, 25, 'casco').setScrollFactor(0);
+        this.libro = this.add.image(520, 25, 'libro').setScrollFactor(0);
         this.monedas = 100;
+        this.timer();
         this.texto = this.add.text(0.5, 10, '😶‍🌫️Monedas: ' + this.monedas, { fontSize: '36px', fill: "#fff" }).setScrollFactor(0);
+        this.tiempo = this.add.text(560, 10, 'Reloj:', { fontSize: '36px', fill: "#fff" }).setScrollFactor(0);
         console.log(this.texto);
         this.createPersonaje();
         this.createSerpiente();
@@ -92,12 +110,25 @@ class WorldScene1 extends BaseScene {
         this.createFlecha();
         this.createPlaforms();
         this.colision();
+ 
+    }
 
+   
+
+    timer() {
+
+        setInterval(()=>{
+            --this.tiempoRestante;
+            try {
+             this.tiempo.setText(`${this.tiempoRestante}`);
+            } catch (error) {
+               
+            }
+        },1000)
     }
 
     createPersonaje() {
-
-        this.player = this.physics.add.sprite(0.5, 403, 'ha').setOrigin(0);
+        this.player = this.physics.add.sprite(0.5, 403, ).setOrigin(0);
         this.player.body.setGravityY(500);
         this.player.setCollideWorldBounds(true);
         this.cameras.main.startFollow(this.player, true);
@@ -105,10 +136,8 @@ class WorldScene1 extends BaseScene {
     }
 
     createSerpiente() {
-
         this.serpiente1 = this.physics.add.sprite(600, 600, 'serpiente').setImmovable(true).setOrigin(0);
         this.serpiente1.setFlipX(this.value1)
-
 
         this.serpiente1.setCollideWorldBounds(true);
         this.movimientoS1();
@@ -116,10 +145,8 @@ class WorldScene1 extends BaseScene {
         this.serpiente2 = this.physics.add.sprite(450, 600, 'serpiente2').setImmovable(true).setOrigin(0);
         this.serpiente2.setFlipX(this.value2);
 
-
         this.serpiente2.setCollideWorldBounds(true);
         this.movimientoS2();
-
     }
 
     createMosquito() {
@@ -291,7 +318,7 @@ class WorldScene1 extends BaseScene {
     AnimacionAtaqueSerpiente() {
         this.anims.create({
             key: 'ataque',
-            frames: this.anims.generateFrameNumbers('ha', { start: 12, end: 14 }),
+            frames: this.anims.generateFrameNumbers('player1', { start: 12, end: 14 }),
             frameRate: 7,
             repeat: -1
         });
@@ -489,21 +516,21 @@ class WorldScene1 extends BaseScene {
     }
 
     flechaAtaque(x1, x2, x3) {
-        
-            this.flechaValue = true;
-            this.flecha1.setVisible(this.flechaValue);
-            this.flecha1.setVelocityX(-this.velocidadFlecha);
-        
-   
-            this.flechaValue = true;
-            this.flecha2.setVisible(this.flechaValue);
-            this.flecha2.setVelocityX(-this.velocidadFlecha);
-    
-       
-            this.flechaValue = true;
-            this.flecha3.setVisible(this.flechaValue);
-            this.flecha3.setVelocityX(-this.velocidadFlecha);
-        
+
+        this.flechaValue = true;
+        this.flecha1.setVisible(this.flechaValue);
+        this.flecha1.setVelocityX(-this.velocidadFlecha);
+
+
+        this.flechaValue = true;
+        this.flecha2.setVisible(this.flechaValue);
+        this.flecha2.setVelocityX(-this.velocidadFlecha);
+
+
+        this.flechaValue = true;
+        this.flecha3.setVisible(this.flechaValue);
+        this.flecha3.setVelocityX(-this.velocidadFlecha);
+
         if (Math.trunc(x1.x) < -1300) {
             this.flechaValue = false;
             this.flecha1.setVisible(this.flechaValue);
@@ -528,7 +555,7 @@ class WorldScene1 extends BaseScene {
         } else {
             this.anims.create({
                 key: 'quieto',
-                frames: this.anims.generateFrameNumbers('ha', { frame: 0 }),
+                frames: this.anims.generateFrameNumbers('player1', { frame: 0 }),
                 frameRate: 0
             });
             this.player.play('quieto');
@@ -541,7 +568,7 @@ class WorldScene1 extends BaseScene {
         } else {
             this.anims.create({
                 key: 'derecha',
-                frames: this.anims.generateFrameNumbers('ha', { start: 3, end: 5 }),
+                frames: this.anims.generateFrameNumbers('player1', { start: 3, end: 5 }),
                 frameRate: 5,
                 repeat: -1
             })
@@ -557,7 +584,7 @@ class WorldScene1 extends BaseScene {
         } else {
             this.anims.create({
                 key: 'izquierda',
-                frames: this.anims.generateFrameNumbers('ha', { start: 8, end: 6 }),
+                frames: this.anims.generateFrameNumbers('player1', { start: 8, end: 6 }),
                 frameRate: 5,
                 repeat: -1
             })
