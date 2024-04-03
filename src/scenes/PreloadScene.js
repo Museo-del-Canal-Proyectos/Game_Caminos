@@ -30,9 +30,12 @@ class PreloadScene extends Phaser.Scene {
           this.load.spritesheet('mosquito2','assets/enemigos/mosquito.png',{frameWidth:36,frameHeight:51});//enemigo
           this.load.spritesheet('mosquito3','assets/enemigos/mosquito.png',{frameWidth:36,frameHeight:51});//enemigo
           
-          this.load.spritesheet('flecha1','assets/enemigos/flecha.png',{frameWidth:36,frameHeight:51});
+          this.load.image('flecha1','assets/enemigos/flecha.png');
           this.load.image('flecha2','assets/enemigos/flecha.png');
           this.load.image('flecha3','assets/enemigos/flecha.png');
+
+          this.load.spritesheet('bala1','assets/enemigos/baladecanon.png',{frameWidth:71,frameHeight:26});
+          
 
 
           this.load.image('block_1','assets/1.png');//bloques transparentes
@@ -48,12 +51,6 @@ class PreloadScene extends Phaser.Scene {
 
           this.load.audio('choque', './assets/Audios/level_up.mp3');//audios Moi Music
           this.load.audio('choque_plat', './assets/Audios/pasos.ogg');//audios Moi Music
-
-          
-
-          
-        
-          
     }
 
     create(){
