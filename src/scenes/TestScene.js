@@ -42,7 +42,7 @@ class TestScene extends BaseScene {
 
   createPersonaje() {
 
-    this.personaje = this.physics.add.sprite(94, 615, 'ha')
+    this.personaje = this.physics.add.sprite(94, 615, 'player1')
       //.setScale(0)
       .setOrigin(0);
     console.log(this.personaje)
@@ -337,7 +337,7 @@ class TestScene extends BaseScene {
   moveRight() {
     this.anims.create({
       key: 'derecha',
-      frames: this.anims.generateFrameNumbers('ha', { start: 3, end: 5 }),
+      frames: this.anims.generateFrameNumbers('player1', { start: 3, end: 5 }),
       //SON 24 FPS DE ANIMACION POR SEGUNDO
       //EN ESTE CASO  RADIO DE FRAMES SON 2 DE LOS 8 DE LA ANIMACION
       //4 SEC; 8/2=4
@@ -354,7 +354,7 @@ class TestScene extends BaseScene {
 
     this.anims.create({
       key: 'izquierda',
-      frames: this.anims.generateFrameNumbers('ha', { start: 8, end: 6 }),
+      frames: this.anims.generateFrameNumbers('player1', { start: 8, end: 6 }),
       //SON 24 FPS DE ANIMACION POR SEGUNDO
       //EN ESTE CASO  RADIO DE FRAMES SON 2 DE LOS 8 DE LA ANIMACION
       //4 SEC; 8/2=4
@@ -369,7 +369,7 @@ class TestScene extends BaseScene {
   moveUp() {
     this.anims.create({
       key: 'arriba',
-      frames: this.anims.generateFrameNumbers('ha', { start: 12, end: 14 }),
+      frames: this.anims.generateFrameNumbers('player1', { start: 12, end: 14 }),
       //SON 24 FPS DE ANIMACION POR SEGUNDO
       //EN ESTE CASO  RADIO DE FRAMES SON 2 DE LOS 8 DE LA ANIMACION
       //4 SEC; 8/2=4
@@ -383,7 +383,7 @@ class TestScene extends BaseScene {
   moveDown() {
     this.anims.create({
       key: 'abajo',
-      frames: this.anims.generateFrameNumbers('ha', { start: 10, end: 11 }),
+      frames: this.anims.generateFrameNumbers('player1', { start: 10, end: 11 }),
       //SON 24 FPS DE ANIMACION POR SEGUNDO
       //EN ESTE CASO  RADIO DE FRAMES SON 2 DE LOS 8 DE LA ANIMACION
       //4 SEC; 8/2=4
@@ -400,7 +400,7 @@ class TestScene extends BaseScene {
 
     this.anims.create({
       key: 'quieto',
-      frames: this.anims.generateFrameNumbers('ha', { frame: 0 }),
+      frames: this.anims.generateFrameNumbers('player1', { frame: 0 }),
       frameRate: 0
     });
 
