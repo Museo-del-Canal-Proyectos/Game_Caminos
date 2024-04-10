@@ -24,6 +24,8 @@ class PreloadScene extends Phaser.Scene {
           this.load.image('mundo1','assets/worlds/world 1.png')//Mundo 1
 
 
+
+
           this.load.spritesheet('serpiente','assets/enemigos/Serpiente.png',{frameWidth:143,frameHeight:54});//enemigo
           this.load.spritesheet('serpiente2','assets/enemigos/Serpiente.png',{frameWidth:143,frameHeight:54});//enemigo
           this.load.spritesheet('mosquito','assets/enemigos/mosquito.png',{frameWidth:36,frameHeight:51});//enemigo

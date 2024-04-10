@@ -10,6 +10,16 @@ class PlayScene extends BaseScene {
         this.flecha2 = null;
         this.flecha3 = null;
         this.bala1 = null;
+        this.objeto1 = null;
+        this.objeto1Sub1 = null;
+        this.objeto2 = null;
+        this.objeto2Sub2 = null;
+        this.objeto3 = null;
+        this.objeto3Sub3 = null;
+        this.objeto4 = null;
+        this.objeto4Sub4 = null;
+        this.objeto5 = null;
+        this.objeto5Sub5 = null;
         this.serpiente1 = null;
         this.serpiente2 = null;
         this.textoMonedas = null;
@@ -18,6 +28,7 @@ class PlayScene extends BaseScene {
         this.mosquito = null;
         this.mosquito2 = null;
         this.monedas = 100;
+        this.contadorObjetos = 0;
         this.tiempo = 45;
         this.valorIntervalo = 1000;
         this.arregloTiempo = ['🕧', '🕐', '🕜', '🕑', '🕛']
@@ -32,10 +43,26 @@ class PlayScene extends BaseScene {
         this.velocidadFlecha = 395; //550
     }
     //Creacion de elementos 
+
+
+
     create() {
+
+
         this.cameras.main.setBounds(0, 0, 4095, 768);
         this.physics.world.setBounds(0, 0, 4095, 768);
         this.mundo = this.add.image(0, 0, 'mundo1').setAlpha(5).setOrigin(0);
+        //Objetos encontrables
+        this.objeto1 = this.add.image(235, 42.5, 'bolsa').setScrollFactor(0);
+        this.objeto1.setVisible(false);
+        this.objeto2 = this.add.image(267, 42.5, 'diamantes').setScrollFactor(0);
+        this.objeto2.setVisible(false);
+        this.objeto3 = this.add.image(297, 42.5, 'libro').setScrollFactor(0);
+        this.objeto3.setVisible(false);
+        this.objeto4 = this.add.image(325, 42.5, 'casco').setScrollFactor(0);
+        this.objeto4.setVisible(false);
+        this.objeto5 = this.add.image(353, 42.5, 'fin').setScrollFactor(0);
+        this.objeto5.setVisible(false);
         this.textoGameOver = this.add.text(470, 350, '', { fontSize: '64px', fontFamily: 'Comic Sans MS', backgroundColor: '#000', fill: "#fff" }).setScrollFactor(0);
         this.textoMonedas = this.add.text(1, 20, '🪙' + this.monedas, { fontSize: '38px', fontFamily: 'Comic Sans MS', fill: "#000" }).setScrollFactor(0);
         this.textoTiempo = this.add.text(120, 20, '🕛' + this.tiempo, { fontSize: '38px', fontFamily: 'Comic Sans MS', fill: "#000" }).setScrollFactor(0);
@@ -43,8 +70,9 @@ class PlayScene extends BaseScene {
         this.plataforma();
         this.enemigoFlecha();
         this.enemigoBala();
-        this.enemigoSerpiente();
-        this.enemigoMosquito();
+        // this.enemigoSerpiente();
+        // this.enemigoMosquito();
+        this.createObjetos();
         this.createColisiones();
         this.tiemporizador();
     }
@@ -216,10 +244,10 @@ class PlayScene extends BaseScene {
         this.serpiente2.body.setEnable(true);
     }
     /*final evento Serpiente*/
- 
+
     /*EventoMosquito*/
-    
-    evMosq(){
+
+    evMosq() {
         this.perdidaMonedas();
         this.mosquito.body.setEnable(false);
         this.mosquito.setPosition(2842, 580);
@@ -227,7 +255,7 @@ class PlayScene extends BaseScene {
         this.damagePlayer1();
         this.mosquito.body.setEnable(true);
     }
-    evMosq2(){
+    evMosq2() {
         this.perdidaMonedas();
         this.mosquito2.body.setEnable(false);
         this.mosquito2.setPosition(3630, 400);
@@ -289,10 +317,15 @@ class PlayScene extends BaseScene {
         this.physics.add.collider(this.player1, this.flecha1, this.evFlecha1, null, this);
         this.physics.add.collider(this.player1, this.flecha2, this.evFlecha2, null, this);
         this.physics.add.collider(this.player1, this.flecha3, this.evFlecha3, null, this);
-        this.physics.add.collider(this.player1, this.serpiente1, this.evSerp, null, this);
-        this.physics.add.collider(this.player1, this.serpiente2, this.evSerp2, null, this);
-        this.physics.add.collider(this.player1, this.mosquito, this.evMosq, null, this);
-        this.physics.add.collider(this.player1, this.mosquito2, this.evMosq2, null, this);
+        this.physics.add.collider(this.player1, this.objeto1Sub1, this.evObjeto1, null, this);
+        this.physics.add.collider(this.player1, this.objeto2Sub2, this.evObjeto2, null, this);
+        this.physics.add.collider(this.player1, this.objeto3Sub3, this.evObjeto3, null, this);
+        this.physics.add.collider(this.player1, this.objeto4Sub4, this.evObjeto4, null, this);
+        this.physics.add.collider(this.player1, this.objeto5Sub5, this.evObjeto5, null, this);
+        // this.physics.add.collider(this.player1, this.serpiente1, this.evSerp, null, this);
+        // this.physics.add.collider(this.player1, this.serpiente2, this.evSerp2, null, this);
+        // this.physics.add.collider(this.player1, this.mosquito, this.evMosq, null, this);
+        // this.physics.add.collider(this.player1, this.mosquito2, this.evMosq2, null, this);
     }
     //evento salto
     evSalto() {
@@ -405,10 +438,12 @@ class PlayScene extends BaseScene {
                     this.textoTiempo.setText(this.arregloTiempo[0] + 0);
                     this.textoGameOver.setText("⏱️ Time's up! ");
                     this.physics.pause();
+                    this.puntajeMundo(this.monedas, this.contadorObjetos);
                     setTimeout(() => {
-                        window.location.reload();
+                        //window.location.reload();
+                       console.log("redirigimos al menu");
                     }, 5000);
-                    clearInterval(tiempo);
+                    clearInterval(tiempo);//convertir en funcion
                 } else if (this.tiempo === 30) {
                     this.mundo.setTint(0xfad6a5);
                 } else if (this.tiempo === 15) {
@@ -469,7 +504,6 @@ class PlayScene extends BaseScene {
     ataquemosquito(x, valor, y, val) {
         const data = Math.trunc(x.x);
         const dataUp = Math.trunc(y.y);
-
         if (data < 2670) {
             this.Mvalue = true
             this.mosquito.setFlipX(this.Mvalue);
@@ -486,7 +520,6 @@ class PlayScene extends BaseScene {
                 this.mosquito.setVelocityX(-70);
                 break;
         }
-
         if (dataUp > 630) {
             this.M2value = true
             this.mosquito2.setFlipX(this.M2value);
@@ -495,7 +528,6 @@ class PlayScene extends BaseScene {
             this.M2value = false
             this.mosquito2.setFlipX(this.M2value);
         }
-
         switch (val) {
             case true:
                 this.mosquito2.setVelocityY(-70);
@@ -506,15 +538,64 @@ class PlayScene extends BaseScene {
         }
     }
 
+    //Moises Linea Objetos anexar Modal
+    evObjeto1() {
+        this.objeto1Sub1.body.setEnable(false);
+        this.objeto1Sub1.setVisible(false);
+        this.contadorObjetos++;
+        console.log(this.contadorObjetos);
+        this.objeto1.setVisible(true);
+    }
+    //moises
+    evObjeto2() {
+        this.objeto2Sub2.body.setEnable(false);
+        this.objeto2Sub2.setVisible(false);
+        this.contadorObjetos++;
+        console.log(this.contadorObjetos);
+        this.objeto2.setVisible(true);
+    }
+    //moises
+    evObjeto3() {
+        this.objeto3Sub3.body.setEnable(false);
+        this.objeto3Sub3.setVisible(false);
+        this.contadorObjetos++;
+        console.log(this.contadorObjetos);
+        this.objeto3.setVisible(true);
+    }
+    //moises
+    evObjeto4() {
+        this.objeto4Sub4.body.setEnable(false);
+        this.objeto4Sub4.setVisible(false);
+        this.contadorObjetos++;
+        console.log(this.contadorObjetos);
+        this.objeto4.setVisible(true);
+    }
+    //moises
+    evObjeto5() {
+        this.objeto5Sub5.body.setEnable(false);
+        this.objeto5Sub5.setVisible(false);
+        this.contadorObjetos++;
+        console.log(this.contadorObjetos);
+        this.objeto5.setVisible(true);
+    }
+
+    createObjetos() {
+        this.objeto1Sub1 = this.physics.add.sprite(1115, 667, 'bolsa');
+        this.objeto2Sub2 = this.physics.add.sprite(1990, 667, 'diamantes');
+        this.objeto3Sub3 = this.physics.add.sprite(2668, 340, 'libro');
+        this.objeto4Sub4 = this.physics.add.sprite(2668, 667, 'casco');
+        this.objeto5Sub5 = this.physics.add.sprite(3334, 590, 'fin');
+    }
+
     update() {
 
-        //this.movePlayer();
-        this.moveController();
+
+        this.movePlayer();
+        //this.moveController();
         this.flechaAtaque(this.flecha1, this.flecha2, this.flecha3);
         this.balaAtaque(this.bala1);
-        this.serpienteSide(this.serpiente1, this.stadoSerpiente1, this.serpiente2, this.stadoSerpiente2);
-        this.ataquemosquito(this.mosquito, this.Mvalue, this.mosquito2, this.M2value);
-
+        // this.serpienteSide(this.serpiente1, this.stadoSerpiente1, this.serpiente2, this.stadoSerpiente2);
+        // this.ataquemosquito(this.mosquito, this.Mvalue, this.mosquito2, this.M2value);
     }
 
     movePlayer() {
@@ -534,24 +615,90 @@ class PlayScene extends BaseScene {
         }
     }
 
+    puntajeMundo(monedas, objetos) {
+
+        //console.log(registrosPuntaje);
+
+        const puntajeMundo = 25;
+        let puntajeObtenido = (puntajeMundo * monedas) / 100;
+        let obtenidos = Math.trunc(((puntajeObtenido * objetos) * 10) / 100);
+
+        let TotalAcumulado = puntajeObtenido + obtenidos;
+        this.Almacenado(TotalAcumulado);
+
+    }
+
+    Almacenado(total) {
+        let arreglo = [];
+        let arregloPuntajeIgual=[];
+        let arregloPuntajeMenor=[];
+        let arregloPuntajeCambio=[];
+        let scanRegistro;
+        let contadordeRegistrosIguales=0;
+        let contadordeRegistrosMayor=0;
+        let registrosPuntaje = localStorage.length
+        const dataTotalJugador = {
+            nombre: "Por definir",
+            puntos: total
+        }
+        if (registrosPuntaje === 0) {
+            arreglo.push(JSON.stringify(dataTotalJugador));
+            localStorage.setItem("1", arreglo);
+        } else {
+            if (registrosPuntaje < 5) {
+                let nuevoRegistro = registrosPuntaje + 1
+                arreglo.push(JSON.stringify(dataTotalJugador));
+                localStorage.setItem(`${nuevoRegistro}`, arreglo);
+            } else {
+                // console.log("Y hay 5 registros");
+            }
+        }
+        if (registrosPuntaje === 5) {
+            for (let i = 1; i < 6; i++) {
+                scanRegistro = JSON.parse(localStorage.getItem(`${i}`));
+                if (scanRegistro.puntos <= total) {
+                    console.log("Aqui Hacemos cambio Por puntaje obtenido: " + total +" dataPuntaje: "+scanRegistro.puntos);
+                    if(scanRegistro.puntos == total){
+                     contadordeRegistrosIguales++;
+                     console.log(`${total} Registro igual en posicion:${i}  valor: ${scanRegistro.puntos}`);
+                     arregloPuntajeIgual.push(i);
+                     const nuevaData={nombre:"Nuevo dato IGUAL",puntos:total}
+                     arregloPuntajeCambio.push(JSON.stringify(nuevaData));
+                     localStorage.setItem(`${arregloPuntajeIgual[0]}`,arregloPuntajeCambio[0]);
+                     arregloPuntajeCambio=[];
+                     console.log("veces repetidas",contadordeRegistrosIguales," en posiciones "+arregloPuntajeIgual);
+                    }else{
+                        contadordeRegistrosMayor++;
+                        arregloPuntajeMenor.push(i);
+                        const dataMenorCambio={nombre:"Nuevo dato NO IGUAL",puntos:total}
+                        arregloPuntajeCambio.push(JSON.stringify(dataMenorCambio))
+                        localStorage.setItem(`${arregloPuntajeMenor[0]}`,arregloPuntajeCambio[0]);
+                        arregloPuntajeCambio=[];
+                        console.log("Arreglo de numeros menores posiciones: ",arregloPuntajeMenor);
+                        console.log("datos Mayores: ",contadordeRegistrosMayor);
+                    }
+                }
+            }
+        }
+    }
+
     moveController() {
         const control = this.input.gamepad.getPad(0);
         if (!control) {
             return;
         }
-        if(this.estadoSaltoPlayer1 && control.buttons[0].pressed ){
+        if (this.estadoSaltoPlayer1 && control.buttons[0].pressed) {
             this.player1.setVelocityY(-this.saltoPlayer1);
             this.estadoSaltoPlayer1 = false;
         }
         if (control.axes.length) {
             const axisH = control.axes[0].getValue();
-
             if (axisH === -1) {
-                this.player1.setVelocityX(-this.velocidadPlayer1);
-                this.moveLeft();
-            } else if (axisH === 1) {
                 this.player1.setVelocityX(this.velocidadPlayer1);
                 this.moveRight();
+            } else if (axisH === 1) {
+                this.player1.setVelocityX(-this.velocidadPlayer1);
+                this.moveLeft();
             } else {
                 this.player1.setVelocityX(0);
                 this.standBy();
