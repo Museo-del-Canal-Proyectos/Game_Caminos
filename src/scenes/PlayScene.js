@@ -24,7 +24,7 @@ class PlayScene extends BaseScene {
         this.serpiente2 = null;
         this.textoMonedas = null;
         this.textoGameOver = null;
-        this.textoTiempo = null;
+        this.textoTiempo = "0:00";
         this.mosquito = null;
         this.mosquito2 = null;
         this.monedas = 100;
@@ -422,8 +422,10 @@ class PlayScene extends BaseScene {
             this.textoGameOver.setText('☠️ Game Over');
             this.physics.pause();
             setTimeout(() => {
-                window.location.reload();
-            }, 4000);
+             console.log("GAMEover");
+             this.puntajeMundo(this.monedas,this.contadorObjetos);
+            },2000);
+            console.log("Saliendo del juego game over: ",this.monedas," ",this.contadorObjetos)
         }
     }
 
@@ -432,17 +434,24 @@ class PlayScene extends BaseScene {
             const temporizador = Math.random() * 5;
             --this.tiempo;
             if (this.monedas === 0) {
-                this.textoTiempo.setText(this.arregloTiempo[0] + 0);
+              try{
+                //this.textoTiempo.setText("⏱️");
+              }catch (error){
+                console.log("Erro 1",error)
+              }
             } else {
                 if (this.tiempo <= 0) {
-                    this.textoTiempo.setText(this.arregloTiempo[0] + 0);
+                    try{
+                       // this.textoTiempo.setText("⏱️");
+                      }catch (error){
+                        console.log("Erro 2",error)
+                      }
                     this.textoGameOver.setText("⏱️ Time's up! ");
                     this.physics.pause();
-                    this.puntajeMundo(this.monedas, this.contadorObjetos);
                     setTimeout(() => {
-                        //window.location.reload();
-                       console.log("redirigimos al menu");
-                    }, 5000);
+                       console.log("redirigimos al inicio puntaje bajo no puede entrar a tabla");
+                       this.puntajeMundo(this.monedas, this.contadorObjetos);
+                    }, 2000);
                     clearInterval(tiempo);//convertir en funcion
                 } else if (this.tiempo === 30) {
                     this.mundo.setTint(0xfad6a5);
@@ -590,8 +599,8 @@ class PlayScene extends BaseScene {
     update() {
 
 
-        this.movePlayer();
-        //this.moveController();
+        //this.movePlayer();
+        this.moveController();
         this.flechaAtaque(this.flecha1, this.flecha2, this.flecha3);
         this.balaAtaque(this.bala1);
         // this.serpienteSide(this.serpiente1, this.stadoSerpiente1, this.serpiente2, this.stadoSerpiente2);
@@ -616,16 +625,12 @@ class PlayScene extends BaseScene {
     }
 
     puntajeMundo(monedas, objetos) {
-
-        //console.log(registrosPuntaje);
-
         const puntajeMundo = 25;
         let puntajeObtenido = (puntajeMundo * monedas) / 100;
-        let obtenidos = Math.trunc(((puntajeObtenido * objetos) * 10) / 100);
+        let obtenidos = Math.trunc((objetos * 10));
 
         let TotalAcumulado = puntajeObtenido + obtenidos;
         this.Almacenado(TotalAcumulado);
-
     }
 
     Almacenado(total) {
@@ -644,13 +649,17 @@ class PlayScene extends BaseScene {
         if (registrosPuntaje === 0) {
             arreglo.push(JSON.stringify(dataTotalJugador));
             localStorage.setItem("1", arreglo);
+            sessionStorage.setItem("1",arreglo);
+            this.scene.start('SavePlayer');
         } else {
             if (registrosPuntaje < 5) {
                 let nuevoRegistro = registrosPuntaje + 1
                 arreglo.push(JSON.stringify(dataTotalJugador));
                 localStorage.setItem(`${nuevoRegistro}`, arreglo);
+                sessionStorage.setItem(`${nuevoRegistro}`,arreglo);
+                this.scene.start('SavePlayer');
             } else {
-                // console.log("Y hay 5 registros");
+               location.reload();
             }
         }
         if (registrosPuntaje === 5) {
@@ -659,35 +668,35 @@ class PlayScene extends BaseScene {
                 if (scanRegistro.puntos <= total) {
                     console.log("Aqui Hacemos cambio Por puntaje obtenido: " + total +" dataPuntaje: "+scanRegistro.puntos);
                     if(scanRegistro.puntos == total){
-                     contadordeRegistrosIguales++;
+                     contadordeRegistrosIguales++;//arreglar aqui
                      console.log(`${total} Registro igual en posicion:${i}  valor: ${scanRegistro.puntos}`);
                      arregloPuntajeIgual.push(i);
                      const nuevaData={nombre:"Nuevo dato IGUAL",puntos:total}
                      arregloPuntajeCambio.push(JSON.stringify(nuevaData));
                      localStorage.setItem(`${arregloPuntajeIgual[0]}`,arregloPuntajeCambio[0]);
+                     sessionStorage(`${arregloPuntajeIgual[0]}`,arregloPuntajeCambio[0]);
                      arregloPuntajeCambio=[];
-                     console.log("veces repetidas",contadordeRegistrosIguales," en posiciones "+arregloPuntajeIgual);
+                      //this.scene.start('SavePlayer');
                     }else{
-                        contadordeRegistrosMayor++;
+                        contadordeRegistrosMayor++;//arreglar aqui
                         arregloPuntajeMenor.push(i);
                         const dataMenorCambio={nombre:"Nuevo dato NO IGUAL",puntos:total}
                         arregloPuntajeCambio.push(JSON.stringify(dataMenorCambio))
                         localStorage.setItem(`${arregloPuntajeMenor[0]}`,arregloPuntajeCambio[0]);
+                        sessionStorage.setItem(`${arregloPuntajeMenor[0]}`,arregloPuntajeCambio[0]);
                         arregloPuntajeCambio=[];
-                        console.log("Arreglo de numeros menores posiciones: ",arregloPuntajeMenor);
-                        console.log("datos Mayores: ",contadordeRegistrosMayor);
+                        //this.scene.start('SavePlayer');
                     }
                 }
             }
         }
     }
-
     moveController() {
         const control = this.input.gamepad.getPad(0);
         if (!control) {
             return;
         }
-        if (this.estadoSaltoPlayer1 && control.buttons[0].pressed) {
+        if (this.estadoSaltoPlayer1 && control.buttons[1].pressed) {
             this.player1.setVelocityY(-this.saltoPlayer1);
             this.estadoSaltoPlayer1 = false;
         }
