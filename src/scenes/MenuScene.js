@@ -3,81 +3,80 @@ import BaseScene from "./BaseScene";
 
 class MenuScene extends BaseScene {
 
-    constructor(config) {
+  constructor(config) {
 
-        super('MenuScene', config);
+    super('MenuScene', config);
 
-        this.menu = [
-           { scene: 'PlayScene', text: 'Play'},
-           { scene: 'ScoreScene',text:'Score'},
-        ]
-
-
-    }
-
-    create() {
-
-        super.create();
-        this.createMenu(this.menu, this.setupMenuEvents.bind(this));
-
-    }
+    this.menu = [
+      { scene: 'PlayScene', text: 'Play' },
+      { scene: 'ScoreScene', text: 'Score' },
+    ]
 
 
-  setupMenuEvents(menuItem){
+  }
 
-    
+  create() {
 
-    const textGO =menuItem.textGO;
+    super.create();
+    this.createMenu(this.menu, this.setupMenuEvents.bind(this));
+
+  }
+
+
+  setupMenuEvents(menuItem) {
+
+
+
+    const textGO = menuItem.textGO;
     textGO.setInteractive();
 
     //console.log(this)
-    textGO.on('pointerover',()=>{
-        textGO.setStyle({fill:'#ff0'});
+    textGO.on('pointerover', () => {
+      textGO.setStyle({ fill: '#ff0' });
     })
 
-    textGO.on('pointerout',()=>{
-        textGO.setStyle({fill:'#fff'});
+    textGO.on('pointerout', () => {
+      textGO.setStyle({ fill: '#fff' });
     })
 
-    textGO.on('pointerup',()=>{
+    textGO.on('pointerup', () => {
       menuItem.scene && this.scene.start(menuItem.scene);
-     
-      if(menuItem.text=== 'Exit'){
+
+      if (menuItem.text === 'Exit') {
         this.game.destroy(true);
       }
 
     })
 
-    
+
 
 
   }
 
-  update(){
+  update() {
 
-    const botonInicio=this.input.gamepad.getPad(0);
+   this.moveController();
 
+  }
 
-    if (!botonInicio) {
+  moveController() {
+    const control = this.input.gamepad.getPad(0);
+    if (!control) {
       return;
     }
-
-    if(botonInicio.buttons.length){
-      
-     if(botonInicio.buttons[9].pressed){
+    if (control.buttons[0].pressed) {
     
       this.scene.start('PlayScene');
-       
-     }else if(botonInicio.buttons[4].pressed){
+
+    }
+    if (control.buttons[1].pressed) {
 
       this.scene.start('ScoreScene');
-       
-     }
+    }
 
-   }
   }
-
 }
+
 
 
 export default MenuScene

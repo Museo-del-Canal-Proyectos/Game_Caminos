@@ -75,6 +75,7 @@ class PlayScene extends BaseScene {
         this.createObjetos();
         this.createColisiones();
         this.tiemporizador();
+        
     }
     //creando personaje Jugable
     createPlayer1() {
@@ -83,6 +84,7 @@ class PlayScene extends BaseScene {
         this.player1.setCollideWorldBounds(true);
         this.player1.body.setGravityY(820);
         this.cameras.main.startFollow(this.player1, true);
+       
     }
     //Daño Jugador Player1
     damagePlayer1() {
@@ -276,8 +278,8 @@ class PlayScene extends BaseScene {
     moveLeft() {
         this.anims.create({
             key: 'izquierda',
-            frames: this.anims.generateFrameNumbers('player1', { start: 8, end: 6 }),
-            frameRate: 10,
+            frames: this.anims.generateFrameNumbers('player1', { start: 32, end: 47 }),
+            frameRate: 36,
             repeat: -1
         })
         this.player1.play('izquierda', true);
@@ -286,11 +288,32 @@ class PlayScene extends BaseScene {
     moveRight() {
         this.anims.create({
             key: 'derecha',
-            frames: this.anims.generateFrameNumbers('player1', { start: 3, end: 5 }),
-            frameRate: 10,
+            frames: this.anims.generateFrameNumbers('player1', { start: 16, end: 31 }),
+            frameRate: 36,
             repeat: -1
         })
         this.player1.play('derecha', true);
+    }
+
+
+    moveSalto() {
+        this.anims.create({
+            key: 'salto',
+            frames: this.anims.generateFrameNumbers('player1', { start: 48, end: 48 }),
+            frameRate: 6,
+            repeat: -1
+        })
+        this.player1.play('salto', true);
+    }
+
+    standBy() {
+        this.anims.create({
+            key: 'quieto',
+            frames: this.anims.generateFrameNumbers('player1', { start: 1, end: 7 }),
+            frameRate: 7,
+            repeat:-1
+        });
+        this.player1.play('quieto',true);
     }
 
     movimientoBala() {
@@ -303,14 +326,7 @@ class PlayScene extends BaseScene {
         this.bala1.play('avanceBala1');
     }
 
-    standBy() {
-        this.anims.create({
-            key: 'quieto',
-            frames: this.anims.generateFrameNumbers('player1', { frame: 0 }),
-            frameRate: 0
-        });
-        this.player1.play('quieto');
-    }
+   
     //colisiones
     createColisiones() {
         this.physics.add.collider(this.player1, this.bloque_1, this.evSalto, null, this);
@@ -617,6 +633,7 @@ class PlayScene extends BaseScene {
             this.player1.setVelocityX(this.velocidadPlayer1);
         } else if (this.cursors.up.isDown && this.estadoSaltoPlayer1) {
             this.estadoSaltoPlayer1 = false;
+            this.moveSalto();
             this.player1.setVelocityY(-this.saltoPlayer1);
         } else {
             this.player1.setVelocityX(0);
@@ -697,20 +714,29 @@ class PlayScene extends BaseScene {
             return;
         }
         if (this.estadoSaltoPlayer1 && control.buttons[1].pressed) {
+            
             this.player1.setVelocityY(-this.saltoPlayer1);
             this.estadoSaltoPlayer1 = false;
+            this.moveSalto();
         }
         if (control.axes.length) {
             const axisH = control.axes[0].getValue();
             if (axisH === -1) {
                 this.player1.setVelocityX(this.velocidadPlayer1);
-                this.moveRight();
+                if(this.estadoSaltoPlayer1){
+                    this.moveRight();
+                }
+                
             } else if (axisH === 1) {
                 this.player1.setVelocityX(-this.velocidadPlayer1);
-                this.moveLeft();
+                if(this.estadoSaltoPlayer1){
+                    this.moveLeft();
+                }
             } else {
                 this.player1.setVelocityX(0);
-                this.standBy();
+                if(this.estadoSaltoPlayer1){
+                    this.standBy();
+                }
             }
 
         }

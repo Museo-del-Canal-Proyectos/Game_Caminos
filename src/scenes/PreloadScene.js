@@ -14,7 +14,7 @@ class PreloadScene extends Phaser.Scene {
         //funciones y propiedades que podemos usar dentro de preload
           this.load.image('sky', 'assets/sky.png');//cargamos el fondo del mundo
         //   this.load.image('bird', 'assets/bird.png');//cargamos el sprite del jugador
-          this.load.spritesheet('player1','assets/personaje.png',{frameWidth:48,frameHeight:68});
+          this.load.spritesheet('player1','assets/personaje1.png',{frameWidth:81,frameHeight:137});
           this.load.spritesheet('bird','assets/birdSprite.png',{frameWidth:16,frameHeight:16});
           this.load.image('pipe', 'assets/pipe.png');//cargamos el sprite de los obstaculos
           this.load.image('pause','assets/pause.png');//cargamos boton de pausa
