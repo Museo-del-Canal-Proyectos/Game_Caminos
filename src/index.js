@@ -6,6 +6,7 @@ import ScoreScene from "./scenes/ScoreScene";
 import TestScene from "./scenes/TestScene";
 import WorldScene1 from "./scenes/worldScene1";
 import SavePlayer from "./scenes/SavePlayer";
+import CreditScene from "./scenes/CreditScene";
 
 const WIDTH= 1366;
 const HEIGHT=768;
@@ -15,7 +16,7 @@ const SHARED_CONFIG={
   height:HEIGHT,
 }
 
-const Scenes=[PreloadScene,MenuScene,ScoreScene,SavePlayer,PlayScene,TestScene,WorldScene1];
+const Scenes=[PreloadScene,MenuScene,ScoreScene,CreditScene, SavePlayer,PlayScene,TestScene,WorldScene1];
 const createScene=Scene => new Scene(SHARED_CONFIG)
 const initScenes = ()=>Scenes.map(createScene);
 

@@ -11,7 +11,7 @@ class ScoreScene extends BaseScene {
   }
 
   create() {
-   
+
     this.mundo = this.add.image(0, 0, 'mundo1').setAlpha(5).setOrigin(0); this.mundo = this.add.image(0, 0, 'mundo1').setAlpha(5).setOrigin(0);
 
     this.dataPlayer();
@@ -29,35 +29,49 @@ class ScoreScene extends BaseScene {
       dataConverter = JSON.parse(localStorage.getItem(`${i}`));
       arregloPlayerRecord.push(dataConverter);
     }
-    
+
     let lastMenuPositionY = 0;
-  
-    let test= this.orderPor(arregloPlayerRecord, ['puntos', 'nombre'], ['DESCENDENTE','ASCENDENTE']);
+
+    let test = this.orderPor(arregloPlayerRecord, ['puntos', 'nombre'], ['DESCENDENTE', 'ASCENDENTE']);
     test.forEach(item => {
-        item.nombre;
-        const posiciones=[this.screenCenter[0], this.screenCenter[1] + lastMenuPositionY];
-        this.add.text(...posiciones,`${item.nombre}  ${item.puntos}`,{ fontSize: '38px', fontFamily: 'Comic Sans MS', fill: "#fff" }).setOrigin(0.5, 2);
-        lastMenuPositionY += this.lineHeight;
-      })
+      item.nombre;
+      const posiciones = [this.screenCenter[0], this.screenCenter[1] + lastMenuPositionY];
+      this.add.text(...posiciones, `${item.nombre}  ${item.puntos}`, { fontSize: '38px', fontFamily: 'Comic Sans MS', fill: "#fff" }).setOrigin(0.5, 2);
+      lastMenuPositionY += this.lineHeight;
+    })
   }
-//orden de objetos 
- orderPor(objetos, propiedades, modosOrden) {
+  //orden de objetos 
+  orderPor(objetos, propiedades, modosOrden) {
     return [...objetos].sort((a, b) => propiedades.reduce((acumulador, p, i) => {
-        if (acumulador === 0) {
-            let [m, n] = modosOrden && modosOrden[i] == 'DESCENDENTE' ? [b[p], a[p]] : [a[p], b[p]];
+      if (acumulador === 0) {
+        let [m, n] = modosOrden && modosOrden[i] == 'DESCENDENTE' ? [b[p], a[p]] : [a[p], b[p]];
 
-            acumulador = m > n ? 1 : m < n ? - 1 : 0;
-        }
+        acumulador = m > n ? 1 : m < n ? - 1 : 0;
+      }
 
-        return acumulador;
+      return acumulador;
     }, 0))
-}
+  }
 
   update() {
 
+    this.moveController();
 
   }
 
+
+  moveController() {
+    const control = this.input.gamepad.getPad(0);
+    if (!control) {
+      return;
+    }
+    if (control.buttons[0].pressed) {
+      console.log("Botones Programando 0");
+      window.location.reload();
+    }
+   
+
+  }
 }
 
 

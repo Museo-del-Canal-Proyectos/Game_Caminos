@@ -10,6 +10,7 @@ class MenuScene extends BaseScene {
     this.menu = [
       { scene: 'PlayScene', text: 'Play' },
       { scene: 'ScoreScene', text: 'Score' },
+      { scene: 'CreditScene', text:'Credits'}
     ]
 
 
@@ -72,6 +73,11 @@ class MenuScene extends BaseScene {
     if (control.buttons[1].pressed) {
 
       this.scene.start('ScoreScene');
+    }
+
+    if (control.buttons[2].pressed) {
+
+      this.scene.start('CreditScene');
     }
 
   }
