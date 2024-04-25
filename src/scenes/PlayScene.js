@@ -70,8 +70,8 @@ class PlayScene extends BaseScene {
         this.plataforma();
         this.enemigoFlecha();
         this.enemigoBala();
-        // this.enemigoSerpiente();
-        // this.enemigoMosquito();
+        this.enemigoSerpiente();
+        this.enemigoMosquito();
         this.createObjetos();
         this.createColisiones();
         this.tiemporizador();
@@ -84,7 +84,6 @@ class PlayScene extends BaseScene {
         this.player1.setCollideWorldBounds(true);
         this.player1.body.setGravityY(820);
         this.cameras.main.startFollow(this.player1, true);
-       
     }
     //Daño Jugador Player1
     damagePlayer1() {
@@ -176,8 +175,8 @@ class PlayScene extends BaseScene {
     movimientoS1() {
         this.anims.create({
             key: 'mover',
-            frames: this.anims.generateFrameNumbers('serpiente', { start: 0, end: 2 }),
-            frameRate: 5,
+            frames: this.anims.generateFrameNumbers('serpiente', { start: 0, end: 3 }),
+            frameRate: 6,
             repeat: -1
         });
         this.serpiente1.play('mover', true);
@@ -186,7 +185,7 @@ class PlayScene extends BaseScene {
         this.anims.create({
             key: 'mover1',
             frames: this.anims.generateFrameNumbers('serpiente2', { start: 0, end: 2 }),
-            frameRate: 5,
+            frameRate: 6,
             repeat: -1
         });
         this.serpiente2.play('mover1', true);
@@ -276,23 +275,26 @@ class PlayScene extends BaseScene {
 
 
     moveLeft() {
+        this.player1.flipX(true);
         this.anims.create({
             key: 'izquierda',
-            frames: this.anims.generateFrameNumbers('player1', { start: 32, end: 47 }),
+            frames: this.anims.generateFrameNumbers('player1', { start: 0, end: 15 }),
             frameRate: 36,
             repeat: -1
         })
         this.player1.play('izquierda', true);
+        
     }
 
     moveRight() {
         this.anims.create({
             key: 'derecha',
-            frames: this.anims.generateFrameNumbers('player1', { start: 16, end: 31 }),
+            frames: this.anims.generateFrameNumbers('player1', { start: 0, end: 15 }),
             frameRate: 36,
             repeat: -1
         })
         this.player1.play('derecha', true);
+    
     }
 
 
@@ -338,10 +340,10 @@ class PlayScene extends BaseScene {
         this.physics.add.collider(this.player1, this.objeto3Sub3, this.evObjeto3, null, this);
         this.physics.add.collider(this.player1, this.objeto4Sub4, this.evObjeto4, null, this);
         this.physics.add.collider(this.player1, this.objeto5Sub5, this.evObjeto5, null, this);
-        // this.physics.add.collider(this.player1, this.serpiente1, this.evSerp, null, this);
-        // this.physics.add.collider(this.player1, this.serpiente2, this.evSerp2, null, this);
-        // this.physics.add.collider(this.player1, this.mosquito, this.evMosq, null, this);
-        // this.physics.add.collider(this.player1, this.mosquito2, this.evMosq2, null, this);
+         this.physics.add.collider(this.player1, this.serpiente1, this.evSerp, null, this);
+         this.physics.add.collider(this.player1, this.serpiente2, this.evSerp2, null, this);
+         this.physics.add.collider(this.player1, this.mosquito, this.evMosq, null, this);
+         this.physics.add.collider(this.player1, this.mosquito2, this.evMosq2, null, this);
     }
     //evento salto
     evSalto() {
@@ -506,22 +508,22 @@ class PlayScene extends BaseScene {
         switch (value1) {
             case true:
                 this.velocidad = 80;
-                this.serpiente1.setVelocityX(this.velocidad);
+                this.serpiente1.setVelocityX(-this.velocidad);
                 break;
             case false:
                 this.velocidad = 80;
-                this.serpiente1.setVelocityX(-this.velocidad);
+                this.serpiente1.setVelocityX(this.velocidad);
                 break;
         }
 
         switch (value2) {
             case true:
                 this.velocidad = 80;
-                this.serpiente2.setVelocityX(this.velocidad);
+                this.serpiente2.setVelocityX(-this.velocidad);
                 break;
             case false:
                 this.velocidad = 80;
-                this.serpiente2.setVelocityX(-this.velocidad);
+                this.serpiente2.setVelocityX(this.velocidad);
                 break;
         }
     }
@@ -619,8 +621,8 @@ class PlayScene extends BaseScene {
         this.moveController();
         this.flechaAtaque(this.flecha1, this.flecha2, this.flecha3);
         this.balaAtaque(this.bala1);
-        // this.serpienteSide(this.serpiente1, this.stadoSerpiente1, this.serpiente2, this.stadoSerpiente2);
-        // this.ataquemosquito(this.mosquito, this.Mvalue, this.mosquito2, this.M2value);
+        this.serpienteSide(this.serpiente1, this.stadoSerpiente1, this.serpiente2, this.stadoSerpiente2);
+        this.ataquemosquito(this.mosquito, this.Mvalue, this.mosquito2, this.M2value);
     }
 
     movePlayer() {

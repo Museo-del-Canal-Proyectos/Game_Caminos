@@ -14,29 +14,43 @@ class PreloadScene extends Phaser.Scene {
         //funciones y propiedades que podemos usar dentro de preload
           this.load.image('sky', 'assets/sky.png');//cargamos el fondo del mundo
         //   this.load.image('bird', 'assets/bird.png');//cargamos el sprite del jugador
-          this.load.spritesheet('player1','assets/personaje1.png',{frameWidth:81,frameHeight:137});
+         // this.load.spritesheet('player1','assets/personaje1.png',{frameWidth:70,frameHeight:113});
           this.load.spritesheet('bird','assets/birdSprite.png',{frameWidth:16,frameHeight:16});
           this.load.image('pipe', 'assets/pipe.png');//cargamos el sprite de los obstaculos
           this.load.image('pause','assets/pause.png');//cargamos boton de pausa
           this.load.image('back','assets/back.png');//cargamos boton de regresar
           this.load.image('bg1','assets/plano1.png');//BG movimiento
           this.load.image('wordl1','assets/worlds/w1.jpg');
-          this.load.image('mundo1','assets/worlds/world 1.png')//Mundo 1
+          this.load.image('mundo1','assets/worlds/world 1.png');//Mundo 1
+
+          this.load.image('Plano1','assets/worlds/plano-1.png');//LEVEL 1 CONFIRMADO
+          this.load.spritesheet('player1_IDE','assets/player1/player1-ide-R.png',{frameWidth:70,frameHeight:113});
+          this.load.spritesheet('player1_JUMP','assets/player1/player1-jump-R.png',{frameWidth:87,frameHeight:113});
+          this.load.spritesheet('player1','assets/player1/player1-walk-R.png',{frameWidth:70,frameHeight:113});
+          this.load.image('piedra','assets/piedra.png');
+          this.load.image('estado','assets/estados/barra-estado.png');
+
+
+          //pl2
+          this.load.spritesheet('player2_IDE','assets/player2/player2-ide-R.png',{frameWidth:70,frameHeight:113});
+          this.load.spritesheet('player2_JUMP','assets/player2/player2-jump.png',{frameWidth:77,frameHeight:114});
+          this.load.spritesheet('player2','assets/player2/player2_R.png',{frameWidth:70,frameHeight:113});
 
 
 
 
-          this.load.spritesheet('serpiente','assets/enemigos/Serpiente.png',{frameWidth:143,frameHeight:54});//enemigo
-          this.load.spritesheet('serpiente2','assets/enemigos/Serpiente.png',{frameWidth:143,frameHeight:54});//enemigo
+          this.load.spritesheet('serpiente','assets/enemigos/Serpiente.png',{frameWidth:101,frameHeight:71});//enemigo
+          this.load.spritesheet('serpiente2','assets/enemigos/Serpiente-attack.png',{frameWidth:167,frameHeight:65});//enemigo
           this.load.spritesheet('mosquito','assets/enemigos/mosquito.png',{frameWidth:36,frameHeight:51});//enemigo
           this.load.spritesheet('mosquito2','assets/enemigos/mosquito.png',{frameWidth:36,frameHeight:51});//enemigo
           this.load.spritesheet('mosquito3','assets/enemigos/mosquito.png',{frameWidth:36,frameHeight:51});//enemigo
-          
+          this.load.spritesheet('mosquitoTest','assets/enemigos/mosquito2.png',{frameWidth:67,frameHeight:65});//enemigo
+
           this.load.image('flecha1','assets/enemigos/flecha.png');
           this.load.image('flecha2','assets/enemigos/flecha.png');
           this.load.image('flecha3','assets/enemigos/flecha.png');
 
-          this.load.spritesheet('bala1','assets/enemigos/baladecanon.png',{frameWidth:71,frameHeight:26});
+          this.load.spritesheet('bala1','assets/enemigos/baladecanon.png',{frameWidth:50,frameHeight:71});
           
 
 
@@ -58,7 +72,7 @@ class PreloadScene extends Phaser.Scene {
     create(){
     
     // this.scene.start('MenuScene');//enviamos la escena menu
-    this.scene.start('MenuScene');
+    this.scene.start('Plano1');
       
     }
     
