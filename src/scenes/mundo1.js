@@ -60,7 +60,7 @@ class Plano1 extends BaseScene {
 
     createPlayer1() {
         //cuando son dos seteo en storage jugador 1 en seleccion  
-        this.storagePlayer = "player2"
+        this.storagePlayer = "player1"
         //33
         this.player1 = this.physics.add.sprite(33, 326, this.storagePlayer)
             .setOrigin(0);
@@ -217,25 +217,18 @@ class Plano1 extends BaseScene {
 
     teclado() {
         // this.cursors = this.input.keyboard.createCursorKeys();
-
         // const { left, right, up } = this.cursors;
-
         // if (left.isDown) {
         //     console.log(this.player1.x);
         //     this.player1.setVelocityX(-this.velocidadX);
         //     this.player1.setFlipX(true);
-
         // } else if (right.isDown) {
         //     console.log(this.player1.x);
         //     this.player1.setVelocityX(this.velocidadX);
         //     this.player1.setFlipX(false);
-
-
         // } else {
         //     this.player1.setVelocityX(0);
-
         // }
-
         // if(up.isDown && onFloor){
         //     this.estadoSuelo=false;
         //     this.player1.setVelocityY(-this.velocidadY*2);

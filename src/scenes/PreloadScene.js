@@ -24,6 +24,7 @@ class PreloadScene extends Phaser.Scene {
           this.load.image('mundo1','assets/worlds/world 1.png');//Mundo 1
 
           this.load.image('Plano1','assets/worlds/plano-1.png');//LEVEL 1 CONFIRMADO
+          this.load.image('Plano2','assets/worlds/plano-2.png');
           this.load.spritesheet('player1_IDE','assets/player1/player1-ide-R.png',{frameWidth:70,frameHeight:113});
           this.load.spritesheet('player1_JUMP','assets/player1/player1-jump-R.png',{frameWidth:87,frameHeight:113});
           this.load.spritesheet('player1','assets/player1/player1-walk-R.png',{frameWidth:70,frameHeight:113});
@@ -72,7 +73,7 @@ class PreloadScene extends Phaser.Scene {
     create(){
     
     // this.scene.start('MenuScene');//enviamos la escena menu
-    this.scene.start('Plano1');
+    this.scene.start('Plano2');
       
     }
     
