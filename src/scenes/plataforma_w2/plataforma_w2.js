@@ -9,10 +9,10 @@ export default plataforma => {
     plataforma.create(3890, 448, 'block_4').setScale(1.17,1).refreshBody();
 
     //bloques
-    plataforma.create(959, 400, 'block_3').setScale(0.77,1.2).refreshBody();
-    plataforma.create(2638, 653, 'block_3').setScale(0.77,1.2).refreshBody();
-    plataforma.create(2712, 653, 'block_3').setScale(0.77,1.2).refreshBody();
-    plataforma.create(2979, 653, 'block_3').setScale(2.63,1.2).refreshBody();
-    plataforma.create(3262, 468, 'block_3').setScale(1.65,1.1).refreshBody();
+    plataforma.create(958, 400, 'block_3').setScale(0.4,1.2).refreshBody();
+    plataforma.create(2682, 614, 'block_3').setScale(1.3,0).refreshBody();
+    plataforma.create(2979, 614, 'block_3').setScale(2.30,0).refreshBody();
+    plataforma.create(3262, 433, 'block_3').setScale(1.30,0).refreshBody();
+    plataforma.create(2977.8,533, 'block_3').setScale(0.3,0).refreshBody();
   
 }
