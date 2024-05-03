@@ -6,7 +6,7 @@ class SelectRole extends BaseScene {
     }
 
     create(){
-      super.create();
+      
     }
 
     update(){

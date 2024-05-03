@@ -28,6 +28,8 @@ export default (anims,data)=>{
          repeat:-1
      })
 
+     
+
 
 
 }

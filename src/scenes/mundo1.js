@@ -7,13 +7,21 @@ import AnimacionPlayer2 from "../scenes/Jugadores/player2";
 
 
 class Plano1 extends BaseScene {
-
+    /*test en select va*/
+    multiplayer= JSON.stringify(false);
+    t=sessionStorage.setItem('multiplayer', this.multiplayer);
+    selectPlayer= sessionStorage.setItem('selectPLayer','player1');
+    /*final de test*/
     plataforma;
     infoObjeto = true;
     monedas = 100;
+    animacionStop='stop';
+    animacionMove='move';
+    animacionJump='jump';
     objetoPerulera = 0;
     textoObjetos = null;
     textoMonedas = null;
+    gate;
     perulera1;
     perulera2;
     perulera3;
@@ -46,7 +54,11 @@ class Plano1 extends BaseScene {
 
     createPlayer2() {
         //validamos si es multiplayer
-        this.isMultiPLayer = true;
+       // this.isMultiPLayer = false;
+       
+       let r= JSON.parse(sessionStorage.getItem('multiplayer'));
+      
+       this.isMultiPLayer = r;
 
         if (this.isMultiPLayer) {
             this.monedas = 200;
@@ -76,13 +88,13 @@ class Plano1 extends BaseScene {
             this.physics.add.collider(this.Jugador2, this.perulera5, this.ColisionPerulera5, null, this);
 
         } else {
-            console.log("Jugador 2 no conectado")
+           // console.log("Jugador 2 no conectado")
         }
     }
 
     createPlayer1() {
         //cuando son dos seteo en storage jugador 1 en seleccion  
-        this.storagePlayer = "player1"
+        this.storagePlayer = sessionStorage.getItem('selectPLayer');
         //33
         this.player1 = this.physics.add.sprite(33, 326, this.storagePlayer)
             .setOrigin(0);
@@ -159,7 +171,7 @@ class Plano1 extends BaseScene {
                 this.physics.resume();
             },3600)
         } else {
-            console.log("test no Funciona ya se activo")
+           // console.log("test no Funciona ya se activo")
         }
     }
 
@@ -211,6 +223,11 @@ class Plano1 extends BaseScene {
         this.bolcanon1 = this.physics.add.sprite(4198, 400, 'bala1').setScale(0.7);
     }
 
+    gateMundo2(){
+        this.gate= this.physics.add.staticGroup();
+        this.gate.create(3975,300,'block_2').setScale(0,4).refreshBody();
+    }
+
     create() {
         this.cameras.main.setBounds(0, 0, 4095, 768);
         this.physics.world.setBounds(0, 0, 4095, 768);
@@ -225,6 +242,7 @@ class Plano1 extends BaseScene {
         DataPlataforma(this.plataforma);
         DataPlataformaBloque(this.plataformaBloque);
         DataPlataformaAerea(this.plataformaZone);
+        this.gateMundo2();
         this.EnemigoFlecha();
         this.EnemigoBalaCanon();
         this.perulerasCreate();
@@ -250,6 +268,20 @@ class Plano1 extends BaseScene {
         this.physics.add.collider(this.player1, this.perulera3, this.ColisionPerulera3, null, this);
         this.physics.add.collider(this.player1, this.perulera4, this.ColisionPerulera4, null, this);
         this.physics.add.collider(this.player1, this.perulera5, this.ColisionPerulera5, null, this);
+        this.physics.add.collider(this.player1, this.gate, this.mundo2, null, this);
+    }
+    
+    mundo2(){
+        this.velocidadX=0;
+        this.velocidadY=0;
+        this.animacionStop='stop';
+        this.animacionMove='stop';
+        this.animacionJump='stop';
+        this.physics.pause();
+        setTimeout(()=>{
+            this.physics.resume();
+            this.scene.start('Plano2');
+        },2000)
     }
 
     alert() {
@@ -439,7 +471,6 @@ class Plano1 extends BaseScene {
         }
         if (control.buttons[1].pressed && onFloor) {
             this.estadoSuelo = false;
-            console.log("boton presionado");
             this.player1.setVelocityY(-this.velocidadY * 2);
         }
         if (control.axes.length) {
@@ -456,8 +487,8 @@ class Plano1 extends BaseScene {
             }
             this.estadoSuelo ?
                 this.player1.body.velocity.x !== 0 ?
-                    this.player1.play('move', true) : this.player1.play('stop', true) :
-                this.player1.play('jump', true);
+                    this.player1.play(`${this.animacionMove}`, true) : this.player1.play(`${this.animacionStop}`, true) :
+                this.player1.play(`${this.animacionJump}`, true);
         }
     }
 

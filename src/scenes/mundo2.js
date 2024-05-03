@@ -10,6 +10,7 @@ import AnimacionPlayer2 from "../scenes/Jugadores/player2";
 class Plano2 extends BaseScene {
     estadoSuelo;
     estadoSueloP2
+    storagePlayer= sessionStorage.getItem('selectPLayer');
     velocidadX = 230;
     velocidadY = 280;
     isMultiPLayer;
@@ -29,7 +30,8 @@ class Plano2 extends BaseScene {
       /*Comienzo Creacion PLayer2*/
       createPlayer2() {
         //validamos si es multiplayer
-        this.isMultiPLayer = true;
+        let r= JSON.parse(sessionStorage.getItem('multiplayer'));
+        this.isMultiPLayer = r;
         if (this.isMultiPLayer) {
             this.Jugador2 = this.physics.add.sprite(102, 326, 'player2')
                 .setOrigin(0);
@@ -57,8 +59,8 @@ class Plano2 extends BaseScene {
     /*Fin Creacion Player 2*/
     createPlayer1() {
         //cuando son dos seteo en storage jugador 1 en seleccion  
-        this.storagePlayer = "player1"
         //33
+        console.log(this.storagePlayer);
         this.player1 = this.physics.add.sprite(33, 326, this.storagePlayer)
             .setOrigin(0);
         this.player1.setCollideWorldBounds(true);
