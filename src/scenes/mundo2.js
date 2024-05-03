@@ -29,7 +29,7 @@ class Plano2 extends BaseScene {
       /*Comienzo Creacion PLayer2*/
       createPlayer2() {
         //validamos si es multiplayer
-        this.isMultiPLayer = false;
+        this.isMultiPLayer = true;
         if (this.isMultiPLayer) {
             this.Jugador2 = this.physics.add.sprite(102, 326, 'player2')
                 .setOrigin(0);
@@ -159,7 +159,6 @@ class Plano2 extends BaseScene {
         DataVacioW22(this.bloqueVacioW2_2);
         DataVacioW23(this.bloqueVacioW2_3);
         this.circuloW2_part1();
-        this.createPlayer2();
         this.physics.add.collider(this.player1, this.plataformaW2, this.alert, null, this);
         this.physics.add.collider(this.player1, this.sphereW2_1, this.alert, null, this);
         this.physics.add.collider(this.player1, this.sphereW2_2, this.alert, null, this);
@@ -174,6 +173,7 @@ class Plano2 extends BaseScene {
         this.physics.add.collider(this.player1, this.bloqueVacioW2_1, this.vaciow2_1, null, this);
         this.physics.add.collider(this.player1, this.bloqueVacioW2_2, this.vaciow2_2, null, this);
         this.physics.add.collider(this.player1, this.bloqueVacioW2_3, this.vaciow2_3, null, this);
+        this.createPlayer2();
     }
     /*Player1*/
     alert() {
@@ -221,8 +221,8 @@ class Plano2 extends BaseScene {
     /*fin player 2*/
     update() {
         //this.teclado();
-        this.moveController(this.estadoSuelo);
         this.moveController2(this.estadoSueloP2);
+        this.moveController(this.estadoSuelo);
     }
 
 
