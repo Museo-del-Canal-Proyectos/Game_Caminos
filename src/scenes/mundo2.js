@@ -6,6 +6,8 @@ import DataVacioW22 from "../scenes/plataforma_w2/plataformaVacioW2_2"
 import DataVacioW23 from "../scenes/plataforma_w2/plataformaVacioW2_3";
 import AnimacionPlayer1 from "../scenes/Jugadores/player";
 import AnimacionPlayer2 from "../scenes/Jugadores/player2";
+const Serpiente  = require("../scenes/enemigosFuncionW2/Serpiente");
+const mosquito= require("../scenes/enemigosFuncionW2/mosquito");
 
 class Plano2 extends BaseScene {
     estadoSuelo;
@@ -20,6 +22,15 @@ class Plano2 extends BaseScene {
     bloqueVacioW2_1;
     bloqueVacioW2_2;
     bloqueVacioW2_3;
+    velocidadSerpiente=80;
+    Serpiente1 ;
+    Serpiente2;
+    Serpiente3;
+    Mosquito;
+    Mosquito2;
+    Mosquito3;
+    Mosquito4;
+    velocidadMosquito=230;
 
 
 
@@ -30,13 +41,15 @@ class Plano2 extends BaseScene {
       /*Comienzo Creacion PLayer2*/
       createPlayer2() {
         //validamos si es multiplayer
-        let r= JSON.parse(sessionStorage.getItem('multiplayer'));
-        this.isMultiPLayer = r;
+        // let r= JSON.parse(sessionStorage.getItem('multiplayer'));
+        // this.isMultiPLayer = r;
+           this.isMultiPLayer=false;
         if (this.isMultiPLayer) {
             this.Jugador2 = this.physics.add.sprite(102, 326, 'player2')
                 .setOrigin(0);
             this.Jugador2.setCollideWorldBounds(true);
             this.Jugador2.body.setGravityY(820);
+            this.Jugador2.body.setSize(50,120);
             AnimacionPlayer2(this.anims);
             this.physics.add.collider(this.Jugador2, this.plataformaW2, this.alert2, null, this);
             this.physics.add.collider(this.Jugador2, this.sphereW2_1, this.alert2, null, this);
@@ -60,12 +73,13 @@ class Plano2 extends BaseScene {
     createPlayer1() {
         //cuando son dos seteo en storage jugador 1 en seleccion  
         //33
-        console.log(this.storagePlayer);
-        this.player1 = this.physics.add.sprite(33, 326, this.storagePlayer)
+       // console.log(this.storagePlayer);
+        this.player1 = this.physics.add.sprite(2554, 326, 'player1')
             .setOrigin(0);
         this.player1.setCollideWorldBounds(true);
         this.player1.body.setGravityY(820);
-        AnimacionPlayer1(this.anims, this.storagePlayer);
+        this.player1.body.setSize(50,120);
+        AnimacionPlayer1(this.anims, 'player1');
         this.cameras.main.startFollow(this.player1, true);
     }
 
@@ -154,6 +168,22 @@ class Plano2 extends BaseScene {
         this.bloqueVacioW2_1 = this.physics.add.staticGroup();
         this.bloqueVacioW2_2 = this.physics.add.staticGroup();
         this.bloqueVacioW2_3 = this.physics.add.staticGroup();
+        this.Serpiente1=this.physics.add.sprite(800,375,'serpiente').setOrigin(0);
+        this.Serpiente2=this.physics.add.sprite(2004,375,'serpiente').setOrigin(0);
+        Serpiente.createSerpiente2(this.Serpiente2,this.velocidadSerpiente);
+        Serpiente.createSerpiente(this.Serpiente1,this.velocidadSerpiente);
+        Serpiente.Animacion(this.Serpiente1,this.anims);
+        Serpiente.Animacion(this.Serpiente2,this.anims);
+        this.Mosquito= this.physics.add.sprite(1200,240,'mosquito').setOrigin(0);
+        this.Mosquito2= this.physics.add.sprite(1470,240,'mosquito').setOrigin(0);
+        this.Mosquito3= this.physics.add.sprite(2780,240,'mosquito').setOrigin(0);
+        mosquito.Animacion(this.Mosquito3,this.anims);
+        console.log(this.Mosquito3);
+        mosquito.createMosquito3(this.Mosquito3,this.velocidadMosquito);
+        mosquito.createMosquito2(this.Mosquito2,this.velocidadMosquito);
+        mosquito.createMosquito(this.Mosquito,this.velocidadMosquito);
+        mosquito.Animacion(this.Mosquito,this.anims);
+        mosquito.Animacion(this.Mosquito2,this.anims);
         this.createPlayer1();
         DataPlataformaW2(this.plataformaW2);
         DataBloquePlataformaW2(this.BloquePW2);
@@ -221,8 +251,17 @@ class Plano2 extends BaseScene {
 
     }
     /*fin player 2*/
+    //enemigos
+
+    //fin enemigos
+
     update() {
         //this.teclado();
+        mosquito.Move3(this.Mosquito3,this.velocidadMosquito);
+        mosquito.Move2(this.Mosquito2,this.velocidadMosquito);
+        mosquito.Move(this.Mosquito,this.velocidadMosquito);
+        Serpiente.Move(this.Serpiente1,this.velocidadSerpiente);
+        Serpiente.Move2(this.Serpiente2,this.velocidadSerpiente);
         this.moveController2(this.estadoSueloP2);
         this.moveController(this.estadoSuelo);
     }

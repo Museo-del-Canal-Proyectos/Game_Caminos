@@ -6,7 +6,6 @@ export default (anims,data)=>{
         repeat:-1
     });
   
-
     anims.create({
        key:'stop',
        frames:anims.generateFrameNumbers(`${data}_IDE`,{start:0, end:8}),
@@ -20,16 +19,4 @@ export default (anims,data)=>{
         frameRate:3,
          repeat:-1
      })
-
-    anims.create({
-        key:'test',
-        frames:anims.generateFrameNumbers('mosquitoTest',{start:0, end:6}),
-        frameRate:24,
-         repeat:-1
-     })
-
-     
-
-
-
 }

@@ -8,9 +8,9 @@ import AnimacionPlayer2 from "../scenes/Jugadores/player2";
 
 class Plano1 extends BaseScene {
     /*test en select va*/
-    multiplayer= JSON.stringify(false);
-    t=sessionStorage.setItem('multiplayer', this.multiplayer);
-    selectPlayer= sessionStorage.setItem('selectPLayer','player1');
+    // multiplayer= JSON.stringify(false);
+    // t=sessionStorage.setItem('multiplayer', this.multiplayer);
+    // selectPlayer= sessionStorage.setItem('selectPLayer','player1');
     /*final de test*/
     plataforma;
     infoObjeto = true;
@@ -54,11 +54,11 @@ class Plano1 extends BaseScene {
 
     createPlayer2() {
         //validamos si es multiplayer
-       // this.isMultiPLayer = false;
+       this.isMultiPLayer = false;
        
-       let r= JSON.parse(sessionStorage.getItem('multiplayer'));
+      //let r= JSON.parse(sessionStorage.getItem('multiplayer'));
       
-       this.isMultiPLayer = r;
+       //this.isMultiPLayer = r;
 
         if (this.isMultiPLayer) {
             this.monedas = 200;
@@ -66,6 +66,7 @@ class Plano1 extends BaseScene {
                 .setOrigin(0);
             this.Jugador2.setCollideWorldBounds(true);
             this.Jugador2.body.setGravityY(820);
+            this.Jugador2.body.setSize(50,120);
             AnimacionPlayer2(this.anims);
             this.physics.add.collider(this.Jugador2, this.plataforma, this.alert2, null, this);
             this.physics.add.collider(this.Jugador2, this.poligono, this.alert2, null, this);
@@ -94,13 +95,14 @@ class Plano1 extends BaseScene {
 
     createPlayer1() {
         //cuando son dos seteo en storage jugador 1 en seleccion  
-        this.storagePlayer = sessionStorage.getItem('selectPLayer');
+        //this.storagePlayer = sessionStorage.getItem('selectPLayer');
         //33
-        this.player1 = this.physics.add.sprite(33, 326, this.storagePlayer)
+        this.player1 = this.physics.add.sprite(33, 326, 'player2')
             .setOrigin(0);
         this.player1.setCollideWorldBounds(true);
         this.player1.body.setGravityY(820);
-        AnimacionPlayer1(this.anims, this.storagePlayer);
+        this.player1.body.setSize(50,120);
+        AnimacionPlayer1(this.anims,'player2' /*this.storagePlayer*/);
         this.cameras.main.startFollow(this.player1, true);
     }
 
@@ -471,6 +473,8 @@ class Plano1 extends BaseScene {
         }
         if (control.buttons[1].pressed && onFloor) {
             this.estadoSuelo = false;
+            console.log("estado Suelo: ",this.estadoSuelo)
+            console.log("Boton de salto presionado",control.buttons[1].pressed);
             this.player1.setVelocityY(-this.velocidadY * 2);
         }
         if (control.axes.length) {
@@ -486,9 +490,9 @@ class Plano1 extends BaseScene {
                 this.player1.setVelocityX(0);
             }
             this.estadoSuelo ?
-                this.player1.body.velocity.x !== 0 ?
-                    this.player1.play(`${this.animacionMove}`, true) : this.player1.play(`${this.animacionStop}`, true) :
-                this.player1.play(`${this.animacionJump}`, true);
+            this.player1.body.velocity.x !== 0 ?
+                this.player1.play(`${this.animacionMove}`, true) : this.player1.play(`${this.animacionStop}`, true) :
+            this.player1.play(`${this.animacionJump}`, true);
         }
     }
 

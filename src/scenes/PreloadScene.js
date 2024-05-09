@@ -42,10 +42,10 @@ class PreloadScene extends Phaser.Scene {
 
           this.load.spritesheet('serpiente','assets/enemigos/Serpiente.png',{frameWidth:101,frameHeight:71});//enemigo
           this.load.spritesheet('serpiente2','assets/enemigos/Serpiente-attack.png',{frameWidth:167,frameHeight:65});//enemigo
-          this.load.spritesheet('mosquito','assets/enemigos/mosquito.png',{frameWidth:36,frameHeight:51});//enemigo
-          this.load.spritesheet('mosquito2','assets/enemigos/mosquito.png',{frameWidth:36,frameHeight:51});//enemigo
-          this.load.spritesheet('mosquito3','assets/enemigos/mosquito.png',{frameWidth:36,frameHeight:51});//enemigo
-          this.load.spritesheet('mosquitoTest','assets/enemigos/mosquito2.png',{frameWidth:67,frameHeight:65});//enemigo
+        //   this.load.spritesheet('mosquito','assets/enemigos/mosquito.png',{frameWidth:36,frameHeight:51});//enemigo
+        //   this.load.spritesheet('mosquito2','assets/enemigos/mosquito.png',{frameWidth:36,frameHeight:51});//enemigo
+        //   this.load.spritesheet('mosquito3','assets/enemigos/mosquito.png',{frameWidth:36,frameHeight:51});//enemigo
+          this.load.spritesheet('mosquito','assets/enemigos/mosquito2.png',{frameWidth:67,frameHeight:65});//enemigo
 
           this.load.image('flecha1','assets/enemigos/flecha.png');
           this.load.image('flecha2','assets/enemigos/flecha.png');
@@ -73,7 +73,7 @@ class PreloadScene extends Phaser.Scene {
     create(){
     
     // this.scene.start('MenuScene');//enviamos la escena menu
-    this.scene.start('Plano1');
+    this.scene.start('Plano2');
       
     }
     
