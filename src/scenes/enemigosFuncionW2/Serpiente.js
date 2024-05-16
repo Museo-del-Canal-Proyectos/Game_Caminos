@@ -59,7 +59,15 @@ exports.Animacion = (x, anims) => {
     !flag ? x.play('s-idle', true) : x.play('s-atack', true);
 }
 
-
+exports.EstadoSerpiente = (serpiente,x,y) => {
+    serpiente.body.setEnable(false);
+    serpiente.setVisible(false);
+    setTimeout(() => {
+        serpiente.body.setEnable(true);
+        serpiente.setPosition(x,y );
+        serpiente.setVisible(true);
+    }, 7000);
+}
 
 
 /**

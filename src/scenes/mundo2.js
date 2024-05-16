@@ -6,15 +6,16 @@ import DataVacioW22 from "../scenes/plataforma_w2/plataformaVacioW2_2"
 import DataVacioW23 from "../scenes/plataforma_w2/plataformaVacioW2_3";
 import AnimacionPlayer1 from "../scenes/Jugadores/player";
 import AnimacionPlayer2 from "../scenes/Jugadores/player2";
-const Serpiente  = require("../scenes/enemigosFuncionW2/Serpiente");
-const mosquito= require("../scenes/enemigosFuncionW2/mosquito");
-
+const Serpiente = require("../scenes/enemigosFuncionW2/Serpiente");
+const mosquito = require("../scenes/enemigosFuncionW2/mosquito");
+const Balas = require("../scenes/enemigosFuncionW2/balas");
 class Plano2 extends BaseScene {
     estadoSuelo;
     estadoSueloP2
-    storagePlayer= sessionStorage.getItem('selectPLayer');
-    velocidadX = 230;
+    storagePlayer = sessionStorage.getItem('selectPLayer');
+    velocidadX = 300;
     velocidadY = 280;
+    velocidadBalas = 325;
     isMultiPLayer;
     Jugador2;
     plataformaW2;
@@ -22,15 +23,17 @@ class Plano2 extends BaseScene {
     bloqueVacioW2_1;
     bloqueVacioW2_2;
     bloqueVacioW2_3;
-    velocidadSerpiente=80;
-    Serpiente1 ;
+    velocidadSerpiente = 80;
+    Serpiente1;
     Serpiente2;
     Serpiente3;
     Mosquito;
     Mosquito2;
     Mosquito3;
     Mosquito4;
-    velocidadMosquito=230;
+    balas;
+    flechas;
+    velocidadMosquito = 230;
 
 
 
@@ -38,33 +41,41 @@ class Plano2 extends BaseScene {
         super('Plano2', config);
     }
 
-      /*Comienzo Creacion PLayer2*/
-      createPlayer2() {
+    /*Comienzo Creacion PLayer2*/
+    createPlayer2() {
         //validamos si es multiplayer
-        // let r= JSON.parse(sessionStorage.getItem('multiplayer'));
-        // this.isMultiPLayer = r;
-           this.isMultiPLayer=false;
+         let r= JSON.parse(sessionStorage.getItem('multiplayer'));
+         this.isMultiPLayer = r;
+        //this.isMultiPLayer = true;
         if (this.isMultiPLayer) {
             this.Jugador2 = this.physics.add.sprite(102, 326, 'player2')
                 .setOrigin(0);
             this.Jugador2.setCollideWorldBounds(true);
             this.Jugador2.body.setGravityY(820);
-            this.Jugador2.body.setSize(50,120);
+            this.Jugador2.body.setSize(50, 120);
             AnimacionPlayer2(this.anims);
             this.physics.add.collider(this.Jugador2, this.plataformaW2, this.alert2, null, this);
-            this.physics.add.collider(this.Jugador2, this.sphereW2_1, this.alert2, null, this);
-            this.physics.add.collider(this.Jugador2, this.sphereW2_2, this.alert2, null, this);
-            this.physics.add.collider(this.Jugador2, this.sphereW2_3, this.alert2, null, this);
-            this.physics.add.collider(this.Jugador2, this.sphereW2_4, this.alert2, null, this);
-            this.physics.add.collider(this.Jugador2, this.sphereW2_5, this.alert2, null, this);
-            this.physics.add.collider(this.Jugador2, this.sphereW2_6, this.alert2, null, this);
-            this.physics.add.collider(this.Jugador2, this.sphereW2_7, this.alert2, null, this);
-            this.physics.add.collider(this.Jugador2, this.sphereW2_8, this.alert2, null, this);
-            this.physics.add.collider(this.Jugador2, this.sphereW2_9, this.alert2, null, this);
+            this.physics.add.collider(this.Jugador2, this.sphereW2_1, this.alertCirculo2, null, this);
+            this.physics.add.collider(this.Jugador2, this.sphereW2_2, this.alertCirculo2, null, this);
+            this.physics.add.collider(this.Jugador2, this.sphereW2_3, this.alertCirculo2, null, this);
+            this.physics.add.collider(this.Jugador2, this.sphereW2_4, this.alertCirculo2, null, this);
+            this.physics.add.collider(this.Jugador2, this.sphereW2_5, this.alertCirculo2, null, this);
+            this.physics.add.collider(this.Jugador2, this.sphereW2_6, this.alertCirculo2, null, this);
+            this.physics.add.collider(this.Jugador2, this.sphereW2_7, this.alertCirculo2, null, this);
+            this.physics.add.collider(this.Jugador2, this.sphereW2_8, this.alertCirculo2, null, this);
+            this.physics.add.collider(this.Jugador2, this.sphereW2_9, this.alertCirculo2, null, this);
             this.physics.add.collider(this.Jugador2, this.BloquePW2, this.bspecial2, null, this);
             this.physics.add.collider(this.Jugador2, this.bloqueVacioW2_1, this.vaciow2_1_2, null, this);
             this.physics.add.collider(this.Jugador2, this.bloqueVacioW2_2, this.vaciow2_2_2, null, this);
             this.physics.add.collider(this.Jugador2, this.bloqueVacioW2_3, this.vaciow2_3_2, null, this);
+            this.physics.add.overlap(this.Jugador2, this.balas, this.hitBala2, null, this);
+            this.physics.add.overlap(this.Jugador2, this.flechas, this.hitFlecha2, null, this);
+            this.physics.add.collider(this.Jugador2, this.Mosquito, this.mosquito1Colisionp2, null, this);
+            this.physics.add.collider(this.Jugador2, this.Mosquito2, this.mosquito2Colisionp2, null, this);
+            this.physics.add.collider(this.Jugador2, this.Mosquito3, this.mosquito3Colisionp2, null, this);
+            this.physics.add.collider(this.Jugador2, this.Mosquito4, this.mosquito4Colisionp2, null, this);
+            this.physics.add.collider(this.Jugador2, this.Serpiente1, this.serpiente1Colisionp2, null, this);
+            this.physics.add.collider(this.Jugador2, this.Serpiente2, this.serpiente2Colisionp2, null, this);
         } else {
             console.log("Jugador 2 no conectado en mundo 2")
         }
@@ -73,13 +84,13 @@ class Plano2 extends BaseScene {
     createPlayer1() {
         //cuando son dos seteo en storage jugador 1 en seleccion  
         //33
-       // console.log(this.storagePlayer);
-        this.player1 = this.physics.add.sprite(2554, 326, 'player1')
-            .setOrigin(0);
+        // console.log(this.storagePlayer);
+        this.player1 = this.physics.add.sprite(33, 326, this.storagePlayer).setOrigin(0);
         this.player1.setCollideWorldBounds(true);
         this.player1.body.setGravityY(820);
-        this.player1.body.setSize(50,120);
+        this.player1.body.setSize(50, 120);
         AnimacionPlayer1(this.anims, 'player1');
+        console.log(this.player1);
         this.cameras.main.startFollow(this.player1, true);
     }
 
@@ -159,6 +170,8 @@ class Plano2 extends BaseScene {
     }
 
     create() {
+        this.music2= this.sound.add('w2');
+        this.music2.play();
         this.cameras.main.setBounds(0, 0, 4095, 768);
         this.physics.world.setBounds(0, 0, 4095, 768);
         this.add.image(0, 0, 'Plano2').setOrigin(0);
@@ -168,22 +181,50 @@ class Plano2 extends BaseScene {
         this.bloqueVacioW2_1 = this.physics.add.staticGroup();
         this.bloqueVacioW2_2 = this.physics.add.staticGroup();
         this.bloqueVacioW2_3 = this.physics.add.staticGroup();
-        this.Serpiente1=this.physics.add.sprite(800,375,'serpiente').setOrigin(0);
-        this.Serpiente2=this.physics.add.sprite(2004,375,'serpiente').setOrigin(0);
-        Serpiente.createSerpiente2(this.Serpiente2,this.velocidadSerpiente);
-        Serpiente.createSerpiente(this.Serpiente1,this.velocidadSerpiente);
-        Serpiente.Animacion(this.Serpiente1,this.anims);
-        Serpiente.Animacion(this.Serpiente2,this.anims);
-        this.Mosquito= this.physics.add.sprite(1200,240,'mosquito').setOrigin(0);
-        this.Mosquito2= this.physics.add.sprite(1470,240,'mosquito').setOrigin(0);
-        this.Mosquito3= this.physics.add.sprite(2780,240,'mosquito').setOrigin(0);
-        mosquito.Animacion(this.Mosquito3,this.anims);
-        console.log(this.Mosquito3);
-        mosquito.createMosquito3(this.Mosquito3,this.velocidadMosquito);
-        mosquito.createMosquito2(this.Mosquito2,this.velocidadMosquito);
-        mosquito.createMosquito(this.Mosquito,this.velocidadMosquito);
-        mosquito.Animacion(this.Mosquito,this.anims);
-        mosquito.Animacion(this.Mosquito2,this.anims);
+        this.Serpiente1 = this.physics.add.sprite(800, 375, 'serpiente').setImmovable(true).setOrigin(0);
+        this.Serpiente2 = this.physics.add.sprite(2004, 375, 'serpiente').setImmovable(true).setOrigin(0);
+        Serpiente.createSerpiente2(this.Serpiente2, this.velocidadSerpiente);
+        Serpiente.createSerpiente(this.Serpiente1, this.velocidadSerpiente);
+        Serpiente.Animacion(this.Serpiente1, this.anims);
+        Serpiente.Animacion(this.Serpiente2, this.anims);
+        this.Mosquito = this.physics.add.sprite(1200, 240, 'mosquito').setImmovable(true).setOrigin(0);
+        this.Mosquito2 = this.physics.add.sprite(1470, 240, 'mosquito').setImmovable(true).setOrigin(0);
+        this.Mosquito3 = this.physics.add.sprite(2780, 240, 'mosquito').setImmovable(true).setOrigin(0);
+        this.Mosquito4 = this.physics.add.sprite(3020, 510, 'mosquito').setImmovable(true).setOrigin(0);
+        mosquito.createMosquito4(this.Mosquito4, this.velocidadMosquito);
+        mosquito.createMosquito3(this.Mosquito3, this.velocidadMosquito);
+        mosquito.createMosquito2(this.Mosquito2, this.velocidadMosquito);
+        mosquito.createMosquito(this.Mosquito, this.velocidadMosquito);
+        mosquito.Animacion(this.Mosquito, this.anims);
+        mosquito.Animacion(this.Mosquito2, this.anims);
+        mosquito.Animacion(this.Mosquito3, this.anims);
+        mosquito.Animacion(this.Mosquito4, this.anims);
+        this.balas = this.physics.add.group({
+            key: 'bala1',
+            frame: [0, 1, 2],
+            setXY:
+            {
+                x: 4500,
+                y: 100,
+                stepX: 500,
+                stepY: 150,
+            },
+            setScale: { x: 0.7, y: 0.7 },
+            velocityX: -this.velocidadBalas,
+        });
+        this.flechas = this.physics.add.group({
+            key: 'flecha1',
+            frame: [0, 1, 2],
+            setXY:
+            {
+                x: 8000,
+                y: 100,
+                stepX: 500,
+                stepY: 150,
+            },
+            setScale: { x: 0.5, y: 0.5 },
+            velocityX: -this.velocidadBalas,
+        });
         this.createPlayer1();
         DataPlataformaW2(this.plataformaW2);
         DataBloquePlataformaW2(this.BloquePW2);
@@ -192,36 +233,92 @@ class Plano2 extends BaseScene {
         DataVacioW23(this.bloqueVacioW2_3);
         this.circuloW2_part1();
         this.physics.add.collider(this.player1, this.plataformaW2, this.alert, null, this);
-        this.physics.add.collider(this.player1, this.sphereW2_1, this.alert, null, this);
-        this.physics.add.collider(this.player1, this.sphereW2_2, this.alert, null, this);
-        this.physics.add.collider(this.player1, this.sphereW2_3, this.alert, null, this);
-        this.physics.add.collider(this.player1, this.sphereW2_4, this.alert, null, this);
-        this.physics.add.collider(this.player1, this.sphereW2_5, this.alert, null, this);
-        this.physics.add.collider(this.player1, this.sphereW2_6, this.alert, null, this);
-        this.physics.add.collider(this.player1, this.sphereW2_7, this.alert, null, this);
-        this.physics.add.collider(this.player1, this.sphereW2_8, this.alert, null, this);
-        this.physics.add.collider(this.player1, this.sphereW2_9, this.alert, null, this);
+        this.physics.add.collider(this.player1, this.sphereW2_1, this.alertCirculo, null, this);
+        this.physics.add.collider(this.player1, this.sphereW2_2, this.alertCirculo, null, this);
+        this.physics.add.collider(this.player1, this.sphereW2_3, this.alertCirculo, null, this);
+        this.physics.add.collider(this.player1, this.sphereW2_4, this.alertCirculo, null, this);
+        this.physics.add.collider(this.player1, this.sphereW2_5, this.alertCirculo, null, this);
+        this.physics.add.collider(this.player1, this.sphereW2_6, this.alertCirculo, null, this);
+        this.physics.add.collider(this.player1, this.sphereW2_7, this.alertCirculo, null, this);
+        this.physics.add.collider(this.player1, this.sphereW2_8, this.alertCirculo, null, this);
+        this.physics.add.collider(this.player1, this.sphereW2_9, this.alertCirculo, null, this);
         this.physics.add.collider(this.player1, this.BloquePW2, this.bspecial, null, this);
         this.physics.add.collider(this.player1, this.bloqueVacioW2_1, this.vaciow2_1, null, this);
         this.physics.add.collider(this.player1, this.bloqueVacioW2_2, this.vaciow2_2, null, this);
         this.physics.add.collider(this.player1, this.bloqueVacioW2_3, this.vaciow2_3, null, this);
+        this.physics.add.overlap(this.player1, this.balas, this.hitBala, null, this);
+        this.physics.add.overlap(this.player1, this.flechas, this.hitFlecha, null, this);
+        this.physics.add.collider(this.player1, this.Mosquito, this.mosquito1Colisionp1, null, this);
+        this.physics.add.collider(this.player1, this.Mosquito2, this.mosquito2Colisionp1, null, this);
+        this.physics.add.collider(this.player1, this.Mosquito3, this.mosquito3Colisionp1, null, this);
+        this.physics.add.collider(this.player1, this.Mosquito4, this.mosquito4Colisionp1, null, this);
+        this.physics.add.collider(this.player1, this.Serpiente1, this.serpiente1Colisionp1, null, this);
+        this.physics.add.collider(this.player1, this.Serpiente2, this.serpiente2Colisionp1, null, this);
         this.createPlayer2();
     }
     /*Player1*/
     alert() {
         //suelo 1
-        this.estadoSuelo = true;
+        const posiciony = Math.trunc(this.player1.y);
+        console.log(posiciony);
+
+        switch (posiciony) {
+            case 245:
+                this.estadoSuelo = true;
+                break;
+            case 322:
+                this.estadoSuelo = true;
+                break;
+            case 495:
+                this.estadoSuelo = true;
+                break;
+            case 328:
+                this.estadoSuelo = true;
+                break;
+            case 497:
+                this.estadoSuelo = true;
+                break;
+            case 498:
+                this.estadoSuelo = true;
+                break;
+            case 416:
+                this.estadoSuelo = true;
+                break;
+            case 574:
+                this.estadoSuelo = true;
+                break;
+            case 317:
+                this.estadoSuelo = true;
+                break;
+            case 323:
+                this.estadoSuelo = true;
+                break;
+
+            default:
+                this.estadoSuelo = false;
+
+        }
+    }
+    alertCirculo(){
+        this.estadoSuelo=true;
+    }
+    alertCirculo2(){
+        this.estadoSueloP2=true;
     }
 
+
     vaciow2_1() {
+        this.damagePlayer1();
         this.player1.setPosition(435, 310);
     }
 
     vaciow2_2() {
+        this.damagePlayer1();
         this.player1.setPosition(1144, 310);
     }
 
     vaciow2_3() {
+        this.damagePlayer1();
         this.player1.setPosition(2412, 310);
     }
 
@@ -232,18 +329,59 @@ class Plano2 extends BaseScene {
     /*Inicio Player 2*/
     alert2() {
         //suelo 2
-        this.estadoSueloP2 = true;
+        const posiciony = Math.trunc(this.Jugador2.y);
+        console.log(posiciony);
+
+        switch (posiciony) {
+            case 245:
+                this.estadoSueloP2 = true;
+                break;
+            case 322:
+                this.estadoSueloP2 = true;
+                break;
+            case 495:
+                this.estadoSueloP2 = true;
+                break;
+            case 328:
+                this.estadoSueloP2 = true;
+                break;
+            case 497:
+                this.estadoSueloP2 = true;
+                break;
+            case 498:
+                this.estadoSueloP2 = true;
+                break;
+            case 416:
+                this.estadoSueloP2 = true;
+                break;
+            case 574:
+                this.estadoSueloP2 = true;
+                break;
+            case 317:
+                this.estadoSueloP2 = true;
+                break;
+            case 323:
+                this.estadoSueloP2 = true;
+                break;
+
+            default:
+                this.estadoSueloP2 = false;
+
+        }
     }
 
     vaciow2_1_2() {
+        this.damagePlayer2();
         this.Jugador2.setPosition(435, 310);
     }
 
     vaciow2_2_2() {
+        this.damagePlayer2();
         this.Jugador2.setPosition(1144, 310);
     }
 
     vaciow2_3_2() {
+        this.damagePlayer2();
         this.Jugador2.setPosition(2412, 310);
     }
 
@@ -252,20 +390,162 @@ class Plano2 extends BaseScene {
     }
     /*fin player 2*/
     //enemigos
+    mosquito1Colisionp1() {
+        this.damagePlayer1();
+        mosquito.EstadoMosquitos(this.Mosquito, 1200, 240);
+    }
+    mosquito1Colisionp2() {
+        this.damagePlayer2();
+        mosquito.EstadoMosquitos(this.Mosquito, 1200, 240);
+    }
+    mosquito1Colisionp1() {
+        this.damagePlayer1();
+        mosquito.EstadoMosquitos(this.Mosquito, 1200, 240);
+    }
+    mosquito2Colisionp1() {
+        this.damagePlayer1();
+        mosquito.EstadoMosquitos(this.Mosquito2, 1470, 240);
+    }
+    mosquito2Colisionp2() {
+        this.damagePlayer2();
+        mosquito.EstadoMosquitos(this.Mosquito2, 1470, 240);
+    }
+    mosquito3Colisionp1() {
+        this.damagePlayer1();
+        mosquito.EstadoMosquitos(this.Mosquito3, 2780, 240);
+    }
+    mosquito3Colisionp2() {
+        this.damagePlayer2();
+        mosquito.EstadoMosquitos(this.Mosquito3, 2780, 240);
+    }
+    mosquito4Colisionp1() {
+        this.damagePlayer1();
+        mosquito.EstadoMosquitos(this.Mosquito4, 3020, 510);
+    }
+    mosquito4Colisionp2() {
+        this.damagePlayer2();
+        mosquito.EstadoMosquitos(this.Mosquito4, 3020, 510);
+    }
+    serpiente1Colisionp1() {
+        this.damagePlayer1();
+        Serpiente.EstadoSerpiente(this.Serpiente1, 800, 375);
+    }
+    serpiente1Colisionp2() {
+        this.damagePlayer2();
+        Serpiente.EstadoSerpiente(this.Serpiente1, 800, 375);
+    }
+    serpiente2Colisionp1() {
+        this.damagePlayer1();
+        Serpiente.EstadoSerpiente(this.Serpiente2, 2004, 375);
+    }
+    serpiente2Colisionp2() {
+        this.damagePlayer2();
+        Serpiente.EstadoSerpiente(this.Serpiente2, 2004, 375);
+    }
+
 
     //fin enemigos
 
     update() {
         //this.teclado();
-        mosquito.Move3(this.Mosquito3,this.velocidadMosquito);
-        mosquito.Move2(this.Mosquito2,this.velocidadMosquito);
-        mosquito.Move(this.Mosquito,this.velocidadMosquito);
-        Serpiente.Move(this.Serpiente1,this.velocidadSerpiente);
-        Serpiente.Move2(this.Serpiente2,this.velocidadSerpiente);
+        mosquito.Move4(this.Mosquito4, this.velocidadMosquito);
+        mosquito.Move3(this.Mosquito3, this.velocidadMosquito);
+        mosquito.Move2(this.Mosquito2, this.velocidadMosquito);
+        mosquito.Move(this.Mosquito, this.velocidadMosquito);
+        Serpiente.Move(this.Serpiente1, this.velocidadSerpiente);
+        Serpiente.Move2(this.Serpiente2, this.velocidadSerpiente);
         this.moveController2(this.estadoSueloP2);
         this.moveController(this.estadoSuelo);
     }
 
+
+    hitBala(player, bala) {
+        this.damagePlayer1();
+        bala.disableBody(true, true);
+    }
+
+    hitBala2(player, bala) {
+        this.damagePlayer2();
+        bala.disableBody(true, true);
+    }
+
+    hitFlecha(player, flecha) {
+        this.damagePlayer1();
+        flecha.disableBody(true, true);
+    }
+
+    hitFlecha2(player, flecha) {
+        this.damagePlayer2();
+        flecha.disableBody(true, true);
+    }
+
+    damagePlayer1() {
+        this.player1.setTint(0xff0000);
+        this.player1.setAlpha(0.5);
+        setTimeout(() => {
+            this.player1.setAlpha(1);
+        }, 100)
+        setTimeout(() => {
+            this.player1.setAlpha(0.5);
+        }, 300)
+        setTimeout(() => {
+            this.player1.setAlpha(1);
+        }, 400)
+        setTimeout(() => {
+            this.player1.setAlpha(0.5);
+        }, 500)
+        setTimeout(() => {
+            this.player1.setAlpha(1);
+        }, 600)
+        setTimeout(() => {
+            this.player1.setAlpha(0.5);
+        }, 700)
+        setTimeout(() => {
+            this.player1.setAlpha(1);
+        }, 800)
+        setTimeout(() => {
+            this.player1.setAlpha(0.5);
+            this.player1.clearTint();
+        }, 900)
+        setTimeout(() => {
+            this.player1.setAlpha(1);
+            this.player1.clearTint();
+        }, 1000)
+    }
+
+    damagePlayer2() {
+        this.Jugador2.setTint(0xff0000);
+        this.Jugador2.setAlpha(0.5);
+        setTimeout(() => {
+            this.Jugador2.setAlpha(1);
+        }, 100)
+        setTimeout(() => {
+            this.Jugador2.setAlpha(0.5);
+        }, 300)
+        setTimeout(() => {
+            this.Jugador2.setAlpha(1);
+        }, 400)
+        setTimeout(() => {
+            this.Jugador2.setAlpha(0.5);
+        }, 500)
+        setTimeout(() => {
+            this.Jugador2.setAlpha(1);
+        }, 600)
+        setTimeout(() => {
+            this.Jugador2.setAlpha(0.5);
+        }, 700)
+        setTimeout(() => {
+            this.Jugador2.setAlpha(1);
+        }, 800)
+        setTimeout(() => {
+            this.Jugador2.setAlpha(0.5);
+            this.Jugador2.clearTint();
+        }, 900)
+        setTimeout(() => {
+            this.Jugador2.setAlpha(1);
+            this.Jugador2.clearTint();
+        }, 1000)
+    }
 
 
     moveController(onFloor) {
@@ -299,7 +579,7 @@ class Plano2 extends BaseScene {
     moveController2(onFloor) {
         const control = this.input.gamepad.getPad(1);
         if (this.isMultiPLayer) {
-           
+
             if (!control) {
                 return;
             }

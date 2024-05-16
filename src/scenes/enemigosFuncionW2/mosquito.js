@@ -14,10 +14,16 @@ exports.createMosquito = (mosquito, velocidad) => {
     mosquito.setVelocityX(-velocidad);
 }
 
-exports.createMosquito3= (mosquito, velocidad) => {
+exports.createMosquito3 = (mosquito, velocidad) => {
     mosquito.setScale(0.8);
     mosquito.setSize(40, 30);
     mosquito.setVelocityY(velocidad);
+}
+
+exports.createMosquito4 = (mosquito, velocidad) => {
+    mosquito.setScale(0.8);
+    mosquito.setSize(40, 30);
+    mosquito.setVelocityX(velocidad);
 }
 
 exports.Move2 = (mosquito, velocidad) => {
@@ -40,6 +46,16 @@ exports.Move3 = (mosquito, velocidad) => {
     }
 }
 
+exports.Move4 = (mosquito, velocidad) => {
+    if (mosquito.x < 3025) {
+        mosquito.setFlipX(true);
+        mosquito.setVelocityX(velocidad);
+    } else if (mosquito.x > 3500) {
+        mosquito.setFlipX(false);
+        mosquito.setVelocityX(-velocidad);
+    }
+}
+
 exports.createMosquito2 = (mosquito, velocidad) => {
     mosquito.setScale(0.8);
     mosquito.setSize(40, 30);
@@ -47,12 +63,22 @@ exports.createMosquito2 = (mosquito, velocidad) => {
 }
 
 
-exports.Animacion = (mosquito,anims) => {
+exports.Animacion = (mosquito, anims) => {
     anims.create({
         key: 'm-idle',
         frames: anims.generateFrameNumbers('mosquito', { start: 0, end: 5 }),
         frameRate: 36,
         repeat: -1
     });
-    mosquito.play('m-idle',true);
+    mosquito.play('m-idle', true);
+}
+
+exports.EstadoMosquitos = (mosquito,x,y) => {
+    mosquito.body.setEnable(false);
+    mosquito.setVisible(false);
+    setTimeout(() => {
+        mosquito.body.setEnable(true);
+        mosquito.setPosition(x,y );
+        mosquito.setVisible(true);
+    }, 7000);
 }
