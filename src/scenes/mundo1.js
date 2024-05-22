@@ -7,6 +7,10 @@ import AnimacionPlayer2 from "../scenes/Jugadores/player2";
 
 
 class Plano1 extends BaseScene {
+    intervaloTIEMPO=null;
+    tiempo = 45;
+    textoTiempo = "0:00";
+    valorIntervalo = 1000;
     plataforma;
     infoObjeto = true;
     monedas = 100;
@@ -56,7 +60,7 @@ class Plano1 extends BaseScene {
         this.isMultiPLayer = r;
 
         if (this.isMultiPLayer) {
-            this.monedas = 200;
+            this.monedas = 150;
             this.Jugador2 = this.physics.add.sprite(102, 326, 'player2')
                 .setOrigin(0);
             this.Jugador2.setCollideWorldBounds(true);
@@ -229,7 +233,7 @@ class Plano1 extends BaseScene {
         this.music.play();
         this.cameras.main.setBounds(0, 0, 4095, 768);
         this.physics.world.setBounds(0, 0, 4095, 768);
-        this.add.image(0, 0, 'Plano1').setOrigin(0);
+        this.mundo=this.add.image(0, 0, 'Plano1').setOrigin(0);
         this.add.image(250, 30, 'estado').setScale(1).setScrollFactor(0);
         this.add.image(1048, 407, 'piedra');
         this.poligon();
@@ -247,6 +251,7 @@ class Plano1 extends BaseScene {
         this.createPlayer2();
         this.textoMonedas = this.add.text(230, 15, 'x' + this.monedas, { fontSize: '28px', fontFamily: 'Comic Sans MS', fill: "#ffffff" }).setScrollFactor(0);
         this.textoObjetos = this.add.text(373, 15, 'x' + this.objetoPerulera, { fontSize: '28px', fontFamily: 'Comic Sans MS', fill: "#ffffff" }).setScrollFactor(0);
+        this.textoTiempo = this.add.text(65, 15, `0:${this.tiempo}`, { fontSize: '28px', fontFamily: 'Comic Sans MS', fill: "#ffffff" }).setScrollFactor(0);
         this.physics.add.collider(this.player1, this.plataforma, this.alert, null, this);
         this.physics.add.collider(this.player1, this.poligono, this.alertCirculos, null, this);
         this.physics.add.collider(this.player1, this.circulo, this.alertCirculos, null, this);
@@ -265,9 +270,45 @@ class Plano1 extends BaseScene {
         this.physics.add.collider(this.player1, this.perulera4, this.ColisionPerulera4, null, this);
         this.physics.add.collider(this.player1, this.perulera5, this.ColisionPerulera5, null, this);
         this.physics.add.collider(this.player1, this.gate, this.mundo2, null, this);
+        this.temporizador();
+    }
+
+    gameOver(){
+      /*resta monedas*/
+         this.monedas-=10;
+         this.monedas<0 ? this.textoMonedas.setText(`x0`) : this.textoMonedas.setText(`x${this.monedas}`);
+      /*Fin Resta Monedas*/
+    }
+
+    temporizador(){
+        this.intervaloTIEMPO = setInterval(() => {
+            --this.tiempo;
+            if (this.tiempo === 30) {
+                this.mundo.setTint(0xfad6a5);
+            } else if (this.tiempo === 15) {
+                this.mundo.setTint(0x2d3451);
+            }else if (this.tiempo === 0){
+                this.tiempo=0;
+                try {
+                    this.textoTiempo.setText(`0:${this.tiempo}`);
+                } catch (error) {
+                    console.log(error);
+                }
+            }else{
+                if(this.tiempo<0){
+                    this.tiempo=0;
+                }
+                try {
+                    this.textoTiempo.setText(`0:${this.tiempo}`);
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        }, this.valorIntervalo);
     }
 
     mundo2() {
+        clearInterval(this.intervaloTIEMPO);
         this.music.stop();
         this.velocidadX = 0;
         this.velocidadY = 0;
@@ -288,9 +329,6 @@ class Plano1 extends BaseScene {
     alert() {
 
         const posiciony = Math.trunc(this.player1.y);
-        console.log(posiciony);
-
-
         switch (posiciony) {
             case 56:
                 this.estadoSuelo = true;
@@ -323,10 +361,8 @@ class Plano1 extends BaseScene {
 
     alert2() {
         const posiciony = Math.trunc(this.Jugador2.y);
-        console.log(posiciony);
         this.EnemigoBalaCanon
-       
-
+    
         switch (posiciony) {
             case 56:
                 this.estadoSuelo2 = true;
@@ -338,7 +374,7 @@ class Plano1 extends BaseScene {
                 this.estadoSuelo2 = true;
                 break;
             case 175:
-                this.estadoSuelo = true;
+                this.estadoSuelo2 = true;
                 break;
             case 254:
                 this.estadoSuelo2 = true;
@@ -363,6 +399,7 @@ class Plano1 extends BaseScene {
     /**/
     /*Evento Colision Flecha*/
     EvFlecha1() {
+        this.gameOver();
         this.flecha1.body.setEnable(false);
         this.flecha1.setPosition(7498, 410);
         this.player1.setPosition(this.player1.x + 4, this.player1.y);
@@ -371,6 +408,7 @@ class Plano1 extends BaseScene {
     }
 
     EvFlecha2() {
+        this.gameOver();
         this.flecha2.body.setEnable(false);
         this.flecha2.setPosition(8498, 410);
         this.player1.setPosition(this.player1.x + 4, this.player1.y);
@@ -379,6 +417,7 @@ class Plano1 extends BaseScene {
     }
 
     EvFlecha3() {
+        this.gameOver();
         this.flecha3.body.setEnable(false);
         this.flecha3.setPosition(9498, 410);
         this.player1.setPosition(this.player1.x + 4, this.player1.y);
@@ -387,6 +426,7 @@ class Plano1 extends BaseScene {
     }
 
     EvFlecha1P2() {
+        this.gameOver();
         this.flecha1.body.setEnable(false);
         this.flecha1.setPosition(7498, 410);
         this.Jugador2.setPosition(this.Jugador2.x + 4, this.Jugador2.y);
@@ -395,6 +435,7 @@ class Plano1 extends BaseScene {
     }
 
     EvFlecha2P2() {
+        this.gameOver();
         this.flecha2.body.setEnable(false);
         this.flecha2.setPosition(8498, 410);
         this.Jugador2.setPosition(this.Jugador2.x + 4, this.Jugador2.y);
@@ -403,6 +444,7 @@ class Plano1 extends BaseScene {
     }
 
     EvFlecha3P2() {
+        this.gameOver();
         this.flecha3.body.setEnable(false);
         this.flecha3.setPosition(9498, 410);
         this.Jugador2.setPosition(this.Jugador2.x + 4, this.Jugador2.y);
@@ -411,6 +453,7 @@ class Plano1 extends BaseScene {
     }
 
     EvBala1() {
+        this.gameOver();
         this.bolcanon1.body.setEnable(false);
         this.bolcanon1.setPosition(4900, 430);
         this.player1.setPosition(this.player1.x + 2, this.player1.y);
@@ -419,6 +462,7 @@ class Plano1 extends BaseScene {
     }
 
     EvBala2() {
+        this.gameOver();
         this.bolcanon2.body.setEnable(false);
         this.bolcanon2.setPosition(4500, 370);
         this.player1.setPosition(this.player1.x + 4, this.player1.y);
@@ -427,6 +471,7 @@ class Plano1 extends BaseScene {
     }
 
     EvBala1P2() {
+        this.gameOver();
         this.bolcanon1.body.setEnable(false);
         this.bolcanon1.setPosition(6498, 400);
         this.Jugador2.setPosition(this.Jugador2.x + 2, this.Jugador2.y);
@@ -435,6 +480,7 @@ class Plano1 extends BaseScene {
     }
 
     EvBala2P2() {
+        this.gameOver();
         this.bolcanon2.body.setEnable(false);
         this.bolcanon2.setPosition(7500, 340);
         this.Jugador2.setPosition(this.Jugador2.x + 4, this.Jugador2.y);

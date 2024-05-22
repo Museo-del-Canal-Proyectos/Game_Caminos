@@ -10,6 +10,10 @@ const Serpiente = require("../scenes/enemigosFuncionW2/Serpiente");
 const mosquito = require("../scenes/enemigosFuncionW2/mosquito");
 const Balas = require("../scenes/enemigosFuncionW2/balas");
 class Plano2 extends BaseScene {
+    intervaloTIEMPO=null;
+    tiempo = 45;
+    textoTiempo = "0:00";
+    valorIntervalo = 1000;
     estadoSuelo;
     estadoSueloP2
     storagePlayer = sessionStorage.getItem('selectPLayer');
@@ -44,11 +48,11 @@ class Plano2 extends BaseScene {
     /*Comienzo Creacion PLayer2*/
     createPlayer2() {
         //validamos si es multiplayer
-         let r= JSON.parse(sessionStorage.getItem('multiplayer'));
-         this.isMultiPLayer = r;
+        let r = JSON.parse(sessionStorage.getItem('multiplayer'));
+        this.isMultiPLayer = r;
         //this.isMultiPLayer = true;
         if (this.isMultiPLayer) {
-            this.Jugador2 = this.physics.add.sprite(102, 326, 'player2')
+            this.Jugador2 = this.physics.add.sprite(102, 322, 'player2')
                 .setOrigin(0);
             this.Jugador2.setCollideWorldBounds(true);
             this.Jugador2.body.setGravityY(820);
@@ -85,7 +89,7 @@ class Plano2 extends BaseScene {
         //cuando son dos seteo en storage jugador 1 en seleccion  
         //33
         // console.log(this.storagePlayer);
-        this.player1 = this.physics.add.sprite(33, 326, this.storagePlayer).setOrigin(0);
+        this.player1 = this.physics.add.sprite(33, 322, this.storagePlayer).setOrigin(0);
         this.player1.setCollideWorldBounds(true);
         this.player1.body.setGravityY(820);
         this.player1.body.setSize(50, 120);
@@ -170,14 +174,15 @@ class Plano2 extends BaseScene {
     }
 
     create() {
-        this.music2= this.sound.add('w2');
+        this.music2 = this.sound.add('w2');
         this.music2.play();
         this.cameras.main.setBounds(0, 0, 4095, 768);
         this.physics.world.setBounds(0, 0, 4095, 768);
-        this.add.image(0, 0, 'Plano2').setOrigin(0);
+        this.mundo = this.add.image(0, 0, 'Plano2').setOrigin(0);
         this.add.image(250, 30, 'estado').setScale(1).setScrollFactor(0);
         this.plataformaW2 = this.physics.add.staticGroup();
         this.BloquePW2 = this.physics.add.staticGroup();
+
         this.bloqueVacioW2_1 = this.physics.add.staticGroup();
         this.bloqueVacioW2_2 = this.physics.add.staticGroup();
         this.bloqueVacioW2_3 = this.physics.add.staticGroup();
@@ -225,13 +230,15 @@ class Plano2 extends BaseScene {
             setScale: { x: 0.5, y: 0.5 },
             velocityX: -this.velocidadBalas,
         });
-        this.createPlayer1();
         DataPlataformaW2(this.plataformaW2);
         DataBloquePlataformaW2(this.BloquePW2);
         DataVacioW21(this.bloqueVacioW2_1);
         DataVacioW22(this.bloqueVacioW2_2);
         DataVacioW23(this.bloqueVacioW2_3);
         this.circuloW2_part1();
+        this.textoTiempo = this.add.text(65, 15, `0:${this.tiempo}`, { fontSize: '28px', fontFamily: 'Comic Sans MS', fill: "#ffffff" }).setScrollFactor(0);
+        this.temporizador();
+        this.createPlayer1();
         this.physics.add.collider(this.player1, this.plataformaW2, this.alert, null, this);
         this.physics.add.collider(this.player1, this.sphereW2_1, this.alertCirculo, null, this);
         this.physics.add.collider(this.player1, this.sphereW2_2, this.alertCirculo, null, this);
@@ -256,12 +263,37 @@ class Plano2 extends BaseScene {
         this.physics.add.collider(this.player1, this.Serpiente2, this.serpiente2Colisionp1, null, this);
         this.createPlayer2();
     }
+    temporizador() {
+        this.intervaloTIEMPO = setInterval(() => {
+            --this.tiempo;
+            if (this.tiempo === 30) {
+                this.mundo.setTint(0xfad6a5);
+            } else if (this.tiempo === 15) {
+                this.mundo.setTint(0x2d3451);
+            } else if (this.tiempo === 0) {
+                this.tiempo = 0;
+                this.textoTiempo.setText(`0:${this.tiempo}`);
+            } else {
+                if (this.tiempo < 0) {
+                    this.tiempo = 0;
+                    try {
+                        this.textoTiempo.setText(`0:${this.tiempo}`);
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+                try {
+                    this.textoTiempo.setText(`0:${this.tiempo}`);
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        }, this.valorIntervalo);
+    }
     /*Player1*/
     alert() {
         //suelo 1
         const posiciony = Math.trunc(this.player1.y);
-        console.log(posiciony);
-
         switch (posiciony) {
             case 245:
                 this.estadoSuelo = true;
@@ -293,17 +325,16 @@ class Plano2 extends BaseScene {
             case 323:
                 this.estadoSuelo = true;
                 break;
-
             default:
                 this.estadoSuelo = false;
 
         }
     }
-    alertCirculo(){
-        this.estadoSuelo=true;
+    alertCirculo() {
+        this.estadoSuelo = true;
     }
-    alertCirculo2(){
-        this.estadoSueloP2=true;
+    alertCirculo2() {
+        this.estadoSueloP2 = true;
     }
 
 
@@ -330,7 +361,6 @@ class Plano2 extends BaseScene {
     alert2() {
         //suelo 2
         const posiciony = Math.trunc(this.Jugador2.y);
-        console.log(posiciony);
 
         switch (posiciony) {
             case 245:
