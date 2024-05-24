@@ -4,7 +4,7 @@ class MenuScene extends BaseScene {
   selector;
   mOpening;
   mSleccion;
-
+ 
   constructor(config) {
 
     super('MenuScene', config);

@@ -17,6 +17,9 @@ class Plano1 extends BaseScene {
     animacionStop = 'stop';
     animacionMove = 'move';
     animacionJump = 'jump';
+    animacionStopP2 = 'stop2';
+    animacionMoveP2 = 'move2';
+    animacionJumpP2 = 'jump2';
     objetoPerulera = 0;
     textoObjetos = null;
     textoMonedas = null;
@@ -276,6 +279,9 @@ class Plano1 extends BaseScene {
     gameOver(){
       /*resta monedas*/
          this.monedas-=10;
+         if(this.monedas==0){
+            this.tiempo='00';
+         }
          this.monedas<0 ? this.textoMonedas.setText(`x0`) : this.textoMonedas.setText(`x${this.monedas}`);
       /*Fin Resta Monedas*/
     }
@@ -287,16 +293,14 @@ class Plano1 extends BaseScene {
                 this.mundo.setTint(0xfad6a5);
             } else if (this.tiempo === 15) {
                 this.mundo.setTint(0x2d3451);
-            }else if (this.tiempo === 0){
-                this.tiempo=0;
-                try {
-                    this.textoTiempo.setText(`0:${this.tiempo}`);
-                } catch (error) {
-                    console.log(error);
-                }
+            }else if(this.tiempo===0){
+                console.log("Se Acabo el tiempo y se muere");
             }else{
                 if(this.tiempo<0){
-                    this.tiempo=0;
+                    this.tiempo='00';
+                }
+                if(this.tiempo<10 && this.tiempo>0){
+                    this.tiempo='0'+this.tiempo;
                 }
                 try {
                     this.textoTiempo.setText(`0:${this.tiempo}`);
@@ -316,6 +320,7 @@ class Plano1 extends BaseScene {
         this.animacionMove = 'stop';
         this.animacionJump = 'stop';
         this.physics.pause();
+        sessionStorage.setItem('PuntajeActual',this.monedas);
         setTimeout(() => {
             this.physics.resume();
             this.scene.start('Plano2');
@@ -621,8 +626,8 @@ class Plano1 extends BaseScene {
                 }
                 this.estadoSuelo2 ?
                     this.Jugador2.body.velocity.x !== 0 ?
-                        this.Jugador2.play('move2', true) : this.Jugador2.play('stop2', true) :
-                    this.Jugador2.play('jump2', true);
+                        this.Jugador2.play(`${this.animacionMoveP2}`, true) : this.Jugador2.play(`${this.animacionStopP2}`, true) :
+                    this.Jugador2.play(`${this.animacionJumpP2}`, true);
             }
         }
     }

@@ -21,13 +21,5 @@ export default anims=>{
          repeat:-1
      })
 
-    anims.create({
-        key:'test',
-        frames:anims.generateFrameNumbers('mosquitoTest',{start:0, end:6}),
-        frameRate:24,
-         repeat:-1
-     })
-
-
 
 }

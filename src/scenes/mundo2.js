@@ -10,19 +10,28 @@ const Serpiente = require("../scenes/enemigosFuncionW2/Serpiente");
 const mosquito = require("../scenes/enemigosFuncionW2/mosquito");
 const Balas = require("../scenes/enemigosFuncionW2/balas");
 class Plano2 extends BaseScene {
-    intervaloTIEMPO=null;
+    intervaloTIEMPO = null;
     tiempo = 45;
     textoTiempo = "0:00";
     valorIntervalo = 1000;
     estadoSuelo;
     estadoSueloP2
-    storagePlayer = sessionStorage.getItem('selectPLayer');
+    storagePlayer;
     velocidadX = 300;
     velocidadY = 280;
     velocidadBalas = 325;
     isMultiPLayer;
     Jugador2;
     plataformaW2;
+    monedasW2;
+    animacionStop = 'stop';
+    animacionMove = 'move';
+    animacionJump = 'jump';
+    animacionStopP2 = 'stop2';
+    animacionMoveP2 = 'move2';
+    animacionJumpP2 = 'jump2';
+    textoObjetos = null;
+    textoMonedas = null;
     BloquePW2;
     bloqueVacioW2_1;
     bloqueVacioW2_2;
@@ -38,8 +47,6 @@ class Plano2 extends BaseScene {
     balas;
     flechas;
     velocidadMosquito = 230;
-
-
 
     constructor(config) {
         super('Plano2', config);
@@ -89,11 +96,12 @@ class Plano2 extends BaseScene {
         //cuando son dos seteo en storage jugador 1 en seleccion  
         //33
         // console.log(this.storagePlayer);
-        this.player1 = this.physics.add.sprite(33, 322, this.storagePlayer).setOrigin(0);
+        this.storagePlayer = sessionStorage.getItem('selectPLayer');
+        this.player1 = this.physics.add.sprite(33, 326, this.storagePlayer).setOrigin(0);
         this.player1.setCollideWorldBounds(true);
         this.player1.body.setGravityY(820);
         this.player1.body.setSize(50, 120);
-        AnimacionPlayer1(this.anims, 'player1');
+        AnimacionPlayer1(this.anims, this.storagePlayer);
         console.log(this.player1);
         this.cameras.main.startFollow(this.player1, true);
     }
@@ -174,6 +182,7 @@ class Plano2 extends BaseScene {
     }
 
     create() {
+        this.monedasW2=sessionStorage.getItem('PuntajeActual');
         this.music2 = this.sound.add('w2');
         this.music2.play();
         this.cameras.main.setBounds(0, 0, 4095, 768);
@@ -182,7 +191,6 @@ class Plano2 extends BaseScene {
         this.add.image(250, 30, 'estado').setScale(1).setScrollFactor(0);
         this.plataformaW2 = this.physics.add.staticGroup();
         this.BloquePW2 = this.physics.add.staticGroup();
-
         this.bloqueVacioW2_1 = this.physics.add.staticGroup();
         this.bloqueVacioW2_2 = this.physics.add.staticGroup();
         this.bloqueVacioW2_3 = this.physics.add.staticGroup();
@@ -235,10 +243,11 @@ class Plano2 extends BaseScene {
         DataVacioW21(this.bloqueVacioW2_1);
         DataVacioW22(this.bloqueVacioW2_2);
         DataVacioW23(this.bloqueVacioW2_3);
+        this.createPlayer1();
         this.circuloW2_part1();
         this.textoTiempo = this.add.text(65, 15, `0:${this.tiempo}`, { fontSize: '28px', fontFamily: 'Comic Sans MS', fill: "#ffffff" }).setScrollFactor(0);
+        this.textoMonedas = this.add.text(230, 15, 'x' + this.monedasW2, { fontSize: '28px', fontFamily: 'Comic Sans MS', fill: "#ffffff" }).setScrollFactor(0);
         this.temporizador();
-        this.createPlayer1();
         this.physics.add.collider(this.player1, this.plataformaW2, this.alert, null, this);
         this.physics.add.collider(this.player1, this.sphereW2_1, this.alertCirculo, null, this);
         this.physics.add.collider(this.player1, this.sphereW2_2, this.alertCirculo, null, this);
@@ -263,6 +272,15 @@ class Plano2 extends BaseScene {
         this.physics.add.collider(this.player1, this.Serpiente2, this.serpiente2Colisionp1, null, this);
         this.createPlayer2();
     }
+    gameOver(){
+        /*resta monedas*/
+           this.monedasW2-=10;
+           if(this.monedasw2==0){
+              this.tiempo='00';
+           }
+           this.monedasW2<0 ? this.textoMonedas.setText(`x0`) : this.textoMonedas.setText(`x${this.monedasW2}`);
+        /*Fin Resta Monedas*/
+      }
     temporizador() {
         this.intervaloTIEMPO = setInterval(() => {
             --this.tiempo;
@@ -271,16 +289,13 @@ class Plano2 extends BaseScene {
             } else if (this.tiempo === 15) {
                 this.mundo.setTint(0x2d3451);
             } else if (this.tiempo === 0) {
-                this.tiempo = 0;
-                this.textoTiempo.setText(`0:${this.tiempo}`);
+                console.log("Se Acabo el tiempo y se muere");
             } else {
                 if (this.tiempo < 0) {
-                    this.tiempo = 0;
-                    try {
-                        this.textoTiempo.setText(`0:${this.tiempo}`);
-                    } catch (error) {
-                        console.log(error);
-                    }
+                    this.tiempo = '00';
+                }
+                if (this.tiempo < 10 && this.tiempo > 0) {
+                    this.tiempo = '0' + this.tiempo;
                 }
                 try {
                     this.textoTiempo.setText(`0:${this.tiempo}`);
@@ -288,6 +303,7 @@ class Plano2 extends BaseScene {
                     console.log(error);
                 }
             }
+
         }, this.valorIntervalo);
     }
     /*Player1*/
@@ -421,61 +437,71 @@ class Plano2 extends BaseScene {
     /*fin player 2*/
     //enemigos
     mosquito1Colisionp1() {
+        this.gameOver();
         this.damagePlayer1();
         mosquito.EstadoMosquitos(this.Mosquito, 1200, 240);
     }
     mosquito1Colisionp2() {
+        this.gameOver();
         this.damagePlayer2();
         mosquito.EstadoMosquitos(this.Mosquito, 1200, 240);
     }
     mosquito1Colisionp1() {
+        this.gameOver();
         this.damagePlayer1();
         mosquito.EstadoMosquitos(this.Mosquito, 1200, 240);
     }
     mosquito2Colisionp1() {
+        this.gameOver();
         this.damagePlayer1();
         mosquito.EstadoMosquitos(this.Mosquito2, 1470, 240);
     }
     mosquito2Colisionp2() {
+        this.gameOver();
         this.damagePlayer2();
         mosquito.EstadoMosquitos(this.Mosquito2, 1470, 240);
     }
     mosquito3Colisionp1() {
+        this.gameOver();
         this.damagePlayer1();
         mosquito.EstadoMosquitos(this.Mosquito3, 2780, 240);
     }
     mosquito3Colisionp2() {
+        this.gameOver();
         this.damagePlayer2();
         mosquito.EstadoMosquitos(this.Mosquito3, 2780, 240);
     }
     mosquito4Colisionp1() {
+        this.gameOver();
         this.damagePlayer1();
         mosquito.EstadoMosquitos(this.Mosquito4, 3020, 510);
     }
     mosquito4Colisionp2() {
+        this.gameOver();
         this.damagePlayer2();
         mosquito.EstadoMosquitos(this.Mosquito4, 3020, 510);
     }
     serpiente1Colisionp1() {
+        this.gameOver();
         this.damagePlayer1();
         Serpiente.EstadoSerpiente(this.Serpiente1, 800, 375);
     }
     serpiente1Colisionp2() {
+        this.gameOver();
         this.damagePlayer2();
         Serpiente.EstadoSerpiente(this.Serpiente1, 800, 375);
     }
     serpiente2Colisionp1() {
+        this.gameOver();
         this.damagePlayer1();
         Serpiente.EstadoSerpiente(this.Serpiente2, 2004, 375);
     }
     serpiente2Colisionp2() {
+        this.gameOver();
         this.damagePlayer2();
         Serpiente.EstadoSerpiente(this.Serpiente2, 2004, 375);
     }
-
-
     //fin enemigos
-
     update() {
         //this.teclado();
         mosquito.Move4(this.Mosquito4, this.velocidadMosquito);
@@ -490,21 +516,25 @@ class Plano2 extends BaseScene {
 
 
     hitBala(player, bala) {
+        this.gameOver();
         this.damagePlayer1();
         bala.disableBody(true, true);
     }
 
     hitBala2(player, bala) {
+        this.gameOver();
         this.damagePlayer2();
         bala.disableBody(true, true);
     }
 
     hitFlecha(player, flecha) {
+        this.gameOver();
         this.damagePlayer1();
         flecha.disableBody(true, true);
     }
 
     hitFlecha2(player, flecha) {
+        this.gameOver();
         this.damagePlayer2();
         flecha.disableBody(true, true);
     }
@@ -601,15 +631,13 @@ class Plano2 extends BaseScene {
             }
             this.estadoSuelo ?
                 this.player1.body.velocity.x !== 0 ?
-                    this.player1.play('move', true) : this.player1.play('stop', true) :
-                this.player1.play('jump', true);
+                    this.player1.play(`${this.animacionMove}`, true) : this.player1.play(`${this.animacionStop}`, true) :
+                this.player1.play(`${this.animacionJump}`, true);
         }
     }
-
     moveController2(onFloor) {
         const control = this.input.gamepad.getPad(1);
         if (this.isMultiPLayer) {
-
             if (!control) {
                 return;
             }
@@ -630,14 +658,11 @@ class Plano2 extends BaseScene {
                 }
                 this.estadoSueloP2 ?
                     this.Jugador2.body.velocity.x !== 0 ?
-                        this.Jugador2.play('move2', true) : this.Jugador2.play('stop2', true) :
-                    this.Jugador2.play('jump2', true);
+                        this.Jugador2.play(`${this.animacionMoveP2}`, true) : this.Jugador2.play(`${this.animacionStopP2}`, true) :
+                    this.Jugador2.play(`${this.animacionJumpP2}`, true);
             }
         }
     }
-
-
-
     /*   teclado() {
            this.cursors = this.input.keyboard.createCursorKeys();
            const { left, right, up } = this.cursors;
@@ -658,5 +683,4 @@ class Plano2 extends BaseScene {
            }
        }*/
 }
-
 export default Plano2;
