@@ -31,20 +31,17 @@ class SelectRole extends BaseScene {
                 this.musicAmbiente.stop();
                 this.musciNino.stop();
                 this.musicNina.stop();
-                this.scene.start('Plano1');
+                this.scene.start('Mapa1');
 
             }
-
             if(this.role.x===280){
                 sessionStorage.setItem('selectPLayer','player1');
                 this.musicAmbiente.stop();
                 this.musciNino.stop();
                 this.musicNina.stop();
-                this.scene.start('Plano1');
+                this.scene.start('Mapa1');
             }
-          
         }
-
         if (control.axes.length) {
             const axisH = control.axes[0].getValue();
             if (axisH === -1) {
@@ -59,11 +56,8 @@ class SelectRole extends BaseScene {
               this.role.setPosition(280, 210);
             } else {
             }
-      
           }
-
     }
-
 }
 
 export default SelectRole;

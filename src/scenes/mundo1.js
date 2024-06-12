@@ -323,7 +323,7 @@ class Plano1 extends BaseScene {
         sessionStorage.setItem('PuntajeActual',this.monedas);
         setTimeout(() => {
             this.physics.resume();
-            this.scene.start('Plano2');
+            this.scene.start('Mapa2');
         }, 2000)
     }
 
@@ -584,6 +584,10 @@ class Plano1 extends BaseScene {
             this.estadoSuelo = false;
             this.player1.setVelocityY(-this.velocidadY * 2);
         }
+        if (control.buttons[0].pressed && onFloor) {
+            this.estadoSuelo = false;
+            this.player1.setVelocityY(-this.velocidadY * 2);
+        }
         if (control.axes.length) {
             const axisH = control.axes[0].getValue();
             if (axisH === -1) {
@@ -610,6 +614,10 @@ class Plano1 extends BaseScene {
                 return;
             }
             if (control.buttons[1].pressed && onFloor) {
+                this.estadoSuelo2 = false;
+                this.Jugador2.setVelocityY(-this.velocidadY * 2);
+            }
+            if (control.buttons[0].pressed && onFloor) {
                 this.estadoSuelo2 = false;
                 this.Jugador2.setVelocityY(-this.velocidadY * 2);
             }

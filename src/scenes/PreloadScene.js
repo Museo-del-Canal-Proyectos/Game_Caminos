@@ -60,13 +60,10 @@ class PreloadScene extends Phaser.Scene {
     //   this.load.spritesheet('mosquito2','assets/enemigos/mosquito.png',{frameWidth:36,frameHeight:51});//enemigo
     //   this.load.spritesheet('mosquito3','assets/enemigos/mosquito.png',{frameWidth:36,frameHeight:51});//enemigo
     this.load.spritesheet('mosquito', 'assets/enemigos/mosquito2.png', { frameWidth: 67, frameHeight: 65 });//enemigo
-
     this.load.image('flecha1', 'assets/enemigos/flecha.png');
     this.load.image('flecha2', 'assets/enemigos/flecha.png');
     this.load.image('flecha3', 'assets/enemigos/flecha.png');
-
     this.load.spritesheet('bala1', 'assets/enemigos/baladecanon.png', { frameWidth: 50, frameHeight: 71 });
-
 
 
     this.load.image('block_1', 'assets/1.png');//bloques transparentes
@@ -85,10 +82,8 @@ class PreloadScene extends Phaser.Scene {
   }
 
   create() {
-
     // this.scene.start('MenuScene');//enviamos la escena menu
     this.scene.start('MenuScene');
-
   }
 
 

@@ -76,7 +76,7 @@ class MenuScene extends BaseScene {
           setTimeout(() => {
             this.mSleccion.stop();
           }, 2000);
-          this.scene.start('Plano1');
+          this.scene.start('Mapa1');
           break;
 
         case 1000:

@@ -23,6 +23,7 @@ class Plano2 extends BaseScene {
     isMultiPLayer;
     Jugador2;
     plataformaW2;
+    infoObjeto = true;
     monedasW2;
     animacionStop = 'stop';
     animacionMove = 'move';
@@ -45,7 +46,14 @@ class Plano2 extends BaseScene {
     Mosquito3;
     Mosquito4;
     balas;
+    textoObjetos=null;
+    objeto= 0;
     flechas;
+    objeto1;
+    objeto2;
+    objeto3;
+    objeto4;
+    objeto5;
     velocidadMosquito = 230;
 
     constructor(config) {
@@ -87,6 +95,11 @@ class Plano2 extends BaseScene {
             this.physics.add.collider(this.Jugador2, this.Mosquito4, this.mosquito4Colisionp2, null, this);
             this.physics.add.collider(this.Jugador2, this.Serpiente1, this.serpiente1Colisionp2, null, this);
             this.physics.add.collider(this.Jugador2, this.Serpiente2, this.serpiente2Colisionp2, null, this);
+            this.physics.add.collider(this.Jugador2,this.objeto1,this.ColisionObj1,null,this);
+            this.physics.add.collider(this.Jugador2,this.objeto2,this.ColisionObj2,null,this);
+            this.physics.add.collider(this.Jugador2,this.objeto3,this.ColisionObj3,null,this);
+            this.physics.add.collider(this.Jugador2,this.objeto4,this.ColisionObj4,null,this);
+            this.physics.add.collider(this.Jugador2,this.objeto5,this.ColisionObj5,null,this);
         } else {
             console.log("Jugador 2 no conectado en mundo 2")
         }
@@ -178,7 +191,15 @@ class Plano2 extends BaseScene {
         this.sphereW2_9.body.setCollideWorldBounds(true);
         this.sphereW2_9.body.setImmovable(true);
         this.sphereW2_9.setPosition(3395, 1030);
+    }
 
+    createDiamantes(){
+        this.objeto1= this.physics.add.image(970, 345,  'diamantes').setScale(0.8);
+        this.objeto2= this.physics.add.image(3200, 420, 'diamantes').setScale(0.8);
+        this.objeto3= this.physics.add.image(3000, 515, 'diamantes').setScale(0.8);
+        this.objeto4= this.physics.add.image(2700, 600, 'diamantes').setScale(0.8);
+        this.objeto5= this.physics.add.image(1500, 596, 'diamantes').setScale(0.8);
+        console.log(this.objeto5);
     }
 
     create() {
@@ -247,7 +268,9 @@ class Plano2 extends BaseScene {
         this.circuloW2_part1();
         this.textoTiempo = this.add.text(65, 15, `0:${this.tiempo}`, { fontSize: '28px', fontFamily: 'Comic Sans MS', fill: "#ffffff" }).setScrollFactor(0);
         this.textoMonedas = this.add.text(230, 15, 'x' + this.monedasW2, { fontSize: '28px', fontFamily: 'Comic Sans MS', fill: "#ffffff" }).setScrollFactor(0);
+        this.textoObjetos = this.add.text(373, 15, 'x' + this.objeto, { fontSize: '28px', fontFamily: 'Comic Sans MS', fill: "#ffffff" }).setScrollFactor(0);
         this.temporizador();
+        this.createDiamantes();
         this.physics.add.collider(this.player1, this.plataformaW2, this.alert, null, this);
         this.physics.add.collider(this.player1, this.sphereW2_1, this.alertCirculo, null, this);
         this.physics.add.collider(this.player1, this.sphereW2_2, this.alertCirculo, null, this);
@@ -270,6 +293,11 @@ class Plano2 extends BaseScene {
         this.physics.add.collider(this.player1, this.Mosquito4, this.mosquito4Colisionp1, null, this);
         this.physics.add.collider(this.player1, this.Serpiente1, this.serpiente1Colisionp1, null, this);
         this.physics.add.collider(this.player1, this.Serpiente2, this.serpiente2Colisionp1, null, this);
+        this.physics.add.collider(this.player1,this.objeto1,this.ColisionObj1,null,this);
+        this.physics.add.collider(this.player1,this.objeto2,this.ColisionObj2,null,this);
+        this.physics.add.collider(this.player1,this.objeto3,this.ColisionObj3,null,this);
+        this.physics.add.collider(this.player1,this.objeto4,this.ColisionObj4,null,this);
+        this.physics.add.collider(this.player1,this.objeto5,this.ColisionObj5,null,this);
         this.createPlayer2();
     }
     gameOver(){
@@ -514,7 +542,6 @@ class Plano2 extends BaseScene {
         this.moveController(this.estadoSuelo);
     }
 
-
     hitBala(player, bala) {
         this.gameOver();
         this.damagePlayer1();
@@ -606,7 +633,70 @@ class Plano2 extends BaseScene {
             this.Jugador2.clearTint();
         }, 1000)
     }
+    //Activador de Objeto
+    ObjetoMessage() {
+        if (this.infoObjeto) {
+            Swal.fire({
+                position: "bottom",
+                imageUrl: "./assets/iconos/diamantes.png",
+                imageWidth: 50,
+                imageHeight: 50,
+                imageAlt: "Custom image",
+                title: `<p style="font-size:20px;text-align:justify;"><center>Info por Anexar</center></p>`,
+                showConfirmButton: false,
+                backdrop: false,
+                timer: 3500
+            });
+            this.physics.pause();
+            setTimeout(() => {
+                this.physics.resume();
+            }, 3600)
+        } else {
+            // console.log("test no Funciona ya se activo")
+        }
+    }
 
+    //contador de objetos 
+    countObjetos() {
+        this.objeto ++;
+        this.textoObjetos.setText(`x${this.objeto}`);
+    }
+
+    //colision Objetos Suma
+     ColisionObj1() {
+        this.objeto1.disableBody(true, true);
+        this.countObjetos();
+        this.ObjetoMessage();
+        this.infoObjeto = false;
+    }
+    //OBJ2
+    ColisionObj2() {
+        this.objeto2.disableBody(true, true);
+        this.countObjetos();
+        this.ObjetoMessage();
+        this.infoObjeto = false;
+    }
+     //OBJ3
+     ColisionObj3() {
+        this.objeto3.disableBody(true, true);
+        this.countObjetos();
+        this.ObjetoMessage();
+        this.infoObjeto = false;
+    }
+    //OBJ4
+    ColisionObj4() {
+        this.objeto4.disableBody(true, true);
+        this.countObjetos();
+        this.ObjetoMessage();
+        this.infoObjeto = false;
+    }
+    //OBJ5
+    ColisionObj5() {
+        this.objeto5.disableBody(true, true);
+        this.countObjetos();
+        this.ObjetoMessage();
+        this.infoObjeto = false;
+    }
 
     moveController(onFloor) {
         const control = this.input.gamepad.getPad(0);
@@ -614,6 +704,10 @@ class Plano2 extends BaseScene {
             return;
         }
         if (control.buttons[1].pressed && onFloor) {
+            this.estadoSuelo = false;
+            this.player1.setVelocityY(-this.velocidadY * 2);
+        }
+        if (control.buttons[0].pressed && onFloor) {
             this.estadoSuelo = false;
             this.player1.setVelocityY(-this.velocidadY * 2);
         }
@@ -642,6 +736,10 @@ class Plano2 extends BaseScene {
                 return;
             }
             if (control.buttons[1].pressed && onFloor) {
+                this.estadoSueloP2 = false;
+                this.Jugador2.setVelocityY(-this.velocidadY * 2);
+            }
+            if (control.buttons[0].pressed && onFloor) {
                 this.estadoSueloP2 = false;
                 this.Jugador2.setVelocityY(-this.velocidadY * 2);
             }

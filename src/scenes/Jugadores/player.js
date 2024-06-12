@@ -19,4 +19,18 @@ export default (anims,data)=>{
         frameRate:3,
          repeat:-1
      })
+
+     anims.create({
+        key:'up',
+        frames:anims.generateFrameNumbers(`${data}_JUMP`,{start:0, end:3}),
+        frameRate:3,
+         repeat:-1
+     })
+
+     anims.create({
+        key:'down',
+        frames:anims.generateFrameNumbers(`${data}_JUMP`,{start:0, end:3}),
+        frameRate:3,
+         repeat:-1
+     })
 }
