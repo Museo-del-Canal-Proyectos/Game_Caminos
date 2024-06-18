@@ -15,7 +15,7 @@ class Plano2 extends BaseScene {
     textoTiempo = "0:00";
     valorIntervalo = 1000;
     estadoSuelo;
-    estadoSueloP2
+    estadoSueloP2;
     storagePlayer;
     velocidadX = 300;
     velocidadY = 280;
@@ -33,6 +33,7 @@ class Plano2 extends BaseScene {
     animacionJumpP2 = 'jump2';
     textoObjetos = null;
     textoMonedas = null;
+    gate = null;
     BloquePW2;
     bloqueVacioW2_1;
     bloqueVacioW2_2;
@@ -202,6 +203,27 @@ class Plano2 extends BaseScene {
         console.log(this.objeto5);
     }
 
+    gateMundo2() {
+        this.gate = this.physics.add.staticGroup();
+        this.gate.create(3975, 300, 'block_2').setScale(0, 4).refreshBody();
+    }
+
+    mundo2() {
+        clearInterval(this.intervaloTIEMPO);
+        //this.music.stop();
+        this.velocidadX = 0;
+        this.velocidadY = 0;
+        this.animacionStop = 'stop';
+        this.animacionMove = 'stop';
+        this.animacionJump = 'stop';
+        this.physics.pause();
+       // sessionStorage.setItem('PuntajeActual',this.monedas);
+        setTimeout(() => {
+            this.physics.resume();
+            this.scene.start('Mapa3');
+        }, 2000)
+    }
+
     create() {
         this.monedasW2=sessionStorage.getItem('PuntajeActual');
         this.music2 = this.sound.add('w2');
@@ -215,6 +237,7 @@ class Plano2 extends BaseScene {
         this.bloqueVacioW2_1 = this.physics.add.staticGroup();
         this.bloqueVacioW2_2 = this.physics.add.staticGroup();
         this.bloqueVacioW2_3 = this.physics.add.staticGroup();
+        this.gateMundo2();
         this.Serpiente1 = this.physics.add.sprite(800, 375, 'serpiente').setImmovable(true).setOrigin(0);
         this.Serpiente2 = this.physics.add.sprite(2004, 375, 'serpiente').setImmovable(true).setOrigin(0);
         Serpiente.createSerpiente2(this.Serpiente2, this.velocidadSerpiente);
@@ -298,6 +321,7 @@ class Plano2 extends BaseScene {
         this.physics.add.collider(this.player1,this.objeto3,this.ColisionObj3,null,this);
         this.physics.add.collider(this.player1,this.objeto4,this.ColisionObj4,null,this);
         this.physics.add.collider(this.player1,this.objeto5,this.ColisionObj5,null,this);
+        this.physics.add.collider(this.player1, this.gate, this.mundo2, null, this);
         this.createPlayer2();
     }
     gameOver(){
