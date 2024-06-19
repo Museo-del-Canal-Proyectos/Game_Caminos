@@ -47,8 +47,8 @@ class Plano2 extends BaseScene {
     Mosquito3;
     Mosquito4;
     balas;
-    textoObjetos=null;
-    objeto= 0;
+    textoObjetos = null;
+    objeto = 0;
     flechas;
     objeto1;
     objeto2;
@@ -96,11 +96,11 @@ class Plano2 extends BaseScene {
             this.physics.add.collider(this.Jugador2, this.Mosquito4, this.mosquito4Colisionp2, null, this);
             this.physics.add.collider(this.Jugador2, this.Serpiente1, this.serpiente1Colisionp2, null, this);
             this.physics.add.collider(this.Jugador2, this.Serpiente2, this.serpiente2Colisionp2, null, this);
-            this.physics.add.collider(this.Jugador2,this.objeto1,this.ColisionObj1,null,this);
-            this.physics.add.collider(this.Jugador2,this.objeto2,this.ColisionObj2,null,this);
-            this.physics.add.collider(this.Jugador2,this.objeto3,this.ColisionObj3,null,this);
-            this.physics.add.collider(this.Jugador2,this.objeto4,this.ColisionObj4,null,this);
-            this.physics.add.collider(this.Jugador2,this.objeto5,this.ColisionObj5,null,this);
+            this.physics.add.collider(this.Jugador2, this.objeto1, this.ColisionObj1, null, this);
+            this.physics.add.collider(this.Jugador2, this.objeto2, this.ColisionObj2, null, this);
+            this.physics.add.collider(this.Jugador2, this.objeto3, this.ColisionObj3, null, this);
+            this.physics.add.collider(this.Jugador2, this.objeto4, this.ColisionObj4, null, this);
+            this.physics.add.collider(this.Jugador2, this.objeto5, this.ColisionObj5, null, this);
         } else {
             console.log("Jugador 2 no conectado en mundo 2")
         }
@@ -194,12 +194,12 @@ class Plano2 extends BaseScene {
         this.sphereW2_9.setPosition(3395, 1030);
     }
 
-    createDiamantes(){
-        this.objeto1= this.physics.add.image(970, 345,  'diamantes').setScale(0.8);
-        this.objeto2= this.physics.add.image(3200, 420, 'diamantes').setScale(0.8);
-        this.objeto3= this.physics.add.image(3000, 515, 'diamantes').setScale(0.8);
-        this.objeto4= this.physics.add.image(2700, 600, 'diamantes').setScale(0.8);
-        this.objeto5= this.physics.add.image(1500, 596, 'diamantes').setScale(0.8);
+    createDiamantes() {
+        this.objeto1 = this.physics.add.image(970, 345, 'diamantes').setScale(0.8);
+        this.objeto2 = this.physics.add.image(3200, 420, 'diamantes').setScale(0.8);
+        this.objeto3 = this.physics.add.image(3000, 515, 'diamantes').setScale(0.8);
+        this.objeto4 = this.physics.add.image(2700, 600, 'diamantes').setScale(0.8);
+        this.objeto5 = this.physics.add.image(1500, 596, 'diamantes').setScale(0.8);
         console.log(this.objeto5);
     }
 
@@ -208,24 +208,8 @@ class Plano2 extends BaseScene {
         this.gate.create(3975, 300, 'block_2').setScale(0, 4).refreshBody();
     }
 
-    mundo2() {
-        clearInterval(this.intervaloTIEMPO);
-        //this.music.stop();
-        this.velocidadX = 0;
-        this.velocidadY = 0;
-        this.animacionStop = 'stop';
-        this.animacionMove = 'stop';
-        this.animacionJump = 'stop';
-        this.physics.pause();
-       // sessionStorage.setItem('PuntajeActual',this.monedas);
-        setTimeout(() => {
-            this.physics.resume();
-            this.scene.start('Mapa3');
-        }, 2000)
-    }
-
     create() {
-        this.monedasW2=sessionStorage.getItem('PuntajeActual');
+        this.monedasW2 = sessionStorage.getItem('PuntajeActual');
         this.music2 = this.sound.add('w2');
         this.music2.play();
         this.cameras.main.setBounds(0, 0, 4095, 768);
@@ -240,8 +224,8 @@ class Plano2 extends BaseScene {
         this.gateMundo2();
         this.Serpiente1 = this.physics.add.sprite(800, 375, 'serpiente').setImmovable(true).setOrigin(0);
         this.Serpiente2 = this.physics.add.sprite(2004, 375, 'serpiente').setImmovable(true).setOrigin(0);
-        Serpiente.createSerpiente2(this.Serpiente2, this.velocidadSerpiente);
         Serpiente.createSerpiente(this.Serpiente1, this.velocidadSerpiente);
+        Serpiente.createSerpiente2(this.Serpiente2, this.velocidadSerpiente);
         Serpiente.Animacion(this.Serpiente1, this.anims);
         Serpiente.Animacion(this.Serpiente2, this.anims);
         this.Mosquito = this.physics.add.sprite(1200, 240, 'mosquito').setImmovable(true).setOrigin(0);
@@ -316,23 +300,40 @@ class Plano2 extends BaseScene {
         this.physics.add.collider(this.player1, this.Mosquito4, this.mosquito4Colisionp1, null, this);
         this.physics.add.collider(this.player1, this.Serpiente1, this.serpiente1Colisionp1, null, this);
         this.physics.add.collider(this.player1, this.Serpiente2, this.serpiente2Colisionp1, null, this);
-        this.physics.add.collider(this.player1,this.objeto1,this.ColisionObj1,null,this);
-        this.physics.add.collider(this.player1,this.objeto2,this.ColisionObj2,null,this);
-        this.physics.add.collider(this.player1,this.objeto3,this.ColisionObj3,null,this);
-        this.physics.add.collider(this.player1,this.objeto4,this.ColisionObj4,null,this);
-        this.physics.add.collider(this.player1,this.objeto5,this.ColisionObj5,null,this);
+        this.physics.add.collider(this.player1, this.objeto1, this.ColisionObj1, null, this);
+        this.physics.add.collider(this.player1, this.objeto2, this.ColisionObj2, null, this);
+        this.physics.add.collider(this.player1, this.objeto3, this.ColisionObj3, null, this);
+        this.physics.add.collider(this.player1, this.objeto4, this.ColisionObj4, null, this);
+        this.physics.add.collider(this.player1, this.objeto5, this.ColisionObj5, null, this);
         this.physics.add.collider(this.player1, this.gate, this.mundo2, null, this);
         this.createPlayer2();
     }
-    gameOver(){
+
+    mundo2() {
+        clearInterval(this.intervaloTIEMPO);
+        this.music2.stop();
+        this.velocidadX = 0;
+        this.velocidadY = 0;
+        this.animacionStop = 'stop';
+        this.animacionMove = 'stop';
+        this.animacionJump = 'stop';
+        this.physics.pause();
+        sessionStorage.setItem('PuntajeActual', this.monedasW2);
+        setTimeout(() => {
+            this.physics.resume();
+            this.scene.start('Mapa3');
+        }, 2000)
+    }
+
+    gameOver() {
         /*resta monedas*/
-           this.monedasW2-=10;
-           if(this.monedasw2==0){
-              this.tiempo='00';
-           }
-           this.monedasW2<0 ? this.textoMonedas.setText(`x0`) : this.textoMonedas.setText(`x${this.monedasW2}`);
+        this.monedasW2 -= 10;
+        if (this.monedasw2 == 0) {
+            this.tiempo = '00';
+        }
+        this.monedasW2 < 0 ? this.textoMonedas.setText(`x0`) : this.textoMonedas.setText(`x${this.monedasW2}`);
         /*Fin Resta Monedas*/
-      }
+    }
     temporizador() {
         this.intervaloTIEMPO = setInterval(() => {
             --this.tiempo;
@@ -682,12 +683,12 @@ class Plano2 extends BaseScene {
 
     //contador de objetos 
     countObjetos() {
-        this.objeto ++;
+        this.objeto++;
         this.textoObjetos.setText(`x${this.objeto}`);
     }
 
     //colision Objetos Suma
-     ColisionObj1() {
+    ColisionObj1() {
         this.objeto1.disableBody(true, true);
         this.countObjetos();
         this.ObjetoMessage();
@@ -700,8 +701,8 @@ class Plano2 extends BaseScene {
         this.ObjetoMessage();
         this.infoObjeto = false;
     }
-     //OBJ3
-     ColisionObj3() {
+    //OBJ3
+    ColisionObj3() {
         this.objeto3.disableBody(true, true);
         this.countObjetos();
         this.ObjetoMessage();

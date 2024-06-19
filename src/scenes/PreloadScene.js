@@ -82,9 +82,6 @@ class PreloadScene extends Phaser.Scene {
     // this.scene.start('MenuScene');//enviamos la escena menu
     this.scene.start('MenuScene');
   }
-
-
-
 }
 
 
