@@ -11,6 +11,8 @@ import Plano2 from "./scenes/mundo2";
 import SelectRole from "./scenes/SelectRole";
 import Mapa1 from "./scenes/Mapa1";
 import Mapa2 from "./scenes/Mapa2";
+import Plano3 from "./scenes/mundo3";
+import Mapa3 from "./scenes/Mapa3";
 
 const WIDTH = 1368;
 const HEIGHT = 768;
@@ -20,7 +22,7 @@ const SHARED_CONFIG = {
   height: HEIGHT,
 }
 
-const Scenes = [PreloadScene, MenuScene, SelectRole, Plano1,Plano2, ScoreScene, CreditScene, SavePlayer, PlayScene, Mapa1, Mapa2, WorldScene1];
+const Scenes = [PreloadScene, MenuScene, SelectRole, Plano1,Plano2,Plano3, ScoreScene, CreditScene, SavePlayer, PlayScene, Mapa1, Mapa2,Mapa3, WorldScene1];
 const createScene = Scene => new Scene(SHARED_CONFIG)
 const initScenes = () => Scenes.map(createScene);
 
@@ -37,7 +39,7 @@ const config = {
     default: 'arcade',
     arcade: {
       //gravity:{ y: 400 },
-     // debug: true //linea verde de velocidad PARA VER DISTACIA DE OBJETOS
+     // debug: true //linea verde de velocidad PARA VER DISTANCIA DE OBJETOS
     },
   },
   scene: initScenes()

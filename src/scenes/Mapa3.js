@@ -2,11 +2,11 @@
 import BaseScene from "./BaseScene";
 import AnimacionPlayer1 from "./Jugadores/player";
 import AnimacionPlayer2 from "./Jugadores/player2";
-class Mapa1 extends BaseScene {
+class Mapa3 extends BaseScene {
 
   constructor(config) {
 
-    super('Mapa1', config);
+    super('Mapa3', config);
     this.personaje = null;
     this.cursors = null;
     this.plat = null;
@@ -40,7 +40,7 @@ class Mapa1 extends BaseScene {
 
   createBotonW1() {
     this.boton = this.physics.add.group();
-    this.boton.create(577, 659, 'block_3')
+    this.boton.create(939, 185, 'block_3')
       .setScale(0.1)
       .setImmovable(true)
       .setOrigin(0, 0);
@@ -51,7 +51,7 @@ class Mapa1 extends BaseScene {
   }
 
   createPersonaje() {
-    this.personaje = this.physics.add.sprite(120, 623, sessionStorage.getItem('selectPLayer'))
+    this.personaje = this.physics.add.sprite(831, 330, sessionStorage.getItem('selectPLayer'))
       .setScale(0.5)
       .setOrigin(0);
     console.log(this.personaje)
@@ -76,7 +76,7 @@ class Mapa1 extends BaseScene {
     this.physics.pause();
     this.cameras.main.shake(500);
     setTimeout(()=>{
-      this.scene.start('Plano1');
+      this.scene.start('Plano3');
     },400)
   }
 
@@ -284,7 +284,6 @@ class Mapa1 extends BaseScene {
     if (!control) {
       return;
     }
-
     if (control.axes.length) {
 
       const axisH = control.axes[0].getValue();
@@ -311,10 +310,11 @@ class Mapa1 extends BaseScene {
         console.log(this.personaje.body.y);
         this.move();
         // this.moveDown();
-      } else if (control.buttons[3].pressed ) {
+      }else if (control.buttons[3].pressed ) {
         Swal.close()
         this.physics.resume();
-      } else {
+      }
+      else {
         this.personaje.setVelocityX(0);
         this.personaje.setVelocityY(0);
         this.standBy();
@@ -335,4 +335,4 @@ class Mapa1 extends BaseScene {
   }
 }
 
-export default Mapa1
+export default Mapa3

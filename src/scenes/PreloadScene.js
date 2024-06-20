@@ -19,7 +19,6 @@ class PreloadScene extends Phaser.Scene {
     this.load.audio('w1', [ 'assets/Audios/WarioSound/world1.mp3']);
     this.load.audio('w2', [ 'assets/Audios/WarioSound/world2.mp3']);
     /*Music*/
-
     /*menu*/
     this.load.image('MenuInicial','assets/menu/Inicio.png');
     this.load.image('select','assets/menu/Select-Inicio.png');
@@ -39,20 +38,17 @@ class PreloadScene extends Phaser.Scene {
 
     this.load.image('Plano1', 'assets/worlds/plano-1.png');//LEVEL 1 CONFIRMADO
     this.load.image('Plano2', 'assets/worlds/plano-2.png');
+    this.load.image('Plano3', 'assets/worlds/plano-3.png');
     this.load.spritesheet('player1_IDE', 'assets/player1/player1-ide-R.png', { frameWidth: 70, frameHeight: 113 });
     this.load.spritesheet('player1_JUMP', 'assets/player1/player1-jump-R.png', { frameWidth: 87, frameHeight: 113 });
     this.load.spritesheet('player1', 'assets/player1/player1-walk-R.png', { frameWidth: 70, frameHeight: 113 });
     this.load.image('piedra', 'assets/piedra.png');
     this.load.image('estado', 'assets/estados/barra-estado.png');
     this.load.image('perulera', 'assets/iconos/perulera.png');
-
     //pl2
     this.load.spritesheet('player2_IDE', 'assets/player2/player2-ide-R.png', { frameWidth: 70, frameHeight: 113 });
     this.load.spritesheet('player2_JUMP', 'assets/player2/player2-jump.png', { frameWidth: 77, frameHeight: 114 });
     this.load.spritesheet('player2', 'assets/player2/player2_R.png', { frameWidth: 70, frameHeight: 113 });
-
-
-
 
     this.load.spritesheet('serpiente', 'assets/enemigos/Serpiente.png', { frameWidth: 101, frameHeight: 71 });//enemigo
     this.load.spritesheet('serpiente2', 'assets/enemigos/Serpiente-attack.png', { frameWidth: 167, frameHeight: 65 });//enemigo
@@ -64,8 +60,9 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('flecha2', 'assets/enemigos/flecha.png');
     this.load.image('flecha3', 'assets/enemigos/flecha.png');
     this.load.spritesheet('bala1', 'assets/enemigos/baladecanon.png', { frameWidth: 50, frameHeight: 71 });
-
-
+    /*LUVIA*/
+    this.load.image('lluvia', 'assets/enemigos/LLUVIA.png',{ frameWidth: 899, frameHeight: 454 });
+     
     this.load.image('block_1', 'assets/1.png');//bloques transparentes
     this.load.image('block_2', 'assets/2.png');//bloques transparentes
     this.load.image('block_3', 'assets/3.png');//bloques transparentes
@@ -85,9 +82,6 @@ class PreloadScene extends Phaser.Scene {
     // this.scene.start('MenuScene');//enviamos la escena menu
     this.scene.start('MenuScene');
   }
-
-
-
 }
 
 

@@ -7,5 +7,4 @@ export default plataformaBloque => {
     plataformaBloque.create(1050, 407, 'block_3').setScale(0.7,1).refreshBody();
     plataformaBloque.create(3255, 173, 'block_3').setScale(4.5,0).refreshBody();
     
-
 }

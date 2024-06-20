@@ -9,7 +9,7 @@
     "dev": "webpack serve --config webpack.common.js",
     "dev-fb": "webpack serve --config webpack.fb.js"
   },
-  "author": "",
+  "author": "MUSEO DEL CANAL",
   "license": "ISC",
   "dependencies": {
     "phaser": "^3.24.1",
