@@ -240,7 +240,6 @@ class Mapa3 extends BaseScene {
   nombreDeDios() {
     this.choque.play();
     Swal.fire({
-
       position: "center",
       customClass: "manoDeDios",
       imageUrl: "./assets/star.png",
@@ -250,8 +249,8 @@ class Mapa3 extends BaseScene {
       title: `
       <b style="font-size:25px;text-align:center;">Nombre de Dios</b><hr><p style="font-size:20px;text-align:justify;">Este territorio indígena fue avistado por Cristóbal Colón en su cuarto viaje en 1502, sin embargo, fue poblado en 1510 por Diego de Nicuesa y fundado oficialmente a finales de 1519 por Diego de Albítez. La ciudad de Nombre de Dios fue reemplazada por Portobelo debido a que tenía mejores condiciones comerciales, militares y agrícolas. La ciudad se muda en 1597 luego del ataque del corsario Francis Drake.</p>`,
       showConfirmButton: false,
-      timer: 5000,
     });
+    this.physics.pause();
   }
   collisionEv1() {
     console.log(this.personaje, this.plat1);
@@ -273,8 +272,8 @@ class Mapa3 extends BaseScene {
       imageAlt: "Custom image",
       title: `<p style="font-size:20px;text-align:justify;">Este camino se cerró en 1673 por el ataque de Morgan a <b>Panamá viejo</b>. Luego del ataque se decidió mudar la ciudad a lo que hoy conoces como Casco (Panamá) y la vieja quedó vacía</p>`,
       showConfirmButton: false,
-      timer: 9000
     });
+    this.physics.pause();
   }
   collisionEv2() {
     this.physics.add.collider(this.personaje, this.plat2, this.panamaViejo, null, this);
@@ -311,7 +310,11 @@ class Mapa3 extends BaseScene {
         console.log(this.personaje.body.y);
         this.move();
         // this.moveDown();
-      } else {
+      }else if (control.buttons[3].pressed ) {
+        Swal.close()
+        this.physics.resume();
+      }
+      else {
         this.personaje.setVelocityX(0);
         this.personaje.setVelocityY(0);
         this.standBy();

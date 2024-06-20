@@ -15,6 +15,7 @@ class Plano3 extends BaseScene {
     Jugador2 = null;
     lluvia = null;
     lluvia2 = null;
+    infoObjeto= true;
     mundo = null;
     intervaloTIEMPO = null;
     tiempo = 45;//
@@ -61,6 +62,11 @@ class Plano3 extends BaseScene {
     flechas = null;
     flechas2 = null;
     velocidadBalas = 325;
+    objeto1= null;
+    objeto2= null;
+    objeto3= null;;
+    objeto4= null;
+    objeto5= null;
 
     constructor(config) {
         super('Plano3', config);
@@ -112,6 +118,11 @@ class Plano3 extends BaseScene {
             this.physics.add.overlap(this.Jugador2,this.balas2,this.hitBala2P2,null,this);
             this.physics.add.overlap(this.Jugador2,this.flechas,this.hitflecha1P2,null,this);
             this.physics.add.overlap(this.Jugador2,this.flechas2,this.hitflecha2P2,null,this);
+            this.physics.add.collider(this.Jugador2,this.objeto1,this.ColisionObj1,null,this);
+            this.physics.add.collider(this.Jugador2,this.objeto2,this.ColisionObj2,null,this);
+            this.physics.add.collider(this.Jugador2,this.objeto3,this.ColisionObj3,null,this);
+            this.physics.add.collider(this.Jugador2,this.objeto4,this.ColisionObj4,null,this);
+            this.physics.add.collider(this.Jugador2,this.objeto5,this.ColisionObj5,null,this);
         } else {
             console.log("Jugador 2 no conectado en mundo 2")
         }
@@ -244,6 +255,7 @@ class Plano3 extends BaseScene {
             velocityX: -this.velocidadBalas,
         });
         this.temporizador();
+        this.createObjetos();
         this.createPlayer1();
         this.createPlayer2();
         this.lluvia = this.physics.add.sprite(1353, 0, 'lluvia').setScale(1.2, 1.7).setImmovable(true).setOrigin(0);
@@ -269,6 +281,11 @@ class Plano3 extends BaseScene {
         this.physics.add.overlap(this.player1,this.balas2,this.hitBala2,null,this);
         this.physics.add.overlap(this.player1,this.flechas,this.hitflecha1,null,this);
         this.physics.add.overlap(this.player1,this.flechas2,this.hitflecha2,null,this);
+        this.physics.add.collider(this.player1,this.objeto1,this.ColisionObj1,null,this);
+        this.physics.add.collider(this.player1,this.objeto2,this.ColisionObj2,null,this);
+        this.physics.add.collider(this.player1,this.objeto3,this.ColisionObj3,null,this);
+        this.physics.add.collider(this.player1,this.objeto4,this.ColisionObj4,null,this);
+        this.physics.add.collider(this.player1,this.objeto5,this.ColisionObj5,null,this);
     }
     damagePlayer1() {
         this.player1.setTint(0xff0000);
@@ -554,22 +571,26 @@ class Plano3 extends BaseScene {
         this.gameOver();
         this.damagePlayer1();
         SerpientesACT1.EstadoSerpiente(this.Serpiente1, 1400, 375);
+        this.player1.setVelocityX(0);
     }
     serpiente1Colisionp1P2() {
         this.gameOver();
         this.damagePlayer2();
         SerpientesACT1.EstadoSerpiente(this.Serpiente1, 1400, 375);
+        this.Jugador2.setVelocityX(0);
     }
 
     serpiente2Colisionp1() {
         this.gameOver();
         this.damagePlayer1();
         SerpientesACT1.EstadoSerpiente(this.Serpiente2, 2600, 375);
+        this.player1.setVelocityX(0);
     }
     serpiente2Colisionp1P2() {
         this.gameOver();
         this.damagePlayer2();
         SerpientesACT1.EstadoSerpiente(this.Serpiente2, 2600, 375);
+        this.Jugador2.setVelocityX(0);
     }
 
     hitBala1(player, bala) {
@@ -613,8 +634,80 @@ class Plano3 extends BaseScene {
         this.damagePlayer2();
         bala.disableBody(true, true);
     }
+    //contador de objetos 
+    countObjetos() {
+        this.objeto++;
+        this.textoObjetos.setText(`x${this.objeto}`);
+    }
+    //Activador de Objeto
+    ObjetoMessage() {
+        if (this.infoObjeto) {
+            Swal.fire({
+                position: "bottom",
+                imageUrl: "./assets/iconos/dineroBolsa.png",
+                imageWidth: 50,
+                imageHeight: 50,
+                imageAlt: "Custom image",
+                title: `<p style="font-size:20px;text-align:justify;"><center>Info por Anexar</center></p>`,
+                showConfirmButton: false,
+                backdrop: false,
+                timer: 3500
+            });
+            this.physics.pause();
+            setTimeout(() => {
+                this.physics.resume();
+            }, 3600)
+        } else {
+            // console.log("test no Funciona ya se activo")
+        }
+    }
+
+    createObjetos() {
+        this.objeto1 = this.physics.add.image(608, 595, 'bolsa').setScale(0.8);
+        this.objeto2 = this.physics.add.image(900, 525, 'bolsa').setScale(0.8);
+        this.objeto3 = this.physics.add.image(1175, 425, 'bolsa').setScale(0.8);
+        this.objeto4 = this.physics.add.image(1976, 425, 'bolsa').setScale(0.8);
+        this.objeto5 = this.physics.add.image(3145, 425, 'bolsa').setScale(0.8);
+    }
+    //colision Objetos Suma
+    //OBJ1
+     ColisionObj1() {
+        this.objeto1.disableBody(true, true);
+        this.countObjetos();
+        this.ObjetoMessage();
+        this.infoObjeto = false;
+    }
+    //OBJ2
+    ColisionObj2() {
+        this.objeto2.disableBody(true, true);
+        this.countObjetos();
+        this.ObjetoMessage();
+        this.infoObjeto = false;
+    }
+    //OBJ3
+    ColisionObj3() {
+        this.objeto3.disableBody(true, true);
+        this.countObjetos();
+        this.ObjetoMessage();
+        this.infoObjeto = false;
+    }
+    //OBJ4
+    ColisionObj4() {
+        this.objeto4.disableBody(true, true);
+        this.countObjetos();
+        this.ObjetoMessage();
+        this.infoObjeto = false;
+    }
+    //OBJ5
+    ColisionObj5() {
+        this.objeto5.disableBody(true, true);
+        this.countObjetos();
+        this.ObjetoMessage();
+        this.infoObjeto = false;
+    }
 
     update() {
+        console.log(this.player1.x,":",this.player1.y);
         MosquitoACT1.MoveW3_1(this.Mosquito, this.velocidadMosquito);
         MosquitoACT1.MoveW3_1(this.Mosquito2, this.velocidadMosquito);
         MosquitoACT1.MoveW3_1(this.Mosquito3, this.velocidadMosquito);
