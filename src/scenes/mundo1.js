@@ -12,6 +12,7 @@ class Plano1 extends BaseScene {
     textoTiempo = "0:00";
     valorIntervalo = 1000;
     plataforma;
+    volteoP1= true;
     infoObjeto = true;
     monedas = 100;
     animacionStop = 'stop';
@@ -102,6 +103,7 @@ class Plano1 extends BaseScene {
             .setOrigin(0);
         this.player1.setCollideWorldBounds(true);
         this.player1.body.setGravityY(820);
+        console.log(this.player1);
         this.player1.body.setSize(50, 120);
         AnimacionPlayer1(this.anims, this.storagePlayer /*'player2'*/);
         this.cameras.main.startFollow(this.player1, true);
@@ -314,11 +316,13 @@ class Plano1 extends BaseScene {
     mundo2() {
         clearInterval(this.intervaloTIEMPO);
         this.music.stop();
+        this.volteoP1=false;
         this.velocidadX = 0;
         this.velocidadY = 0;
-        this.animacionStop = 'stop';
-        this.animacionMove = 'stop';
-        this.animacionJump = 'stop';
+        this.animacionStop='celebrate';
+        this.animacionJump='celebrate';
+        this.animacionMove='celebrate';
+        this.player1.setPosition(3915,310);
         this.physics.pause();
         sessionStorage.setItem('PuntajeActual',this.monedas);
         setTimeout(() => {
@@ -595,7 +599,7 @@ class Plano1 extends BaseScene {
                 this.player1.setFlipX(false);
             } else if (axisH === 1) {
                 this.player1.setVelocityX(-this.velocidadX);
-                this.player1.setFlipX(true);
+                this.player1.setFlipX(this.volteoP1);
             } else {
                 this.player1.setVelocityX(0);
             }
