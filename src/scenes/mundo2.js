@@ -34,6 +34,8 @@ class Plano2 extends BaseScene {
     textoObjetos = null;
     textoMonedas = null;
     gate = null;
+    volteoP2=true;
+    volteoP1=true;
     BloquePW2;
     bloqueVacioW2_1;
     bloqueVacioW2_2;
@@ -314,9 +316,18 @@ class Plano2 extends BaseScene {
         this.music2.stop();
         this.velocidadX = 0;
         this.velocidadY = 0;
-        this.animacionStop = 'stop';
-        this.animacionMove = 'stop';
-        this.animacionJump = 'stop';
+        this.volteoP1=false;
+        this.animacionStop = 'celebrate';
+        this.animacionMove = 'celebrate';
+        this.animacionJump = 'celebrate';
+        this.animacionMoveP2='celebrateP2';
+        this.animacionJumpP2='celebrateP2';
+        this.animacionStopP2='celebrateP2';
+        this.player1.setPosition(3910,320);
+        if(this.isMultiPLayer){
+           this.volteoP2=false;
+           this.Jugador2.setPosition(3820,320);
+        }
         this.physics.pause();
         sessionStorage.setItem('PuntajeActual', this.monedasW2);
         setTimeout(() => {
@@ -744,7 +755,7 @@ class Plano2 extends BaseScene {
 
             } else if (axisH === 1) {
                 this.player1.setVelocityX(-this.velocidadX);
-                this.player1.setFlipX(true);
+                this.player1.setFlipX(this.volteoP1);
             } else {
                 this.player1.setVelocityX(0);
             }
@@ -775,7 +786,7 @@ class Plano2 extends BaseScene {
                     this.Jugador2.setFlipX(false);
                 } else if (axisH === 1) {
                     this.Jugador2.setVelocityX(-this.velocidadX);
-                    this.Jugador2.setFlipX(true);
+                    this.Jugador2.setFlipX(this.volteoP2);
                 } else {
                     this.Jugador2.setVelocityX(0);
                 }

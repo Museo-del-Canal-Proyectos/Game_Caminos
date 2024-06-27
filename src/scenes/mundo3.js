@@ -258,7 +258,16 @@ class Plano3 extends BaseScene {
         this.createObjetos();
         this.createPlayer1();
         this.createPlayer2();
-        this.lluvia = this.physics.add.sprite(1353, 0, 'lluvia').setScale(1.2, 1.7).setImmovable(true).setOrigin(0);
+        this.lluvia = this.physics.add.sprite(1450, 0, 'lluvia').setImmovable(true).setOrigin(0);
+        this.anims.create({
+            key:'caer' ,
+            frames: this.anims.generateFrameNumbers('lluvia',{start:0, end:1}),
+            frameRate: 4,
+            repeat:-1, 
+         })
+         this.lluvia.play('caer',true);
+
+         
         this.lluvia2 = this.physics.add.sprite(2434, 0, 'lluvia').setScale(1.2, 1.7).setImmovable(true).setOrigin(0);
         this.physics.add.collider(this.player1, this.plataformaW3, this.colisionMundo, null, this);
         this.physics.add.collider(this.player1, this.plataformaVacio3, this.colisionVacio1, null, this);

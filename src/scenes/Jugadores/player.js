@@ -20,6 +20,13 @@ export default (anims,data)=>{
          repeat:-1
      })
 
+    anims.create({
+       key:'celebrate' ,
+       frames: anims.generateFrameNumbers(`${data}_C`,{start:0, end:11}),
+       frameRate: 6,
+       repeat:-1, 
+    })
+
      anims.create({
         key:'up',
         frames:anims.generateFrameNumbers(`${data}_JUMP`,{start:0, end:3}),
@@ -33,4 +40,8 @@ export default (anims,data)=>{
         frameRate:3,
          repeat:-1
      })
+
+
+
+
 }

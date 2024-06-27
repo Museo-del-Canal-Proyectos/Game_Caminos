@@ -13,6 +13,7 @@ class Plano1 extends BaseScene {
     valorIntervalo = 1000;
     plataforma;
     volteoP1= true;
+    volteoP2= true;
     infoObjeto = true;
     monedas = 100;
     animacionStop = 'stop';
@@ -322,7 +323,14 @@ class Plano1 extends BaseScene {
         this.animacionStop='celebrate';
         this.animacionJump='celebrate';
         this.animacionMove='celebrate';
+        this.animacionMoveP2='celebrateP2';
+        this.animacionJumpP2='celebrateP2';
+        this.animacionStopP2='celebrateP2';
         this.player1.setPosition(3915,310);
+        if(this.isMultiPLayer){
+            this.volteoP2=false;
+            this.Jugador2.setPosition(3820,310);
+        }
         this.physics.pause();
         sessionStorage.setItem('PuntajeActual',this.monedas);
         setTimeout(() => {
@@ -632,7 +640,7 @@ class Plano1 extends BaseScene {
                     this.Jugador2.setFlipX(false);
                 } else if (axisH === 1) {
                     this.Jugador2.setVelocityX(-this.velocidadX);
-                    this.Jugador2.setFlipX(true);
+                    this.Jugador2.setFlipX(this.volteoP2);
                 } else {
                     this.Jugador2.setVelocityX(0);
                 }

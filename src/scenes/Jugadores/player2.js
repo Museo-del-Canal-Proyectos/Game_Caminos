@@ -22,6 +22,20 @@ export default anims=>{
      })
 
      anims.create({
+        key:'celebrate' ,
+        frames: anims.generateFrameNumbers(`player2_C`,{start:0, end:11}),
+        frameRate: 6,
+        repeat:-1, 
+     })
+
+     anims.create({
+        key:'celebrateP2' ,
+        frames: anims.generateFrameNumbers(`player2_C`,{start:0, end:11}),
+        frameRate: 6,
+        repeat:-1, 
+     })
+
+     anims.create({
         key:'up',
         frames:anims.generateFrameNumbers(`player2_JUMP`,{start:0, end:3}),
         frameRate:3,
