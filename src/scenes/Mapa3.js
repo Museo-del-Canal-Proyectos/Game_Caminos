@@ -74,7 +74,7 @@ class Mapa3 extends BaseScene {
 
   cambioScenario() {
     this.physics.pause();
-    this.cameras.main.shake(500);
+    this.cameras.main.fade(2000);
     setTimeout(()=>{
       this.scene.start('Plano3');
     },400)
