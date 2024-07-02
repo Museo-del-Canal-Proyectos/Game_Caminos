@@ -74,9 +74,9 @@ class Mapa2 extends BaseScene {
 
   cambioScenario() {
     this.physics.pause();
-    this.cameras.main.fade(2000);
+    this.cameras.main.fade(1500);
     setTimeout(() => {
-      this.scene.start('Plano2');
+      this.scene.start('IntroCruces');
     }, 400)
   }
 
@@ -248,7 +248,7 @@ class Mapa2 extends BaseScene {
       imageHeight: 50,
       imageAlt: "Custom image",
       title: `
-      <b style="font-size:25px;text-align:center;">Nombre de Dios</b><hr><p style="font-size:20px;text-align:justify;">Este territorio indígena fue avistado por Cristóbal Colón en su cuarto viaje en 1502, sin embargo, fue poblado en 1510 por Diego de Nicuesa y fundado oficialmente a finales de 1519 por Diego de Albítez. La ciudad de Nombre de Dios fue reemplazada por Portobelo debido a que tenía mejores condiciones comerciales, militares y agrícolas. La ciudad se muda en 1597 luego del ataque del corsario Francis Drake.</p>`,
+      <b style="font-size:25px;text-align:center;">Nombre de Dios</b><hr><p style="font-size:20px;text-align:justify;">Fundada en 1510 por Diego de Nicuesa y repoblada en 1519, Nombre de Dios fue el primer puerto en el caribe istmeño en formar parte del circuito comercial transístmico, por medio de las ferias comerciales que se realizaban con la llegada de la Flota de Tierra Firme. En 1596, tras un ataque del corsario inglés Francis Drake, la ciudad fue abandonada y trasladada a la bahía de Portobelo debido a que tenía mejores condiciones comerciales y defensivas.</p>`,
       showConfirmButton: false,
     });
     this.physics.pause();
@@ -267,11 +267,12 @@ class Mapa2 extends BaseScene {
     this.choque.play();
     Swal.fire({
       position: "center",
+      customClass: "manoDeDios",
       imageUrl: "./assets/star.png",
       imageWidth: 50,
       imageHeight: 50,
       imageAlt: "Custom image",
-      title: `<p style="font-size:20px;text-align:justify;">Este camino se cerró en 1673 por el ataque de Morgan a <b>Panamá viejo</b>. Luego del ataque se decidió mudar la ciudad a lo que hoy conoces como Casco (Panamá) y la vieja quedó vacía</p>`,
+      title: `<b style="font-size:25px;text-align:center;">Panamá la Vieja</b><hr><p style="font-size:18px;text-align:justify;">Fundada en 1519 por Pedrarias Dávila, la ciudad de Panamá fue el principal puerto comercial del Pacífico istmeño y vínculo con las posesiones españolas en el costa pacífica de Suramérica. En 1671 fue atacada por el corsario inglés Henry Morgan y, posteriormente, sus vecinos optaron por trasladarla a una pequeña península sobre la bahía de Panamá que tenía mejores condiciones salubres y defensivas.</p>`,
       showConfirmButton: false,
     });
     this.physics.pause();

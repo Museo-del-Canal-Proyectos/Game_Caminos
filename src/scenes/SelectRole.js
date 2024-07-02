@@ -31,7 +31,7 @@ class SelectRole extends BaseScene {
                 this.musicAmbiente.stop();
                 this.musciNino.stop();
                 this.musicNina.stop();
-                this.scene.start('Mapa1');
+                this.scene.start('IntroScene');
 
             }
             if(this.role.x===280){
@@ -39,7 +39,7 @@ class SelectRole extends BaseScene {
                 this.musicAmbiente.stop();
                 this.musciNino.stop();
                 this.musicNina.stop();
-                this.scene.start('Mapa1');
+                this.scene.start('IntroScene');
             }
         }
         if (control.axes.length) {

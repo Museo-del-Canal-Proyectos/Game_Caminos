@@ -18,6 +18,8 @@ class PreloadScene extends Phaser.Scene {
     this.load.audio('ob', [ 'assets/Audios/WarioSound/objetos.mp3']);
     this.load.audio('w1', [ 'assets/Audios/WarioSound/world1.mp3']);
     this.load.audio('w2', [ 'assets/Audios/WarioSound/world2.mp3']);
+    this.load.audio('w3', [ 'assets/Audios/WarioSound/mz3.mp3']);
+    this.load.audio('rain', [ 'assets/Audios/WarioSound/lluvia.mp3']);
     /*Music*/
     /*menu*/
     this.load.image('MenuInicial','assets/menu/Inicio.png');
@@ -63,7 +65,7 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('flecha3', 'assets/enemigos/flecha.png');
     this.load.spritesheet('bala1', 'assets/enemigos/baladecanon.png', { frameWidth: 50, frameHeight: 71 });
     /*LUVIA*/
-    this.load.spritesheet('lluvia', 'assets/enemigos/lluvia1750x440.png',{ frameWidth: 875, frameHeight: 440 });
+    this.load.spritesheet('lluvia', 'assets/enemigos/lluvia448x4608.png',{ frameWidth: 768, frameHeight: 448 });
      
     this.load.image('block_1', 'assets/1.png');//bloques transparentes
     this.load.image('block_2', 'assets/2.png');//bloques transparentes
@@ -78,6 +80,13 @@ class PreloadScene extends Phaser.Scene {
 
     this.load.audio('choque', './assets/Audios/level_up.mp3');//audios Moi Music
     this.load.audio('choque_plat', './assets/Audios/pasos.ogg');//audios Moi Music
+
+    this.load.image('TextoIMG', 'assets/papelvf2.png');
+    this.load.image('TextoIMG1', 'assets/cuadrante.png');
+    this.load.image('TextoIMG2', 'assets/papelviejofondo.jpg');
+    this.load.image('btnRed', 'assets/boton_red.png');
+
+
   }
 
   create() {
