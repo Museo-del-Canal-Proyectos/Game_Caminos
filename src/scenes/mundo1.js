@@ -90,12 +90,15 @@ class Plano1 extends BaseScene {
             this.physics.add.collider(this.Jugador2, this.perulera3, this.ColisionPerulera3, null, this);
             this.physics.add.collider(this.Jugador2, this.perulera4, this.ColisionPerulera4, null, this);
             this.physics.add.collider(this.Jugador2, this.perulera5, this.ColisionPerulera5, null, this);
+            this.physics.add.collider(this.Jugador2, this.gate, this.vacio,null,this);
 
         } else {
             // console.log("Jugador 2 no conectado")
         }
     }
+    vacio(){
 
+    }
     createPlayer1() {
         //cuando son dos seteo en storage jugador 1 en seleccion  
         this.storagePlayer = sessionStorage.getItem('selectPLayer');

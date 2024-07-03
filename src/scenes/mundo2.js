@@ -103,9 +103,13 @@ class Plano2 extends BaseScene {
             this.physics.add.collider(this.Jugador2, this.objeto3, this.ColisionObj3, null, this);
             this.physics.add.collider(this.Jugador2, this.objeto4, this.ColisionObj4, null, this);
             this.physics.add.collider(this.Jugador2, this.objeto5, this.ColisionObj5, null, this);
+            this.physics.add.collider(this.Jugador2, this.gate, this.vacio,null,this);
         } else {
             console.log("Jugador 2 no conectado en mundo 2")
         }
+    }
+    vacio(){
+        
     }
     /*Fin Creacion Player 2*/
     createPlayer1() {

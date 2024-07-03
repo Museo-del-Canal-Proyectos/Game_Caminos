@@ -43,6 +43,8 @@ class Plano3 extends BaseScene {
     velocidadX = 300;
     velocidadX_P2 = 300;
     velocidadY = 280;
+    volteoP1= true;
+    volteoP2= true;
     Mosquito = null;
     entradaLLuvia = null;
     salidaLLuvia = null;
@@ -71,6 +73,10 @@ class Plano3 extends BaseScene {
         super('Plano3', config);
     }
 
+    gateMundo2() {
+        this.gate = this.physics.add.staticGroup();
+        this.gate.create(3945, 300, 'block_2').setScale(0, 4).refreshBody();
+    }
     createPlayer1() {
         //cuando son dos seteo en storage jugador 1 en seleccion  
         this.storagePlayer = sessionStorage.getItem('selectPLayer');
@@ -122,9 +128,14 @@ class Plano3 extends BaseScene {
             this.physics.add.collider(this.Jugador2, this.objeto3, this.ColisionObj3, null, this);
             this.physics.add.collider(this.Jugador2, this.objeto4, this.ColisionObj4, null, this);
             this.physics.add.collider(this.Jugador2, this.objeto5, this.ColisionObj5, null, this);
+            this.physics.add.collider(this.Jugador2, this.gate, this.vacio,null,this);
         } else {
             console.log("Jugador 2 no conectado en mundo 2")
         }
+    }
+
+    vacio(){
+
     }
     CirculosW3() {
         this.Circle1 = this.add.graphics();
@@ -257,6 +268,7 @@ class Plano3 extends BaseScene {
         });
         this.temporizador();
         this.createObjetos();
+        this.gateMundo2();
         this.createPlayer1();
         this.createPlayer2();
         this.lluvia = this.physics.add.sprite(1525, 0, 'lluvia').setImmovable(true).setOrigin(0);
@@ -269,7 +281,6 @@ class Plano3 extends BaseScene {
         })
         this.lluvia.play('caer', true);
         //this.lluvia3.play('caer',true);
-
         this.physics.add.collider(this.player1, this.plataformaW3, this.colisionMundo, null, this);
         this.physics.add.collider(this.player1, this.plataformaVacio3, this.colisionVacio1, null, this);
         this.physics.add.collider(this.player1, this.plataformaVacio3_2, this.colisionVacio2, null, this);
@@ -296,6 +307,7 @@ class Plano3 extends BaseScene {
         this.physics.add.collider(this.player1, this.objeto3, this.ColisionObj3, null, this);
         this.physics.add.collider(this.player1, this.objeto4, this.ColisionObj4, null, this);
         this.physics.add.collider(this.player1, this.objeto5, this.ColisionObj5, null, this);
+        this.physics.add.collider(this.player1, this.gate, this.mundo2, null, this);
     }
 
     sonidoLLuvuia(player) {
@@ -329,6 +341,32 @@ class Plano3 extends BaseScene {
        }
     }
 
+    /**/
+    mundo2() {
+        clearInterval(this.intervaloTIEMPO);
+        this.volteoP1=false;
+        this.velocidadX = 0;
+        this.velocidadY = 0;
+        this.animacionStop='celebrate';
+        this.animacionJump='celebrate';
+        this.animacionMove='celebrate';
+        this.animacionMoveP2='celebrateP2';
+        this.animacionJumpP2='celebrateP2';
+        this.animacionStopP2='celebrateP2';
+        this.player1.setPosition(3790,130);
+        if(this.isMultiPLayer){
+            this.volteoP2=false;
+            this.Jugador2.setPosition(3685,130);
+        }
+        this.physics.pause();
+        sessionStorage.setItem('PuntajeActual',this.monedasW3);
+        setTimeout(() => {
+            this.physics.resume();
+            this.game.sound.stopAll();
+            this.scene.start('SavePlayer');
+        }, 2000)
+    }
+ /**/
     damagePlayer1() {
         this.player1.setTint(0xff0000);
         this.player1.setAlpha(0.5);
@@ -749,7 +787,7 @@ class Plano3 extends BaseScene {
     }
 
     update() {
-        console.log(this.player1.x, ":", this.player1.y);
+       // console.log(this.player1.x, ":", this.player1.y);
         MosquitoACT1.MoveW3_1(this.Mosquito, this.velocidadMosquito);
         MosquitoACT1.MoveW3_1(this.Mosquito2, this.velocidadMosquito);
         MosquitoACT1.MoveW3_1(this.Mosquito3, this.velocidadMosquito);
@@ -785,7 +823,7 @@ class Plano3 extends BaseScene {
                 this.player1.setFlipX(false);
             } else if (axisH === 1) {
                 this.player1.setVelocityX(-this.velocidadX);
-                this.player1.setFlipX(true);
+                this.player1.setFlipX(this.volteoP1);
             } else {
                 this.player1.setVelocityX(0);
             }
@@ -817,7 +855,7 @@ class Plano3 extends BaseScene {
                     this.Jugador2.setFlipX(false);
                 } else if (axisH === 1) {
                     this.Jugador2.setVelocityX(-this.velocidadX_P2);
-                    this.Jugador2.setFlipX(true);
+                    this.Jugador2.setFlipX(this.volteoP2);
                 } else {
                     this.Jugador2.setVelocityX(0);
                 }

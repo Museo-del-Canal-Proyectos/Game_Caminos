@@ -12,25 +12,35 @@ class SavePlayer extends BaseScene {
         this.key=null;
     }
 
-    getDataChange(){
-        this.dataSesion= sessionStorage.length;
-        let parseData
-        console.log(this.dataSesion)
-        if(this.dataSesion === 1){ 
-           for(let i=0;i<=5;i++){
-            parseData = JSON.parse(sessionStorage.getItem(`${i}`));
-            if(parseData!=null){
-            this.key=i;  
-            this.dataName=parseData.nombre;
-            this.dataPuntos=parseData.puntos;
-            }
-           }
-        }
-        console.log(this.key,this.dataName,this.dataPuntos);
-    }
+    // getDataChange(){
+    //     this.dataSesion= sessionStorage.length;
+    //     // let parseData
+    //     // console.log(this.dataSesion)
+    //     // if(this.dataSesion === 1){ 
+    //     //    for(let i=0;i<=5;i++){
+    //     //     parseData = JSON.parse(sessionStorage.getItem(`${i}`));
+    //     //     if(parseData!=null){
+    //     //     this.key=i;  
+    //     //     this.dataName=parseData.nombre;
+    //     //     this.dataPuntos=parseData.puntos;
+    //     //     }
+    //     //    }
+    //     // }else{
+    //     //     this.key=1;
+    //     // }
+       
+    // }
 
     create() {
-        this.getDataChange();
+       this.dataSesion= localStorage.length;
+       this.dataPuntos=sessionStorage.getItem('PuntajeActual');
+       if(this.dataSesion>0){
+            this.key=this.dataSesion+1;
+       }else{
+           this.key=1;
+       }
+       console.log(this.key,this.dataName,this.dataPuntos);
+        
         this.add.text(10, 10, 'Enter your name:', { font: '32px Courier', fill: '#ffffff' });
 
         const textEntry = this.add.text(10, 50, '', { font: '32px Courier', fill: '#ffff00' });
