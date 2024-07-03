@@ -260,7 +260,7 @@ class Plano3 extends BaseScene {
         this.createPlayer1();
         this.createPlayer2();
         this.lluvia = this.physics.add.sprite(1525, 0, 'lluvia').setImmovable(true).setOrigin(0);
-        console.log(this.lluvia);
+        this.add.image(1525, 0, 'nubes').setOrigin(0);
         this.anims.create({
             key: 'caer',
             frames: this.anims.generateFrameNumbers('lluvia', { start: 0, end: 5 }),

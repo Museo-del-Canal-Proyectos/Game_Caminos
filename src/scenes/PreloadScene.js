@@ -22,7 +22,7 @@ class PreloadScene extends Phaser.Scene {
     this.load.audio('rain', [ 'assets/Audios/WarioSound/lluvia.mp3']);
     /*Music*/
     /*menu*/
-    this.load.image('MenuInicial','assets/menu/Inicio.png');
+    this.load.image('MenuInicial','assets/menu/In2.png');
     this.load.image('select','assets/menu/Select-Inicio.png');
     this.load.image('personaje','assets/menu/seleccionpersonaje.png');
     this.load.image('pesonaje-select','assets/menu/Select-personaje.png');
@@ -85,7 +85,7 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('TextoIMG1', 'assets/cuadrante.png');
     this.load.image('TextoIMG2', 'assets/papelviejofondo.jpg');
     this.load.image('btnRed', 'assets/boton_red.png');
-
+    this.load.image('nubes','assets/Nubes.png');
 
   }
 
