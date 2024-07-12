@@ -34,7 +34,7 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('pipe', 'assets/pipe.png');//cargamos el sprite de los obstaculos
     this.load.image('pause', 'assets/pause.png');//cargamos boton de pausa
     this.load.image('back', 'assets/back.png');//cargamos boton de regresar
-    this.load.image('bg1', 'assets/plano1.png');//BG movimiento
+    this.load.image('bg1', 'assets/worlds/Background-Video--Juego.png');//BG movimiento
     this.load.image('wordl1', 'assets/worlds/w1.jpg');
     this.load.image('mundo1', 'assets/worlds/world 1.png');//Mundo 1
 
@@ -86,6 +86,7 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('TextoIMG2', 'assets/papelviejofondo.jpg');
     this.load.image('btnRed', 'assets/boton_red.png');
     this.load.image('nubes','assets/Nubes.png');
+    this.load.image('punto','assets/worlds/point-desactivo.png')
 
   }
 

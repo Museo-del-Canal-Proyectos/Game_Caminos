@@ -23,6 +23,10 @@ class Mapa3 extends BaseScene {
   create() {
     this.cameras.add(1366, 768);
     this.fondo = this.add.image(0, 0, 'bg1').setOrigin(0);
+    this.punto= this.add.image(555,634,'punto').setOrigin(0);
+    console.log(this.punto);
+    this.punto2= this.add.image(825,345,'punto').setOrigin(0);
+    console.log(this.punto2);
     this.createPersonaje();
     this.createPlatform();
     this.plataformaND();
