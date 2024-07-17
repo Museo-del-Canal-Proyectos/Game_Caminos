@@ -240,7 +240,8 @@ class Plano1 extends BaseScene {
     create() {
         this.music=this.sound.add('w1');
         this.music.play();
-        this.cameras.main.setBounds(0, 0, 4095, 768);
+        this.camara = this.cameras.main.setBounds(0, 0, 4095, 768);
+        this.camara.flash(2000);
         this.physics.world.setBounds(0, 0, 4095, 768);
         this.mundo=this.add.image(0, 0, 'Plano1').setOrigin(0);
         this.add.image(250, 30, 'estado').setScale(1).setScrollFactor(0);
@@ -336,6 +337,7 @@ class Plano1 extends BaseScene {
         }
         this.physics.pause();
         sessionStorage.setItem('PuntajeActual',this.monedas);
+        this.camara.fade(2500);
         setTimeout(() => {
             this.physics.resume();
             this.scene.start('Mapa2');

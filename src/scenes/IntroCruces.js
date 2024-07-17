@@ -16,7 +16,14 @@ class IntroCruces extends BaseScene {
         this.video.on('complete', () => {
           AnimacionPlayer1(this.anims,this.storagePlayer);
           this.activacion=true;
-          this.btn = this.add.image(1035, 545, 'btnRed').setScale(0.2).setOrigin(0);
+          this.btn = this.physics.add.sprite(450, 450, 'btn').setScale(0.5).setOrigin(0);
+          this.anims.create({
+            key:'btnV' ,
+            frames: this.anims.generateFrameNumbers('btn',{start:0, end:3}),
+            frameRate: 4,
+            repeat:-1, 
+           })
+          this.btn.play('btnV',true);
         });
     }
 
@@ -32,22 +39,24 @@ class IntroCruces extends BaseScene {
             return;
         }
         if (control.buttons[1].pressed) {
-            this.player1 = this.physics.add.sprite(940, 510,this.storagePlayer).setOrigin(0);
+            this.player1 = this.physics.add.sprite(450, 450,this.storagePlayer).setOrigin(0);
+            this.player1.setScale(0.5);
             this.btn.setVisible(false);
             this.player1.play('celebrateV', true);
             this.activacion=false;
             setTimeout(()=>{
                 this.scene.start('Plano2');
-            },1600)
+            },1500)
         }
         if(control.buttons[0].pressed){
-            this.player1 = this.physics.add.sprite(940, 510,this.storagePlayer).setOrigin(0);
+            this.player1 = this.physics.add.sprite(450, 450,this.storagePlayer).setOrigin(0);
+            this.player1.setScale(0.5);
             this.btn.setVisible(false);
             this.player1.play('celebrateV', true);
             this.activacion=false;
             setTimeout(()=>{
                 this.scene.start('Plano2');
-            },1600)
+            },1500)
         }
     }
 }

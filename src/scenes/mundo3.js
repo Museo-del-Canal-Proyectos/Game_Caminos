@@ -161,7 +161,8 @@ class Plano3 extends BaseScene {
         this.music3 = this.sound.add('w3');
         this.lluviaMusic = this.sound.add('rain');
         this.music3.play();
-        this.cameras.main.setBounds(0, 0, 4095, 768);
+        this.camara = this.cameras.main.setBounds(0, 0, 4095, 768);
+        this.camara.flash(2000);
         this.physics.world.setBounds(0, 0, 4095, 768);
         this.mundo = this.add.image(0, 0, 'Plano3').setOrigin(0);
         this.add.image(250, 30, 'estado').setScale(1).setScrollFactor(0);
@@ -360,6 +361,7 @@ class Plano3 extends BaseScene {
         }
         this.physics.pause();
         sessionStorage.setItem('PuntajeActual',this.monedasW3);
+        this.camara.fade(2500);
         setTimeout(() => {
             this.physics.resume();
             this.game.sound.stopAll();

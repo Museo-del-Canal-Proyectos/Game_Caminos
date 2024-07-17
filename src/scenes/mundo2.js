@@ -218,7 +218,8 @@ class Plano2 extends BaseScene {
         this.monedasW2 = sessionStorage.getItem('PuntajeActual');
         this.music2 = this.sound.add('w2');
         this.music2.play();
-        this.cameras.main.setBounds(0, 0, 4095, 768);
+        this.camara = this.cameras.main.setBounds(0, 0, 4095, 768);
+        this.camara.flash(2000);
         this.physics.world.setBounds(0, 0, 4095, 768);
         this.mundo = this.add.image(0, 0, 'Plano2').setOrigin(0);
         this.add.image(250, 30, 'estado').setScale(1).setScrollFactor(0);
@@ -328,12 +329,14 @@ class Plano2 extends BaseScene {
         this.animacionJumpP2='celebrateP2';
         this.animacionStopP2='celebrateP2';
         this.player1.setPosition(3910,320);
+
         if(this.isMultiPLayer){
            this.volteoP2=false;
            this.Jugador2.setPosition(3820,320);
         }
         this.physics.pause();
         sessionStorage.setItem('PuntajeActual', this.monedasW2);
+        this.camara.fade(2500);
         setTimeout(() => {
             this.physics.resume();
             this.scene.start('Mapa3');

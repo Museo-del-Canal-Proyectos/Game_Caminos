@@ -53,6 +53,8 @@ class PreloadScene extends Phaser.Scene {
     this.load.spritesheet('player2_JUMP', 'assets/player2/player2-jump.png', { frameWidth: 77, frameHeight: 114 });
     this.load.spritesheet('player2', 'assets/player2/player2_R.png', { frameWidth: 70, frameHeight: 113 });
     this.load.spritesheet('player2_C','assets/player2/player2Celebracion.png',{ frameWidth: 93, frameHeight:135})
+    this.load.spritesheet('player1Continuar','assets/player1/Continuar.png',{ frameWidth: 665, frameHeight:656})
+    this.load.spritesheet('btn','assets/player1/Buttons-Continuar.png',{ frameWidth: 665, frameHeight:656})
 
     this.load.spritesheet('serpiente', 'assets/enemigos/Serpiente.png', { frameWidth: 101, frameHeight: 71 });//enemigo
     this.load.spritesheet('serpiente2', 'assets/enemigos/Serpiente-attack.png', { frameWidth: 167, frameHeight: 65 });//enemigo
@@ -89,9 +91,9 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('punto','assets/worlds/point-desactivo.png')
     
     //Video
-    this.load.video('videoVentas', 'assets/video/Secuencia 03.mp4',true);
-    this.load.video('videoCity','assets/video/Secuencia 01_2.mp4',true);
-    this.load.video('videoBoqueron','assets/video/Secuencia 03_1.mp4',true);
+    this.load.video('videoVentas', 'assets/video/02 Ventas Chagres- 1366.mp4',true);
+    this.load.video('videoCity','assets/video/01 Panama- 1366.mp4',true);
+    this.load.video('videoBoqueron','assets/video/03 Boqueron- 1366.mp4',true);
 
   }
 
