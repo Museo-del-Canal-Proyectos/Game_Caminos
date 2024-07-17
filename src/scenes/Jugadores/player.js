@@ -41,7 +41,12 @@ export default (anims,data)=>{
          repeat:-1
      })
 
-
+     anims.create({
+        key:'celebrateV' ,
+        frames: anims.generateFrameNumbers(`${data}_C`,{start:0, end:11}),
+        frameRate: 8,
+        repeat:0, 
+     })
 
 
 }

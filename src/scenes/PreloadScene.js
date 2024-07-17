@@ -87,6 +87,11 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('btnRed', 'assets/boton_red.png');
     this.load.image('nubes','assets/Nubes.png');
     this.load.image('punto','assets/worlds/point-desactivo.png')
+    
+    //Video
+    this.load.video('videoVentas', 'assets/video/Secuencia 03.mp4',true);
+    this.load.video('videoCity','assets/video/Secuencia 01_2.mp4',true);
+    this.load.video('videoBoqueron','assets/video/Secuencia 03_1.mp4',true);
 
   }
 
@@ -95,6 +100,5 @@ class PreloadScene extends Phaser.Scene {
     this.scene.start('MenuScene');
   }
 }
-
 
 export default PreloadScene;

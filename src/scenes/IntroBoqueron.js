@@ -1,8 +1,8 @@
 import BaseScene from "./BaseScene";
-
+import AnimacionPlayer1 from "../scenes/Jugadores/player";
 
 class IntroBoqueron extends BaseScene {
-
+    video = null;
     activacion = false;
     constructor(config) {
         super('IntroBoqueron', config);
@@ -10,34 +10,21 @@ class IntroBoqueron extends BaseScene {
 
 
     create() {
-        this.cameras.main.setBounds(0, 0, 1366, 768);
-        this.cameras.main.flash(1500);
-        const titulo = "Boquerón";
-        const content = [
-            'Una de las primeras ventas que surgieron en el Camino Real, estaba ubicada a 24 km de Portobelo',
-            'y era la primera parada en la ruta hacia la ciudad de Panamá. Al igual que otros pueblos transístmicos,',
-            'en Boquerón los viajeros podían encontrar hospedaje y comida como bollos de maíz,',
-            'plátanos y platos de carne o pescado.',
-            '',,
-            'By ITMSOFT.'
-        ];
-
-        this.add.image(0, 0, 'TextoIMG1').setOrigin(0);
-        this.texto1 = this.add.text(235, 320, content, { fontFamily: 'Comic Sans MS', fontSize: '20px', color: '#151515', wordWrap: { width: 950 } }).setOrigin(0);
-        this.texto1.setShadow(5, 5, '#333333', 4, true, true);
-        this.titulo= this.add.text(600,225,titulo,{ fontFamily: 'Comic Sans MS', fontSize: '36px', color: '#151515', wordWrap: { width: 950 } }).setOrigin(0);
-        this.titulo.setShadow(5, 5, '#333333', 4, true);
-        setTimeout(() => {
+        this.storagePlayer = sessionStorage.getItem('selectPLayer');
+        this.video = this.add.video(0, 0, 'videoBoqueron').setOrigin(0);
+        this.video.play();
+        this.video.on('complete', () => {
+            AnimacionPlayer1(this.anims, this.storagePlayer);
             this.activacion = true;
             this.btn = this.add.image(1035, 545, 'btnRed').setScale(0.2).setOrigin(0);
-        }, 7000)
+        });
     }
 
 
     update() {
 
         if (this.activacion) {
-         this.moveController();
+            this.moveController();
         }
 
     }
@@ -48,10 +35,22 @@ class IntroBoqueron extends BaseScene {
             return;
         }
         if (control.buttons[1].pressed) {
-            this.scene.start('Plano3');
+            this.player1 = this.physics.add.sprite(940, 510, this.storagePlayer).setOrigin(0);
+            this.btn.setVisible(false);
+            this.player1.play('celebrateV', true);
+            this.activacion = false;
+            setTimeout(() => {
+                this.scene.start('Plano3');
+            }, 1600);
         }
-        if(control.buttons[0].pressed){
-            this.scene.start('Plano3');
+        if (control.buttons[0].pressed) {
+            this.player1 = this.physics.add.sprite(940, 510, this.storagePlayer).setOrigin(0);
+            this.btn.setVisible(false);
+            this.player1.play('celebrateV', true);
+            this.activacion = false;
+            setTimeout(() => {
+                this.scene.start('Plano3');
+            }, 1600);
         }
     }
 

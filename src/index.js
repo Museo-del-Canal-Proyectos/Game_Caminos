@@ -17,6 +17,7 @@ import IntroScene from "./scenes/Intro.Scene";
 import IntroCity  from "./scenes/IntroCity";
 import IntroCruces from "./scenes/IntroCruces";
 import IntroBoqueron from "./scenes/IntroBoqueron";
+import videoTest from "./scenes/videoTest";
 
 const WIDTH = 1368;
 const HEIGHT = 768;
@@ -26,7 +27,7 @@ const SHARED_CONFIG = {
   height: HEIGHT,
 }
 
-const Scenes = [PreloadScene, MenuScene, IntroScene,IntroCity,IntroCruces,IntroBoqueron,SelectRole, Plano1,Plano2,Plano3, ScoreScene, CreditScene, SavePlayer, PlayScene, Mapa1, Mapa2,Mapa3, WorldScene1];
+const Scenes = [PreloadScene, MenuScene, IntroScene,IntroCity,videoTest,IntroCruces,IntroBoqueron,SelectRole, Plano1,Plano2,Plano3, ScoreScene, CreditScene, SavePlayer, PlayScene, Mapa1, Mapa2,Mapa3, WorldScene1];
 const createScene = Scene => new Scene(SHARED_CONFIG)
 const initScenes = () => Scenes.map(createScene);
 
