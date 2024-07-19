@@ -65,6 +65,7 @@ class SavePlayer extends BaseScene {
      dataJugador.push(JSON.stringify(data));
      localStorage.setItem(`${this.key}`,dataJugador);
      sessionStorage.clear();
+     this.scene.stop('SavePlayer');
      this.scene.start("ScoreScene");
     }
 

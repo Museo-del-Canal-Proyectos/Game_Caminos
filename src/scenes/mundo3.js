@@ -365,6 +365,7 @@ class Plano3 extends BaseScene {
         setTimeout(() => {
             this.physics.resume();
             this.game.sound.stopAll();
+            this.scene.stop('Plano3');
             this.scene.start('SavePlayer');
         }, 2000)
     }
@@ -725,7 +726,7 @@ class Plano3 extends BaseScene {
     ObjetoMessage() {
         if (this.infoObjeto) {
             Swal.fire({
-                position: "bottom",
+                position: "center",
                 imageUrl: "./assets/iconos/dineroBolsa.png",
                 imageWidth: 50,
                 imageHeight: 50,
@@ -736,8 +737,10 @@ class Plano3 extends BaseScene {
                 timer: 3500
             });
             this.physics.pause();
+            clearInterval(this.intervaloTIEMPO);//limpio intervalo
             setTimeout(() => {
                 this.physics.resume();
+                this.temporizador();//vuelvo a lanzar funcion con valor actual antes del clear
             }, 3600)
         } else {
             // console.log("test no Funciona ya se activo")

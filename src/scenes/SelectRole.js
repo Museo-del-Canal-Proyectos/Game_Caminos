@@ -31,6 +31,7 @@ class SelectRole extends BaseScene {
                 this.musicAmbiente.stop();
                 this.musciNino.stop();
                 this.musicNina.stop();
+                this.scene.stop('SelectRole');
                 this.scene.start('IntroScene');
 
             }
@@ -39,6 +40,7 @@ class SelectRole extends BaseScene {
                 this.musicAmbiente.stop();
                 this.musciNino.stop();
                 this.musicNina.stop();
+                this.scene.stop('SelectRole');
                 this.scene.start('IntroScene');
             }
         }

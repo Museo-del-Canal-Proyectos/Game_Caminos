@@ -59,7 +59,6 @@ class ScoreScene extends BaseScene {
 
   }
 
-
   moveController() {
     const control = this.input.gamepad.getPad(0);
     if (!control) {
@@ -67,10 +66,9 @@ class ScoreScene extends BaseScene {
     }
     if (control.buttons[3].pressed) {
       console.log("Botones Programando 0");
+      this.scene.stop('ScoreScene');
       window.location.reload();
     }
-   
-
   }
 }
 

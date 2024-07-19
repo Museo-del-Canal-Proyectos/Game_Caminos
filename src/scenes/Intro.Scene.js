@@ -47,9 +47,11 @@ class IntroScene extends BaseScene {
             return;
         }
         if (control.buttons[1].pressed) {
+            this.scene.stop('IntroScene');
             this.scene.start('Mapa1');
         }
         if(control.buttons[0].pressed){
+            this.scene.stop('IntroScene');
             this.scene.start('Mapa1');
         }
     }

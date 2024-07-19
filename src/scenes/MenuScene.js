@@ -66,6 +66,7 @@ class MenuScene extends BaseScene {
           setTimeout(() => {
             this.mSleccion.stop();
           }, 2000);
+          this.scene.stop('MenuScene');
           this.scene.start('SelectRole');
           break;
         case 713:
@@ -76,6 +77,7 @@ class MenuScene extends BaseScene {
           setTimeout(() => {
             this.mSleccion.stop();
           }, 2000);
+          this.scene.stop('MenuScene');
           this.scene.start('IntroScene');
           break;
 

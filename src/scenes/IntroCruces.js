@@ -45,6 +45,7 @@ class IntroCruces extends BaseScene {
             this.player1.play('celebrateV', true);
             this.activacion=false;
             setTimeout(()=>{
+                this.scene.stop('IntroCruces');
                 this.scene.start('Plano2');
             },1500)
         }
@@ -55,6 +56,7 @@ class IntroCruces extends BaseScene {
             this.player1.play('celebrateV', true);
             this.activacion=false;
             setTimeout(()=>{
+                this.scene.stop('IntroCruces');
                 this.scene.start('Plano2');
             },1500)
         }

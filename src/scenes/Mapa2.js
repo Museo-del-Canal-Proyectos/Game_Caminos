@@ -42,8 +42,8 @@ class Mapa2 extends BaseScene {
 
   createBotonW1() {
     this.boton = this.physics.add.group();
-    this.boton.create(847, 370, 'block_3')
-      .setScale(0.1)
+    this.boton.create(830, 370, 'block_3')
+      .setScale(0.4,0.1)
       .setImmovable(true)
       .setOrigin(0, 0);
   }
@@ -78,6 +78,7 @@ class Mapa2 extends BaseScene {
     this.physics.pause();
     this.cameras.main.fade(1500);
     setTimeout(() => {
+      this.scene.stop('Mapa2');
       this.scene.start('IntroCruces');
     }, 400)
   }
@@ -246,6 +247,7 @@ class Mapa2 extends BaseScene {
       position: "center",
       customClass: "manoDeDios",
       imageUrl: "./assets/star.png",
+      background: 'url(./assets/cuadrante.png) no-repeat center center',
       imageWidth: 50,
       imageHeight: 50,
       imageAlt: "Custom image",
@@ -270,11 +272,9 @@ class Mapa2 extends BaseScene {
     Swal.fire({
       position: "center",
       customClass: "manoDeDios",
-      imageUrl: "./assets/star.png",
+      background: 'url(./assets/Historia-Panamaviejo.png) no-repeat center center',
       imageWidth: 50,
       imageHeight: 50,
-      imageAlt: "Custom image",
-      title: `<b style="font-size:25px;text-align:center;">Panamá la Vieja</b><hr><p style="font-size:18px;text-align:justify;">Fundada en 1519 por Pedrarias Dávila, la ciudad de Panamá fue el principal puerto comercial del Pacífico istmeño y vínculo con las posesiones españolas en el costa pacífica de Suramérica. En 1671 fue atacada por el corsario inglés Henry Morgan y, posteriormente, sus vecinos optaron por trasladarla a una pequeña península sobre la bahía de Panamá que tenía mejores condiciones salubres y defensivas.</p>`,
       showConfirmButton: false,
     });
     this.physics.pause();

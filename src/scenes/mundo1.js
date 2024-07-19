@@ -165,7 +165,7 @@ class Plano1 extends BaseScene {
     Objeto() {
         if (this.infoObjeto) {
             Swal.fire({
-                position: "bottom",
+                position: "center",
                 imageUrl: "./assets/iconos/perulera.png",
                 imageWidth: 50,
                 imageHeight: 50,
@@ -176,8 +176,12 @@ class Plano1 extends BaseScene {
                 timer: 3500
             });
             this.physics.pause();
+            //this.textoTiempo.setText("-:--");//
+            clearInterval(this.intervaloTIEMPO);//
             setTimeout(() => {
                 this.physics.resume();
+                // this.tiempo=this.tiempo+1;
+                this.temporizador();//
             }, 3600)
         } else {
             // console.log("test no Funciona ya se activo")
@@ -289,6 +293,7 @@ class Plano1 extends BaseScene {
          if(this.monedas==0){
             this.tiempo='00';
          }
+
          this.monedas<0 ? this.textoMonedas.setText(`x0`) : this.textoMonedas.setText(`x${this.monedas}`);
       /*Fin Resta Monedas*/
     }
@@ -340,6 +345,7 @@ class Plano1 extends BaseScene {
         this.camara.fade(2500);
         setTimeout(() => {
             this.physics.resume();
+            this.scene.stop('Plano1');
             this.scene.start('Mapa2');
         }, 2000)
     }

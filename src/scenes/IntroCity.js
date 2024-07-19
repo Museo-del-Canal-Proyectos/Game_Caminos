@@ -46,6 +46,7 @@ class IntroCity extends BaseScene {
             this.player1.play('celebrateV', true);
             this.activacion=false;
             setTimeout(()=>{
+                this.scene.stop('IntroCity');
                 this.scene.start('Plano1');
             },1500);
         }
@@ -56,6 +57,7 @@ class IntroCity extends BaseScene {
             this.player1.play('celebrateV', true);
             this.activacion=false;
             setTimeout(()=>{
+                this.scene.stop('IntroCity');
                 this.scene.start('Plano1');
             },1500)
         }

@@ -48,6 +48,7 @@ class IntroBoqueron extends BaseScene {
             this.player1.play('celebrateV', true);
             this.activacion = false;
             setTimeout(() => {
+                this.scene.stop('IntroBoqueron');
                 this.scene.start('Plano3');
             }, 1500);
         }
@@ -58,6 +59,7 @@ class IntroBoqueron extends BaseScene {
             this.player1.play('celebrateV', true);
             this.activacion = false;
             setTimeout(() => {
+                this.scene.stop('IntroBoqueron');
                 this.scene.start('Plano3');
             }, 1500);
         }

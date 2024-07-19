@@ -339,6 +339,7 @@ class Plano2 extends BaseScene {
         this.camara.fade(2500);
         setTimeout(() => {
             this.physics.resume();
+            this.scene.stop('Plano2');
             this.scene.start('Mapa3');
         }, 2000)
     }
@@ -680,7 +681,7 @@ class Plano2 extends BaseScene {
     ObjetoMessage() {
         if (this.infoObjeto) {
             Swal.fire({
-                position: "bottom",
+                position: "center",
                 imageUrl: "./assets/iconos/diamantes.png",
                 imageWidth: 50,
                 imageHeight: 50,
@@ -691,8 +692,10 @@ class Plano2 extends BaseScene {
                 timer: 3500
             });
             this.physics.pause();
+            clearInterval(this.intervaloTIEMPO);//
             setTimeout(() => {
                 this.physics.resume();
+                this.temporizador();//
             }, 3600)
         } else {
             // console.log("test no Funciona ya se activo")
