@@ -68,7 +68,7 @@ class PreloadScene extends Phaser.Scene {
     this.load.spritesheet('bala1', 'assets/enemigos/baladecanon.png', { frameWidth: 50, frameHeight: 71 });
     /*LUVIA*/
     this.load.spritesheet('lluvia', 'assets/enemigos/lluvia448x4608.png',{ frameWidth: 768, frameHeight: 448 });
-     
+    /*    */
     this.load.image('block_1', 'assets/1.png');//bloques transparentes
     this.load.image('block_2', 'assets/2.png');//bloques transparentes
     this.load.image('block_3', 'assets/3.png');//bloques transparentes
@@ -91,9 +91,10 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('punto','assets/worlds/point-desactivo.png')
     
     //Video
-    this.load.video('videoVentas', 'assets/video/02 Ventas Chagres- 1366.mp4',true);
-    this.load.video('videoCity','assets/video/01 Panama- 1366.mp4',true);
-    this.load.video('videoBoqueron','assets/video/03 Boqueron- 1366.mp4',true);
+    this.load.video('videoVentas', 'assets/video/2-Venta de Chagres.mp4',true);
+    this.load.video('videoCity','assets/video/1-Panama.mp4',true);
+    this.load.video('videoBoqueron','assets/video/3-boueron.mp4',true);
+    this.load.video('videoPortobelo','assets/video/4.portobelomp4.mp4',true);
 
   }
 

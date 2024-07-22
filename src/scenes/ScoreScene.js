@@ -36,7 +36,7 @@ class ScoreScene extends BaseScene {
     test.forEach(item => {
       item.nombre;
       const posiciones = [this.screenCenter[0], this.screenCenter[1] + lastMenuPositionY];
-      this.add.text(...posiciones, `${item.nombre}  ${item.puntos}`, { fontSize: '38px', fontFamily: 'Comic Sans MS', fill: "#fff" }).setOrigin(0.5, 2);
+      this.add.text(...posiciones, `${item.nombre}  ${item.puntos}`, { fontSize: '38px', fontFamily: 'Comic Sans MS', fill: "#fff" }).setOrigin(0.5, 5);
       lastMenuPositionY += this.lineHeight;
     })
   }
@@ -54,9 +54,7 @@ class ScoreScene extends BaseScene {
   }
 
   update() {
-
     this.moveController();
-
   }
 
   moveController() {

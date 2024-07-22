@@ -18,6 +18,8 @@ import IntroCity  from "./scenes/IntroCity";
 import IntroCruces from "./scenes/IntroCruces";
 import IntroBoqueron from "./scenes/IntroBoqueron";
 import videoTest from "./scenes/videoTest";
+import IntroPortobelo from "./scenes/IntroPortobelo";
+import Mapa4 from "./scenes/Mapa4";
 
 const WIDTH = 1368;
 const HEIGHT = 768;
@@ -27,7 +29,7 @@ const SHARED_CONFIG = {
   height: HEIGHT,
 }
 
-const Scenes = [PreloadScene, MenuScene, IntroScene,IntroCity,videoTest,IntroCruces,IntroBoqueron,SelectRole, Plano1,Plano2,Plano3, ScoreScene, CreditScene, SavePlayer, PlayScene, Mapa1, Mapa2,Mapa3, WorldScene1];
+const Scenes = [PreloadScene, MenuScene, IntroScene,IntroCity,videoTest,IntroCruces,IntroBoqueron,IntroPortobelo,SelectRole, Plano1,Plano2,Plano3, ScoreScene, CreditScene, SavePlayer, PlayScene, Mapa1, Mapa2,Mapa3,Mapa4, WorldScene1];
 const createScene = Scene => new Scene(SHARED_CONFIG)
 const initScenes = () => Scenes.map(createScene);
 
@@ -44,7 +46,7 @@ const config = {
     default: 'arcade',
     arcade: {
       //gravity:{ y: 400 },
-     //debug: true //linea verde de velocidad PARA VER DISTANCIA DE OBJETOS
+     debug: true //linea verde de velocidad PARA VER DISTANCIA DE OBJETOS
     },
   },
   scene: initScenes()

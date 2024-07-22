@@ -176,6 +176,7 @@ class Plano1 extends BaseScene {
                 timer: 3500
             });
             this.physics.pause();
+            
             //this.textoTiempo.setText("-:--");//
             clearInterval(this.intervaloTIEMPO);//
             setTimeout(() => {

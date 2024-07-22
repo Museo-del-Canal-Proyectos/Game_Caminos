@@ -243,13 +243,9 @@ class Mapa1 extends BaseScene {
     Swal.fire({
       position: "center",
       customClass: "manoDeDios",
-      imageUrl: "./assets/star.png",
-      background: 'url(./assets/cuadrante.png) no-repeat center center',
+      background: 'url(./assets/data-nombre-de-Dios.png) no-repeat center center',
       imageWidth: 50,
       imageHeight: 50,
-      imageAlt: "Custom image",
-      title: `
-      <b style="font-size:25px;text-align:center;">Nombre de Dios</b><hr><p style="font-size:20px;text-align:justify;">Fundada en 1510 por Diego de Nicuesa y repoblada en 1519, Nombre de Dios fue el primer puerto en el caribe istmeño en formar parte del circuito comercial transístmico, por medio de las ferias comerciales que se realizaban con la llegada de la Flota de Tierra Firme. En 1596, tras un ataque del corsario inglés Francis Drake, la ciudad fue abandonada y trasladada a la bahía de Portobelo debido a que tenía mejores condiciones comerciales y defensivas.</p>`,
       showConfirmButton: false,
     });
     this.physics.pause();
@@ -269,7 +265,7 @@ class Mapa1 extends BaseScene {
     Swal.fire({
       position: "center",
       customClass: "manoDeDios",
-      background: 'url(./assets/Historia-Panamaviejo.png) no-repeat center center',
+      background: 'url(./assets/data-panama-la-vieja.png) no-repeat center center',
       imageWidth: 50,
       imageHeight: 50,
       showConfirmButton: false,
