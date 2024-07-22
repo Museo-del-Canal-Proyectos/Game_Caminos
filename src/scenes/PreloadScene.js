@@ -84,11 +84,13 @@ class PreloadScene extends Phaser.Scene {
     this.load.audio('choque_plat', './assets/Audios/pasos.ogg');//audios Moi Music
 
     this.load.image('TextoIMG', 'assets/papelvf2.png');
-    this.load.image('TextoIMG1', 'assets/cuadrante.png');
+    this.load.image('TextoIMG1', 'assets/menu/tutorial-blanco.png');
     this.load.image('TextoIMG2', 'assets/papelviejofondo.jpg');
     this.load.image('btnRed', 'assets/boton_red.png');
     this.load.image('nubes','assets/Nubes.png');
     this.load.image('punto','assets/worlds/point-desactivo.png')
+    //menu
+    this.load.spritesheet('f-menu','assets/menu/flecha-exd.png',{frameWidth:18,frameHeight:40})
     
     //Video
     this.load.video('videoVentas', 'assets/video/2-Venta de Chagres.mp4',true);
@@ -100,7 +102,7 @@ class PreloadScene extends Phaser.Scene {
 
   create() {
     // this.scene.start('MenuScene');//enviamos la escena menu
-    this.scene.start('MenuScene');
+    this.scene.start('IntroScene');
   }
 }
 

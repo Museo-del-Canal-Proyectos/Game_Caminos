@@ -45,8 +45,8 @@ const config = {
     //fisicas de simulacion juegos Arcade 
     default: 'arcade',
     arcade: {
-      //gravity:{ y: 400 },
-     debug: true //linea verde de velocidad PARA VER DISTANCIA DE OBJETOS
+      //gravity:{y: 400 },
+      //debug: true //linea verde de velocidad PARA VER DISTANCIA DE OBJETOS
     },
   },
   scene: initScenes()
