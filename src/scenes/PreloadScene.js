@@ -87,12 +87,12 @@ class PreloadScene extends Phaser.Scene {
     this.load.audio('choque_plat', './assets/Audios/pasos.ogg');//audios Moi Music
 
     this.load.image('TextoIMG', 'assets/papelvf2.png');
-    this.load.image('TextoIMG1', 'assets/menu/tutorial-blanco.png');
+    this.load.image('TextoIMG1', 'assets/menu/tutorial-blanco-21.png');
     this.load.image('TextoIMG2', 'assets/papelviejofondo.jpg');
     this.load.image('btnRed', 'assets/boton_red.png');
     this.load.image('nubes','assets/Nubes.png');
     this.load.image('punto','assets/worlds/point-desactivo.png');
-    this.load.image('teclado','assets/menu/Teclado.png');
+    this.load.image('teclado','assets/menu/Teclado-1.png');
     this.load.image('selector-letras','assets/menu/selecct-letra.png');
     this.load.image('selector-delete','assets/menu/selecct-delete.png');
     this.load.image('selector-espacio','assets/menu/selecct-espacio.png');
@@ -104,12 +104,13 @@ class PreloadScene extends Phaser.Scene {
     this.load.video('videoCity','assets/video/1-Panama.mp4',true);
     this.load.video('videoBoqueron','assets/video/3-boueron.mp4',true);
     this.load.video('videoPortobelo','assets/video/4.portobelomp4.mp4',true);
+    this.load.video('videoGame','assets/video/Intro-videojuego.mp4',true);
 
   }
 
   create() {
     // this.scene.start('MenuScene');//enviamos la escena menu
-    this.scene.start('MenuScene');
+    this.scene.start('IntroGame');
   }
 }
 

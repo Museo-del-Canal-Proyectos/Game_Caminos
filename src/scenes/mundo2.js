@@ -201,11 +201,11 @@ class Plano2 extends BaseScene {
     }
 
     createDiamantes() {
-        this.objeto1 = this.physics.add.image(970, 345, 'cruz').setScale(0.5);
-        this.objeto2 = this.physics.add.image(3200, 420, 'cruz').setScale(0.5);
-        this.objeto3 = this.physics.add.image(3000, 515, 'cruz').setScale(0.5);
-        this.objeto4 = this.physics.add.image(2700, 600, 'cruz').setScale(0.5);
-        this.objeto5 = this.physics.add.image(1500, 596, 'cruz').setScale(0.5);
+        this.objeto1 = this.physics.add.image(970, 345, 'cruz').setScale(0.9);
+        this.objeto2 = this.physics.add.image(3230, 410, 'cruz').setScale(0.9);
+        this.objeto3 = this.physics.add.image(3000, 515, 'cruz').setScale(0.9);
+        this.objeto4 = this.physics.add.image(2700, 600, 'cruz').setScale(0.9);
+        this.objeto5 = this.physics.add.image(1500, 596, 'cruz').setScale(0.9);
         console.log(this.objeto5);
     }
 
@@ -220,6 +220,12 @@ class Plano2 extends BaseScene {
         this.music2.play();
         this.camara = this.cameras.main.setBounds(0, 0, 4095, 768);
         this.camara.flash(2000);
+        
+       this.objeto_i = this.physics.add.image(200, 157, 'block_3').setScale(0.2).setOrigin(0);
+       this.linea = this.physics.add.image(110, 170, 'block_3').setImmovable(true).setScale(5, 0).setOrigin(0);
+       this.objeto_i.body.setGravityY(500);
+       this.physics.add.collider(this.objeto_i, this.linea, null, null, this);
+
         this.physics.world.setBounds(0, 0, 4095, 768);
         this.mundo = this.add.image(0, 0, 'Plano2').setOrigin(0);
         this.add.image(250, 30, 'estado').setScale(1).setScrollFactor(0);
@@ -683,21 +689,14 @@ class Plano2 extends BaseScene {
         if (this.infoObjeto) {
             Swal.fire({
                 position: "center",
-                imageUrl: "./assets/iconos/cruz.png",
+                customClass: "manoDeDios",
+                background: 'url(./assets/pieza-cruz.png) no-repeat center center',
                 imageWidth: 50,
                 imageHeight: 50,
-                imageAlt: "Custom image",
-                title: `<p style="font-size:20px;text-align:justify;"><center>Info por Anexar</center></p>`,
                 showConfirmButton: false,
-                backdrop: false,
-                timer: 3500
             });
             this.physics.pause();
             clearInterval(this.intervaloTIEMPO);//
-            setTimeout(() => {
-                this.physics.resume();
-                this.temporizador();//
-            }, 3600)
         } else {
             // console.log("test no Funciona ya se activo")
         }
@@ -757,7 +756,19 @@ class Plano2 extends BaseScene {
         if (control.buttons[0].pressed && onFloor) {
             this.estadoSuelo = false;
             this.player1.setVelocityY(-this.velocidadY * 2);
+        
         }
+
+        if(control.buttons[3].pressed && this.objeto_i.body.onFloor()){
+            if(!this.infoObjeto){
+             this.objeto_i.setVelocityY(-150);
+             this.objeto_i.body.setGravityY(0);
+             Swal.close();
+             this.physics.resume();//
+             this.temporizador();
+            }
+         }
+
         if (control.axes.length) {
             const axisH = control.axes[0].getValue();
             if (axisH === -1) {
@@ -790,6 +801,18 @@ class Plano2 extends BaseScene {
                 this.estadoSueloP2 = false;
                 this.Jugador2.setVelocityY(-this.velocidadY * 2);
             }
+
+
+            if(control.buttons[3].pressed && this.objeto_i.body.onFloor()){
+                if(!this.infoObjeto){
+                 this.objeto_i.setVelocityY(-150);
+                 this.objeto_i.body.setGravityY(0);
+                 Swal.close();
+                 this.physics.resume();//
+                 this.temporizador();
+                }
+             }
+
             if (control.axes.length) {
                 const axisH = control.axes[0].getValue();
                 if (axisH === -1) {

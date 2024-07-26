@@ -163,6 +163,12 @@ class Plano3 extends BaseScene {
         this.music3.play();
         this.camara = this.cameras.main.setBounds(0, 0, 4095, 768);
         this.camara.flash(2000);
+
+        this.objeto_i = this.physics.add.image(200, 157, 'block_3').setScale(0.2).setOrigin(0);
+        this.linea = this.physics.add.image(110, 170, 'block_3').setImmovable(true).setScale(5, 0).setOrigin(0);
+        this.objeto_i.body.setGravityY(500);
+        this.physics.add.collider(this.objeto_i, this.linea, null, null, this);
+
         this.physics.world.setBounds(0, 0, 4095, 768);
         this.mundo = this.add.image(0, 0, 'Plano3').setOrigin(0);
         this.add.image(250, 30, 'estado').setScale(1).setScrollFactor(0);
@@ -513,7 +519,7 @@ class Plano3 extends BaseScene {
         this.player1.setPosition(1198, 318);
     }
     colisionVacio5() {
-        this.player1.setPosition(2358, 317);
+        this.player1.setPosition(2358, 315);
     }
     //player2
     colisionMundo2() {
@@ -557,7 +563,7 @@ class Plano3 extends BaseScene {
         this.Jugador2.setPosition(1198, 318);
     }
     colisionVacio5_P2() {
-        this.Jugador2.setPosition(2358, 317);
+        this.Jugador2.setPosition(2358, 315);
     }
 
     lluviaIn() {
@@ -728,32 +734,25 @@ class Plano3 extends BaseScene {
         if (this.infoObjeto) {
             Swal.fire({
                 position: "center",
-                imageUrl: "./assets/iconos/objeto-3.png",
+                customClass: "manoDeDios",
+                background: 'url(./assets/pieza-herradura.png) no-repeat center center',
                 imageWidth: 50,
                 imageHeight: 50,
-                imageAlt: "Custom image",
-                title: `<p style="font-size:20px;text-align:justify;"><center>Info por Anexar</center></p>`,
                 showConfirmButton: false,
-                backdrop: false,
-                timer: 3500
             });
             this.physics.pause();
             clearInterval(this.intervaloTIEMPO);//limpio intervalo
-            setTimeout(() => {
-                this.physics.resume();
-                this.temporizador();//vuelvo a lanzar funcion con valor actual antes del clear
-            }, 3600)
         } else {
             // console.log("test no Funciona ya se activo")
         }
     }
 
     createObjetos() {
-        this.objeto1 = this.physics.add.image(608, 590, 'herradura').setScale(0.7);
-        this.objeto2 = this.physics.add.image(900, 520, 'herradura').setScale(0.7);
-        this.objeto3 = this.physics.add.image(1175, 420, 'herradura').setScale(0.7);
-        this.objeto4 = this.physics.add.image(1976, 420, 'herradura').setScale(0.7);
-        this.objeto5 = this.physics.add.image(3145, 420, 'herradura').setScale(0.7);
+        this.objeto1 = this.physics.add.image(608, 590, 'herradura').setScale(0.9);
+        this.objeto2 = this.physics.add.image(900, 520, 'herradura').setScale(0.9);
+        this.objeto3 = this.physics.add.image(1175, 420, 'herradura').setScale(0.9);
+        this.objeto4 = this.physics.add.image(1976, 420, 'herradura').setScale(0.9);
+        this.objeto5 = this.physics.add.image(3145, 420, 'herradura').setScale(0.9);
     }
     //colision Objetos Suma
     //OBJ1
@@ -822,6 +821,17 @@ class Plano3 extends BaseScene {
             this.estadoSuelo = false;
             this.player1.setVelocityY(-this.velocidadY * 2);
         }
+
+        if(control.buttons[3].pressed && this.objeto_i.body.onFloor()){
+            if(!this.infoObjeto){
+             this.objeto_i.setVelocityY(-150);
+             this.objeto_i.body.setGravityY(0);
+             Swal.close();
+             this.physics.resume();//
+             this.temporizador();
+            }
+         }
+
         if (control.axes.length) {
             const axisH = control.axes[0].getValue();
             if (axisH === -1) {
@@ -850,6 +860,17 @@ class Plano3 extends BaseScene {
                 this.estadoSueloP2 = false;
                 this.Jugador2.setVelocityY(-this.velocidadY * 2);
             }
+
+            if(control.buttons[3].pressed && this.objeto_i.body.onFloor()){
+                if(!this.infoObjeto){
+                 this.objeto_i.setVelocityY(-150);
+                 this.objeto_i.body.setGravityY(0);
+                 Swal.close();
+                 this.physics.resume();//
+                 this.temporizador();
+                }
+             }
+
             if (control.buttons[0].pressed && onFloor) {
                 this.estadoSueloP2 = false;
                 this.Jugador2.setVelocityY(-this.velocidadY * 2);

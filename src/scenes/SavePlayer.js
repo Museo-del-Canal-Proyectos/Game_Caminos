@@ -224,7 +224,7 @@ class SavePlayer extends BaseScene {
 
         }
 
-        if (control.buttons[3].pressed) {
+        if (control.buttons[2].pressed) {
             if(this.textEntry.text.length === 0){
                 this.dataName="PLAYER"
                 this.guardarData();

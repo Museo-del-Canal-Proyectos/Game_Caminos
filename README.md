@@ -84,3 +84,18 @@ Aquí tienes la suma total de las coordenadas \(x\) e \(y\) para cada punto en t
 28. BARRA ESPACIO: \(x = 597\), \(y = 645\), suma = 1242
 
 Si necesitas algo más, ¡avísame! 😊
+
+  if(control.buttons[3].pressed && this.objeto.body.onFloor()){
+           if(!this.infoObjeto){
+            this.objeto.setVelocityY(-150);
+            this.objeto.body.setGravityY(0);
+            Swal.close();
+            this.physics.resume();//
+            this.temporizador();
+           }
+        }
+
+       this.objeto = this.physics.add.image(200, 157, 'block_3').setScale(0.2).setOrigin(0);
+        this.linea = this.physics.add.image(110, 170, 'block_3').setImmovable(true).setScale(5, 0).setOrigin(0);
+        this.objeto.body.setGravityY(500);
+        this.physics.add.collider(this.objeto, this.linea, null, null, this);
