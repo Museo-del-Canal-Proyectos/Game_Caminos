@@ -4,7 +4,7 @@ class MenuScene extends BaseScene {
   selector;
   mOpening;
   mSleccion;
- 
+
   constructor(config) {
 
     super('MenuScene', config);
@@ -17,9 +17,10 @@ class MenuScene extends BaseScene {
 
   create() {
     this.mOpening = this.sound.add('op');
-    this.mSleccion= this.sound.add('sl');
+    this.mSleccion = this.sound.add('sl');
     this.add.image(0, 0, 'MenuInicial').setOrigin(0);
-    this.selector = this.physics.add.image(425, 693, 'select');
+    this.selector = this.physics.add.image(583, 695, 'select');
+    console.log(this.selector);
     this.mOpening.loop = true;
     this.mOpening.play();
     //posicion1 425, 693
@@ -41,9 +42,9 @@ class MenuScene extends BaseScene {
   }
 
   posiciones() {
-    this.selector.setPosition(713, 693);
+    this.selector.setPosition(870, 695,);
     this.selector.setPosition(1000, 693);
-    this.selector.setPosition(425, 693);
+    this.selector.setPosition(583, 695,);
   }
 
   moveController() {
@@ -53,15 +54,22 @@ class MenuScene extends BaseScene {
       return;
     }
     if (control.buttons[3].pressed) {
-      this.selector.setPosition(1000, 693);
+      //Info por poner modal
+      console.log("por poner");
     }
+
+    if (control.buttons[2].pressed) {
+      this.scene.stop('MenuScene');
+      this.scene.start('ScoreScene');
+    }
+
     if (control.buttons[1].pressed) {
       this.mSleccion.play();
       let multiplayer;
       switch (this.selector.x) {
-        case 425:
+        case 583:
           this.mOpening.stop();
-          multiplayer= JSON.stringify(false);
+          multiplayer = JSON.stringify(false);
           sessionStorage.setItem('multiplayer', multiplayer);
           setTimeout(() => {
             this.mSleccion.stop();
@@ -69,11 +77,11 @@ class MenuScene extends BaseScene {
           this.scene.stop('MenuScene');
           this.scene.start('SelectRole');
           break;
-        case 713:
+        case 870:
           this.mOpening.stop();
-          multiplayer= JSON.stringify(true);
+          multiplayer = JSON.stringify(true);
           sessionStorage.setItem('multiplayer', multiplayer);
-          sessionStorage.setItem('selectPLayer','player1');
+          sessionStorage.setItem('selectPLayer', 'player1');
           setTimeout(() => {
             this.mSleccion.stop();
           }, 2000);
@@ -94,9 +102,9 @@ class MenuScene extends BaseScene {
     if (control.axes.length) {
       const axisH = control.axes[0].getValue();
       if (axisH === -1) {
-        this.selector.setPosition(713, 693);
+        this.selector.setPosition(870, 695);
       } else if (axisH === 1) {
-        this.selector.setPosition(425, 693);
+        this.selector.setPosition(583, 695);
       } else {
 
 

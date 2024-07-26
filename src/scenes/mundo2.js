@@ -201,11 +201,11 @@ class Plano2 extends BaseScene {
     }
 
     createDiamantes() {
-        this.objeto1 = this.physics.add.image(970, 345, 'diamantes').setScale(0.8);
-        this.objeto2 = this.physics.add.image(3200, 420, 'diamantes').setScale(0.8);
-        this.objeto3 = this.physics.add.image(3000, 515, 'diamantes').setScale(0.8);
-        this.objeto4 = this.physics.add.image(2700, 600, 'diamantes').setScale(0.8);
-        this.objeto5 = this.physics.add.image(1500, 596, 'diamantes').setScale(0.8);
+        this.objeto1 = this.physics.add.image(970, 345, 'cruz').setScale(0.5);
+        this.objeto2 = this.physics.add.image(3200, 420, 'cruz').setScale(0.5);
+        this.objeto3 = this.physics.add.image(3000, 515, 'cruz').setScale(0.5);
+        this.objeto4 = this.physics.add.image(2700, 600, 'cruz').setScale(0.5);
+        this.objeto5 = this.physics.add.image(1500, 596, 'cruz').setScale(0.5);
         console.log(this.objeto5);
     }
 
@@ -223,6 +223,7 @@ class Plano2 extends BaseScene {
         this.physics.world.setBounds(0, 0, 4095, 768);
         this.mundo = this.add.image(0, 0, 'Plano2').setOrigin(0);
         this.add.image(250, 30, 'estado').setScale(1).setScrollFactor(0);
+        this.add.image(341, 27, 'cruz-estado').setScale(1).setScrollFactor(0);
         this.plataformaW2 = this.physics.add.staticGroup();
         this.BloquePW2 = this.physics.add.staticGroup();
         this.bloqueVacioW2_1 = this.physics.add.staticGroup();
@@ -682,7 +683,7 @@ class Plano2 extends BaseScene {
         if (this.infoObjeto) {
             Swal.fire({
                 position: "center",
-                imageUrl: "./assets/iconos/diamantes.png",
+                imageUrl: "./assets/iconos/cruz.png",
                 imageWidth: 50,
                 imageHeight: 50,
                 imageAlt: "Custom image",

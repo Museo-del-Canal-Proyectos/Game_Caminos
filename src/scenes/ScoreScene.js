@@ -62,7 +62,12 @@ class ScoreScene extends BaseScene {
     if (!control) {
       return;
     }
-    if (control.buttons[3].pressed) {
+    if (control.buttons[1].pressed) {
+      console.log("Botones Programando 0");
+      this.scene.stop('ScoreScene');
+      window.location.reload();
+    }
+    if (control.buttons[0].pressed) {
       console.log("Botones Programando 0");
       this.scene.stop('ScoreScene');
       window.location.reload();

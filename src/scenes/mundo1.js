@@ -114,11 +114,11 @@ class Plano1 extends BaseScene {
     }
 
     perulerasCreate() {
-        this.perulera1 = this.physics.add.image(795, 215, 'perulera').setScale(0.7);
-        this.perulera2 = this.physics.add.image(1650, 425, 'perulera').setScale(0.7);
-        this.perulera3 = this.physics.add.image(2050, 212, 'perulera').setScale(0.7);
-        this.perulera4 = this.physics.add.image(2545, 425, 'perulera').setScale(0.7);
-        this.perulera5 = this.physics.add.image(3400, 160, 'perulera').setScale(0.7);
+        this.perulera1 = this.physics.add.image(795, 215, 'perulera').setScale(0.5);
+        this.perulera2 = this.physics.add.image(1650, 425, 'perulera').setScale(0.5);
+        this.perulera3 = this.physics.add.image(2050, 212, 'perulera').setScale(0.5);
+        this.perulera4 = this.physics.add.image(2545, 425, 'perulera').setScale(0.5);
+        this.perulera5 = this.physics.add.image(3400, 160, 'perulera').setScale(0.5);
     }
 
     countPerulera() {
@@ -250,6 +250,7 @@ class Plano1 extends BaseScene {
         this.physics.world.setBounds(0, 0, 4095, 768);
         this.mundo=this.add.image(0, 0, 'Plano1').setOrigin(0);
         this.add.image(250, 30, 'estado').setScale(1).setScrollFactor(0);
+        this.add.image(341, 27, 'perulera-estado').setScale(1).setScrollFactor(0);
         this.add.image(1048, 407, 'piedra');
         this.poligon();
         this.circulos();

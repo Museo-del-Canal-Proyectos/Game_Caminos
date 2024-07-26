@@ -166,6 +166,7 @@ class Plano3 extends BaseScene {
         this.physics.world.setBounds(0, 0, 4095, 768);
         this.mundo = this.add.image(0, 0, 'Plano3').setOrigin(0);
         this.add.image(250, 30, 'estado').setScale(1).setScrollFactor(0);
+        this.add.image(353, 24, 'herradura-estado').setScale(1).setScrollFactor(0);
         this.textoTiempo = this.add.text(65, 15, `0:${this.tiempo}`, { fontSize: '28px', fontFamily: 'Comic Sans MS', fill: "#ffffff" }).setScrollFactor(0);
         this.textoMonedas = this.add.text(230, 15, 'x' + this.monedasW3, { fontSize: '28px', fontFamily: 'Comic Sans MS', fill: "#ffffff" }).setScrollFactor(0);
         this.textoObjetos = this.add.text(373, 15, 'x' + this.objeto, { fontSize: '28px', fontFamily: 'Comic Sans MS', fill: "#ffffff" }).setScrollFactor(0);
@@ -727,7 +728,7 @@ class Plano3 extends BaseScene {
         if (this.infoObjeto) {
             Swal.fire({
                 position: "center",
-                imageUrl: "./assets/iconos/dineroBolsa.png",
+                imageUrl: "./assets/iconos/objeto-3.png",
                 imageWidth: 50,
                 imageHeight: 50,
                 imageAlt: "Custom image",
@@ -748,11 +749,11 @@ class Plano3 extends BaseScene {
     }
 
     createObjetos() {
-        this.objeto1 = this.physics.add.image(608, 595, 'bolsa').setScale(0.8);
-        this.objeto2 = this.physics.add.image(900, 525, 'bolsa').setScale(0.8);
-        this.objeto3 = this.physics.add.image(1175, 425, 'bolsa').setScale(0.8);
-        this.objeto4 = this.physics.add.image(1976, 425, 'bolsa').setScale(0.8);
-        this.objeto5 = this.physics.add.image(3145, 425, 'bolsa').setScale(0.8);
+        this.objeto1 = this.physics.add.image(608, 590, 'herradura').setScale(0.7);
+        this.objeto2 = this.physics.add.image(900, 520, 'herradura').setScale(0.7);
+        this.objeto3 = this.physics.add.image(1175, 420, 'herradura').setScale(0.7);
+        this.objeto4 = this.physics.add.image(1976, 420, 'herradura').setScale(0.7);
+        this.objeto5 = this.physics.add.image(3145, 420, 'herradura').setScale(0.7);
     }
     //colision Objetos Suma
     //OBJ1

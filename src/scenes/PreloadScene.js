@@ -22,7 +22,7 @@ class PreloadScene extends Phaser.Scene {
     this.load.audio('rain', [ 'assets/Audios/WarioSound/lluvia.mp3']);
     /*Music*/
     /*menu*/
-    this.load.image('MenuInicial','assets/menu/In2.png');
+    this.load.image('MenuInicial','assets/menu/Inicio-2.png');
     this.load.image('select','assets/menu/Select-Inicio.png');
     this.load.image('personaje','assets/menu/seleccionpersonaje.png');
     this.load.image('pesonaje-select','assets/menu/Select-personaje.png');
@@ -46,8 +46,11 @@ class PreloadScene extends Phaser.Scene {
     this.load.spritesheet('player1', 'assets/player1/player1-walk-R.png', { frameWidth: 70, frameHeight: 113 });
     this.load.spritesheet('player1_C','assets/player1/player1Celebracion.png',{ frameWidth: 96, frameHeight:135})
     this.load.image('piedra', 'assets/piedra.png');
-    this.load.image('estado', 'assets/estados/barra-estado.png');
-    this.load.image('perulera', 'assets/iconos/perulera.png');
+    this.load.image('estado', 'assets/estados/Baarra-de-estado.png');
+    this.load.image('perulera', 'assets/iconos/objeto-1.png');//game
+    this.load.image('perulera-estado', 'assets/iconos/perulera.png');
+    this.load.image('cruz-estado', 'assets/iconos/cruz.png');
+    this.load.image('herradura-estado', 'assets/iconos/herradura.png');
     //pl2
     this.load.spritesheet('player2_IDE', 'assets/player2/player2-ide-R.png', { frameWidth: 70, frameHeight: 113 });
     this.load.spritesheet('player2_JUMP', 'assets/player2/player2-jump.png', { frameWidth: 77, frameHeight: 114 });
@@ -74,9 +77,9 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('block_3', 'assets/3.png');//bloques transparentes
     this.load.image('block_4', 'assets/4.png');//bloques transparentes
 
-    this.load.image('bolsa', 'assets/iconos/dineroBolsa.png');
+    this.load.image('herradura', 'assets/iconos/objeto-3.png');
     this.load.image('fin', 'assets/iconos/gameOver.png');
-    this.load.image('diamantes', 'assets/iconos/diamantes.png');
+    this.load.image('cruz', 'assets/iconos/objeto-2.png');//
     this.load.image('libro', 'assets/iconos/Libro.png');
     this.load.image('casco', 'assets/iconos/casco.png');
 
@@ -88,7 +91,11 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('TextoIMG2', 'assets/papelviejofondo.jpg');
     this.load.image('btnRed', 'assets/boton_red.png');
     this.load.image('nubes','assets/Nubes.png');
-    this.load.image('punto','assets/worlds/point-desactivo.png')
+    this.load.image('punto','assets/worlds/point-desactivo.png');
+    this.load.image('teclado','assets/menu/Teclado.png');
+    this.load.image('selector-letras','assets/menu/selecct-letra.png');
+    this.load.image('selector-delete','assets/menu/selecct-delete.png');
+    this.load.image('selector-espacio','assets/menu/selecct-espacio.png');
     //menu
     this.load.spritesheet('f-menu','assets/menu/flecha-exd.png',{frameWidth:18,frameHeight:40})
     
