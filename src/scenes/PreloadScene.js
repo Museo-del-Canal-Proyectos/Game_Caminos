@@ -106,11 +106,17 @@ class PreloadScene extends Phaser.Scene {
     this.load.video('videoPortobelo','assets/video/4.portobelomp4.mp4',true);
     this.load.video('videoGame','assets/video/Intro-videojuego.mp4',true);
 
+    //puntaje
+    this.load.image('MP','assets/MejorPuntaje.png');
+
+    //Inico
+    this.load.image('startInicio','assets/menu/Inicio-start.png');
+
   }
 
   create() {
-    // this.scene.start('MenuScene');//enviamos la escena menu
-    this.scene.start('IntroGame');
+    //this.scene.start('MenuScene');//enviamos la escena menu
+    this.scene.start('InicioScene');
   }
 }
 

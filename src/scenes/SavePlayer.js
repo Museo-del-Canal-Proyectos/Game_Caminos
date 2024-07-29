@@ -11,6 +11,9 @@ class SavePlayer extends BaseScene {
         this.nombre = "";
         this.dataName = null;
         this.dataPuntos = null;
+        this.obj1 = null;
+        this.obj2 = null;
+        this.obj3 = null;
         this.key = null;
         this.objeto = null;
         this.liena = null;
@@ -94,14 +97,10 @@ class SavePlayer extends BaseScene {
 
             if (verificacion === valorActual && this.textEntry.text.length > 0) {
                 console.log("Valido");
-                this.textEntry.text = this.textEntry.text.substr(0, this.textEntry.text.length - 1);
-            }else{
+                this.dataName = this.textEntry.text = this.textEntry.text.substr(0, this.textEntry.text.length - 1);
+            } else {
                 if (this.textEntry.text.length < 12) {
-                    if (verificacion === valorActual) {
-                        this.textEntry.text = this.textEntry.text.substr(0, this.textEntry.text.length - 1);
-                    } else {
-                        this.dataName= this.textEntry.text += data[numero]
-                    }
+                    this.dataName = this.textEntry.text += data[numero]
                     console.log(valorActual);
                 }
             }
@@ -132,6 +131,9 @@ class SavePlayer extends BaseScene {
         this.physics.add.collider(this.selector, this.c4, null, null, this);
         this.dataSesion = localStorage.length;
         this.dataPuntos = sessionStorage.getItem('PuntajeActual');
+        this.obj1 = sessionStorage.getItem('PeruleraObj1');
+        this.obj2 = sessionStorage.getItem('CruzObj2');
+        this.obj3 = sessionStorage.getItem('HerraduraObj3');
         if (this.dataSesion > 0) {
             this.key = this.dataSesion + 1;
         } else {
@@ -169,11 +171,16 @@ class SavePlayer extends BaseScene {
 
 
     guardarData() {
-        let dataJugador = []
+        let dataJugador = [];
+
         const data = {
             nombre: this.dataName,
-            puntos: this.dataPuntos
+            puntos: this.dataPuntos,
+            perulera: this.obj1,
+            cruz: this.obj2,
+            herradura: this.obj3
         }
+
         dataJugador.push(JSON.stringify(data));
         localStorage.setItem(`${this.key}`, dataJugador);
         sessionStorage.clear();
@@ -225,10 +232,10 @@ class SavePlayer extends BaseScene {
         }
 
         if (control.buttons[2].pressed) {
-            if(this.textEntry.text.length === 0){
-                this.dataName="PLAYER"
+            if (this.textEntry.text.length === 0) {
+                this.dataName = "PLAYER"
                 this.guardarData();
-            }else{
+            } else {
                 this.guardarData();
             }
         }

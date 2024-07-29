@@ -368,6 +368,7 @@ class Plano3 extends BaseScene {
         }
         this.physics.pause();
         sessionStorage.setItem('PuntajeActual',this.monedasW3);
+        sessionStorage.setItem('HerraduraObj3', this.objeto);
         this.camara.fade(2500);
         setTimeout(() => {
             this.physics.resume();

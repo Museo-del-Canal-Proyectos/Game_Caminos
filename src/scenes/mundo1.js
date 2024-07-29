@@ -342,6 +342,7 @@ class Plano1 extends BaseScene {
         }
         this.physics.pause();
         sessionStorage.setItem('PuntajeActual', this.monedas);
+        sessionStorage.setItem('PeruleraObj1', this.objetoPerulera);
         this.camara.fade(2500);
         setTimeout(() => {
             this.physics.resume();

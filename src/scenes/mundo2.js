@@ -343,6 +343,7 @@ class Plano2 extends BaseScene {
         }
         this.physics.pause();
         sessionStorage.setItem('PuntajeActual', this.monedasW2);
+        sessionStorage.setItem('CruzObj2', this.objeto);
         this.camara.fade(2500);
         setTimeout(() => {
             this.physics.resume();
