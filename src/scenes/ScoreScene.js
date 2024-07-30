@@ -41,7 +41,6 @@ class ScoreScene extends BaseScene {
 
   }
 
-
   dataPlayer() {
 
     let arregloPlayerRecord = [];
@@ -52,13 +51,10 @@ class ScoreScene extends BaseScene {
       dataConverter = JSON.parse(localStorage.getItem(`${i}`));
       arregloPlayerRecord.push(dataConverter);
     }
-
-    let lastMenuPositionY = 0;
-    let playerobjy=169;
-   
+  
 
     if(arregloPlayerRecord.length>5){
-      let test = this.orderPor(arregloPlayerRecord.slice(0,5), ['puntos', 'nombre'], ['DESCENDENTE', 'ASCENDENTE']);
+      let test = arregloPlayerRecord.sort((a, b) => b.puntos - a.puntos).slice(0,5);
       test.forEach(item => {
         
         this.textoPlayer= this.add.text(this.coordenadaX,this.coordenadaY,`${item.nombre}`,{fontSize:"32px",fontFamily:"Myriad Pro",color:"#918477"});
@@ -71,7 +67,7 @@ class ScoreScene extends BaseScene {
      
       })
 
-      let test2 = this.orderPor(arregloPlayerRecord.slice(6,10), ['puntos', 'nombre'], ['DESCENDENTE', 'ASCENDENTE']);
+      let test2 = arregloPlayerRecord.sort((a, b) => b.puntos - a.puntos).slice(5,10);
       test2.forEach(item => {
         
         this.textoPlayer_F= this.add.text(this.coordenadaX_F,this.coordenadaY_F,`${item.nombre}`,{fontSize:"32px",fontFamily:"Myriad Pro",color:"#918477"});
@@ -85,33 +81,24 @@ class ScoreScene extends BaseScene {
       })
 
     }else{
-      let test = this.orderPor(arregloPlayerRecord, ['puntos', 'nombre'], ['DESCENDENTE', 'ASCENDENTE']);
+      let test =  arregloPlayerRecord.sort((a, b) => b.puntos - a.puntos);
       test.forEach(item => {
-        
+
         this.textoPlayer= this.add.text(this.coordenadaX,this.coordenadaY,`${item.nombre}`,{fontSize:"32px",fontFamily:"Myriad Pro",color:"#918477"});
         this.puntajePlayer= this.add.text(this.PuntajecoordenadaX,this.PuntajecoordenadaY,`${item.puntos}`,{fontSize:"38px",fontFamily:"Myriad Pro",fontWeight:"bold",color:"#534d46"});
         this.ObjetosValor= this.add.text(this.objetoCoordenadaX,this.objetoCoordenadaY,`${item.perulera}    ${item.cruz}   ${item.herradura}`,{fontSize:"18px",fontFamily:"Myriad Pro",fontWeight:"bold",color:"#7c6f64"});
-        
+    
         this.coordenadaY += 118;
         this.PuntajecoordenadaY += 118;
         this.objetoCoordenadaY += 120;
 
-
       })
+      
     }
 
     
   }
-  //orden de objetos 
-  orderPor(objetos, propiedades, modosOrden) {
-    return [...objetos].sort((a, b) => propiedades.reduce((acumulador, p, i) => {
-      if (acumulador === 0) {
-        let [m, n] = modosOrden && modosOrden[i] == 'DESCENDENTE' ? [b[p], a[p]] : [a[p], b[p]];
-        acumulador = m > n ? 1 : m < n ? - 1 : 0;
-      }
-      return acumulador;
-    }, 0))
-  }
+ 
 
   update() {
     this.moveController();

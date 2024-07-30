@@ -34,7 +34,7 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('pipe', 'assets/pipe.png');//cargamos el sprite de los obstaculos
     this.load.image('pause', 'assets/pause.png');//cargamos boton de pausa
     this.load.image('back', 'assets/back.png');//cargamos boton de regresar
-    this.load.image('bg1', 'assets/worlds/Background-Video--Juego.png');//BG movimiento
+    this.load.image('bg1', 'assets/worlds/Background-Rutaurum mision-1.png');//BG movimiento
     this.load.image('wordl1', 'assets/worlds/w1.jpg');
     this.load.image('mundo1', 'assets/worlds/world 1.png');//Mundo 1
 

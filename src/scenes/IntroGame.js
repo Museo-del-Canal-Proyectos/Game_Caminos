@@ -14,6 +14,7 @@ class IntroGame extends BaseScene {
         this.video.on('complete', () => {
             setTimeout(()=>{
                 this.scene.stop('IntroGame');
+                this.video.stop();
                 this.scene.start('MenuScene');
             },2500)
         });
