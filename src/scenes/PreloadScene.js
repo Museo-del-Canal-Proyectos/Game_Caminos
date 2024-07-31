@@ -24,7 +24,7 @@ class PreloadScene extends Phaser.Scene {
     /*menu*/
     this.load.image('MenuInicial','assets/menu/Inicio-2.png');
     this.load.image('select','assets/menu/Select-Inicio.png');
-    this.load.image('personaje','assets/menu/seleccionpersonaje.png');
+    this.load.image('personaje','assets/menu/seleccionpersonaje-juego.png');
     this.load.image('pesonaje-select','assets/menu/Select-personaje.png');
     /*menu*/
     this.load.image('sky', 'assets/sky.png');//cargamos el fondo del mundo
@@ -112,6 +112,19 @@ class PreloadScene extends Phaser.Scene {
     //Inico
     this.load.image('startInicio','assets/menu/Inicio-start.png');
 
+    //spriete tortugas  y pez
+    this.load.spritesheet('tortuga', 'assets/worlds/tortuga.png',{frameWidth:56,frameHeight:20});
+    
+    this.load.spritesheet('pez', 'assets/worlds/pez.png',{frameWidth:82,frameHeight:38});
+   
+    //final
+    this.load.image('fondoBarco','assets/worlds/barco-cielo.png');
+    this.load.image('fondoPaijase','assets/worlds/Mision-4-final.png');
+    this.load.spritesheet('mar', 'assets/worlds/Mar.png',{frameWidth:561,frameHeight:286});
+
+   //personajes
+   this.load.spritesheet('personaje_Boy', 'assets/player1/player1 SELECCION-idle.png',{frameWidth:195.8,frameHeight:332});
+   this.load.spritesheet('personaje_Girl', 'assets/player2/player2 SELECCION-idle.png',{frameWidth:206.8,frameHeight:336});
   }
 
   create() {

@@ -81,7 +81,7 @@ class Mapa4 extends BaseScene {
     this.cameras.main.fade(2000);
     setTimeout(()=>{
       this.scene.stop('Mapa4');
-      this.scene.start('IntroPortobelo');
+      this.scene.start('FinalScene');
     },400)
   }
 
