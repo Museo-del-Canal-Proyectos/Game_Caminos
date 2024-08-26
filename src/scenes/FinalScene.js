@@ -3,12 +3,22 @@ import BaseScene from "./BaseScene";
 
 class FinalScene extends BaseScene {
     protector=false;
+    multiplayer;
+    puntajeActual;
+    PeruleraObj1;
+    CruzObj2;
+    HerraduraObj3;
     constructor(config) {
         super('FinalScene', config);
        
     }
 
     create() {
+        this.puntajeActual= sessionStorage.getItem("PuntajeActual");
+        this.multiplayer = sessionStorage.getItem("multiplayer");
+        this.PeruleraObj1 = sessionStorage.getItem("PeruleraObj1");
+        this.CruzObj2= sessionStorage.getItem("CruzObj2");
+        this.HerraduraObj3= sessionStorage.getItem("HerraduraObj3");
         this.move_cp1='player1';
         this.move_cp2='player2';
         this.add.image(0, 0, 'fondoBarco').setOrigin(0);
@@ -138,12 +148,48 @@ class FinalScene extends BaseScene {
     }
 
 
+  puntosExtras(puntos){
+
+    let operation
+    operation =((puntos/20)*100);
+    return operation
+
+  }
+
+  puntosTotal(v1,v2,v3,v4){
+    let suma =(v1+v2+v3);
+    let total =suma+v4
+    return total
+  }
+
   alerta(){
+    let ValorPuntaje;
+    console.log(this.multiplayer)
+    if(this.multiplayer==="true"){
+         ValorPuntaje=150;
+    }else{
+        ValorPuntaje=100;
+    }
+
+
+    const perulera= this.puntosExtras(this.PeruleraObj1);
+    const cruz= this.puntosExtras(this.CruzObj2);
+    const herradura = this.puntosExtras(this.HerraduraObj3);
+    const puntaje = parseInt(sessionStorage.getItem("PuntajeActual"));
+    const total= this.puntosTotal(perulera,cruz,herradura,puntaje);
+    sessionStorage.setItem("PuntajeActual",total);
+
+    let dataP1 =`<div class='Puntaje-p1'>${this.puntajeActual}/</div><div class='Puntaje-p2'>${ValorPuntaje}</div> <div class='Puntaje-p3'>${this.puntajeActual}</div>`
+    let dataP2 =`<div class='Puntaje-p4'>${this.PeruleraObj1}/</div><div class='Puntaje-p5'>5</div> <div class='Puntaje-p6'>${perulera}</div>`
+    let dataP3 =`<div class='Puntaje-p7'>${this.CruzObj2}/</div><div class='Puntaje-p8'>5</div> <div class='Puntaje-p9'>${cruz}</div>`
+    let dataP4 =`<div class='Puntaje-p10'>${this.HerraduraObj3}/</div><div class='Puntaje-p11'>5</div> <div class='Puntaje-p12'>${herradura}</div>`
+    let dataP5 =`<div class='Puntaje-p13'>${total}</div>`
+
     Swal.fire({
         position: "center",
         customClass: "mPlayer",
         background: 'url(./assets/findelamision.png) no-repeat center center',
-        text:'hola',
+        html:dataP1+dataP2+dataP3+dataP4+dataP5,
         imageWidth: 50,
         imageHeight: 50,
         showConfirmButton: false,

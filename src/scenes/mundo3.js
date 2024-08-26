@@ -500,27 +500,27 @@ class Plano3 extends BaseScene {
             case 158:
                 this.estadoSuelo = true;
                 break;
-            default:
-                this.estadoSuelo = false;
         }
     }
     colisionEsfera() {
         this.estadoSuelo = true;
     }
     colisionVacio1() {
-        this.player1.setPosition(338, 317);
+        this.player1.setPosition(327, 300);
     }
     colisionVacio2() {
-        this.player1.setPosition(695, 480);
+        this.player1.setPosition(695, 477);
     }
     colisionVacio3() {
-        this.player1.setPosition(938, 420);
+        this.player1.setVelocityX(0);
+        this.player1.setVelocityY(0);
+        this.player1.setPosition(920, 417);
     }
     colisionVacio4() {
-        this.player1.setPosition(1198, 318);
+        this.player1.setPosition(1179, 306);
     }
     colisionVacio5() {
-        this.player1.setPosition(2358, 315);
+        this.player1.setPosition(2358, 305);
     }
     //player2
     colisionMundo2() {
@@ -544,27 +544,25 @@ class Plano3 extends BaseScene {
             case 158:
                 this.estadoSueloP2 = true;
                 break;
-            default:
-                this.estadoSueloP2 = false;
         }
     }
     colisionEsfera_P2() {
         this.estadoSueloP2 = true;
     }
     colisionVacio1_P2() {
-        this.Jugador2.setPosition(338, 317);
+        this.Jugador2.setPosition(327, 300);
     }
     colisionVacio2_P2() {
-        this.Jugador2.setPosition(695, 480);
+        this.Jugador2.setPosition(695, 477);
     }
     colisionVacio3_P2() {
-        this.Jugador2.setPosition(938, 420);
+        this.Jugador2.setPosition(920, 417);
     }
     colisionVacio4_P2() {
-        this.Jugador2.setPosition(1198, 318);
+        this.Jugador2.setPosition(1179, 304);
     }
     colisionVacio5_P2() {
-        this.Jugador2.setPosition(2358, 315);
+        this.Jugador2.setPosition(2358, 303);
     }
 
     lluviaIn() {
@@ -793,7 +791,7 @@ class Plano3 extends BaseScene {
     }
 
     update() {
-       // console.log(this.player1.x, ":", this.player1.y);
+        console.log(this.player1.x, ":", this.player1.y);
         MosquitoACT1.MoveW3_1(this.Mosquito, this.velocidadMosquito);
         MosquitoACT1.MoveW3_1(this.Mosquito2, this.velocidadMosquito);
         MosquitoACT1.MoveW3_1(this.Mosquito3, this.velocidadMosquito);

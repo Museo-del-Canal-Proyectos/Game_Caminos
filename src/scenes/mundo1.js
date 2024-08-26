@@ -289,7 +289,7 @@ class Plano1 extends BaseScene {
 
     gameOver() {
         /*resta monedas*/
-        this.monedas -= 10;
+        this.monedas -=5;
         if (this.monedas == 0) {
             this.tiempo = '00';
         }

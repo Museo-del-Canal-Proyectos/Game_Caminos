@@ -121,6 +121,7 @@ class Plano2 extends BaseScene {
         this.player1.setCollideWorldBounds(true);
         this.player1.body.setGravityY(820);
         this.player1.body.setSize(50, 120);
+
         AnimacionPlayer1(this.anims, this.storagePlayer);
         console.log(this.player1);
         this.cameras.main.startFollow(this.player1, true);
