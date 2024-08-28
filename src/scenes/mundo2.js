@@ -34,8 +34,8 @@ class Plano2 extends BaseScene {
     textoObjetos = null;
     textoMonedas = null;
     gate = null;
-    volteoP2=true;
-    volteoP1=true;
+    volteoP2 = true;
+    volteoP1 = true;
     BloquePW2;
     bloqueVacioW2_1;
     bloqueVacioW2_2;
@@ -58,6 +58,11 @@ class Plano2 extends BaseScene {
     objeto4;
     objeto5;
     velocidadMosquito = 230;
+    OutMonedas;
+    OutTime;
+    OutComplete;
+    btnReload = false;
+    btnContinue = false;
 
     constructor(config) {
         super('Plano2', config);
@@ -103,13 +108,13 @@ class Plano2 extends BaseScene {
             this.physics.add.collider(this.Jugador2, this.objeto3, this.ColisionObj3, null, this);
             this.physics.add.collider(this.Jugador2, this.objeto4, this.ColisionObj4, null, this);
             this.physics.add.collider(this.Jugador2, this.objeto5, this.ColisionObj5, null, this);
-            this.physics.add.collider(this.Jugador2, this.gate, this.vacio,null,this);
+            this.physics.add.collider(this.Jugador2, this.gate, this.vacio, null, this);
         } else {
             console.log("Jugador 2 no conectado en mundo 2")
         }
     }
-    vacio(){
-        
+    vacio() {
+
     }
     /*Fin Creacion Player 2*/
     createPlayer1() {
@@ -221,11 +226,11 @@ class Plano2 extends BaseScene {
         this.music2.play();
         this.camara = this.cameras.main.setBounds(0, 0, 4095, 768);
         this.camara.flash(2000);
-        
-       this.objeto_i = this.physics.add.image(200, 157, 'block_3').setScale(0.2).setOrigin(0);
-       this.linea = this.physics.add.image(110, 170, 'block_3').setImmovable(true).setScale(5, 0).setOrigin(0);
-       this.objeto_i.body.setGravityY(500);
-       this.physics.add.collider(this.objeto_i, this.linea, null, null, this);
+
+        this.objeto_i = this.physics.add.image(200, 157, 'block_3').setScale(0.2).setOrigin(0);
+        this.linea = this.physics.add.image(110, 170, 'block_3').setImmovable(true).setScale(5, 0).setOrigin(0);
+        this.objeto_i.body.setGravityY(500);
+        this.physics.add.collider(this.objeto_i, this.linea, null, null, this);
 
         this.physics.world.setBounds(0, 0, 4095, 768);
         this.mundo = this.add.image(0, 0, 'Plano2').setOrigin(0);
@@ -322,6 +327,24 @@ class Plano2 extends BaseScene {
         this.physics.add.collider(this.player1, this.objeto5, this.ColisionObj5, null, this);
         this.physics.add.collider(this.player1, this.gate, this.mundo2, null, this);
         this.createPlayer2();
+        this.OutMonedas = this.physics.add.image(0, 0, 'GameOverPlayer').setOrigin(0).setScrollFactor(0);
+        this.OutMonedas.setVisible(false);//sin monedas
+        this.OutTime = this.physics.add.image(0, 0, 'GameOverTiempo').setOrigin(0).setScrollFactor(0);
+        this.OutTime.setVisible(false);//sin tiempo
+        this.OutComplete = this.physics.add.image(0, 0, 'GameComplete').setOrigin(0).setScrollFactor(0);
+        this.OutComplete.setVisible(false);
+        this.flechaOp = this.physics.add.sprite(616.5, 523, 'f-menu').setOrigin(0).setScrollFactor(0);//cragamos el sprite a animar previamente definido con sus caracteristicas en preload.js
+
+        //creamos la animacion
+        this.anims.create({
+            key: 'moveflecha',
+            frames: this.anims.generateFrameNumbers('f-menu', { start: 0, end: 2 }),
+            frameRate: 4,
+            repeat: -1
+        });
+        //iniciamos la animacion
+        this.flechaOp.play('moveflecha', true);
+        this.flechaOp.setVisible(false);
     }
 
     mundo2() {
@@ -329,35 +352,45 @@ class Plano2 extends BaseScene {
         this.music2.stop();
         this.velocidadX = 0;
         this.velocidadY = 0;
-        this.volteoP1=false;
+        this.volteoP1 = false;
         this.animacionStop = 'celebrate';
         this.animacionMove = 'celebrate';
         this.animacionJump = 'celebrate';
-        this.animacionMoveP2='celebrateP2';
-        this.animacionJumpP2='celebrateP2';
-        this.animacionStopP2='celebrateP2';
-        this.player1.setPosition(3910,320);
+        this.animacionMoveP2 = 'celebrateP2';
+        this.animacionJumpP2 = 'celebrateP2';
+        this.animacionStopP2 = 'celebrateP2';
+        this.player1.setPosition(3910, 320);
 
-        if(this.isMultiPLayer){
-           this.volteoP2=false;
-           this.Jugador2.setPosition(3820,320);
+        if (this.isMultiPLayer) {
+            this.volteoP2 = false;
+            this.Jugador2.setPosition(3820, 320);
         }
         this.physics.pause();
         sessionStorage.setItem('PuntajeActual', this.monedasW2);
         sessionStorage.setItem('CruzObj2', this.objeto);
-        this.camara.fade(2500);
         setTimeout(() => {
-            this.physics.resume();
-            this.scene.stop('Plano2');
-            this.scene.start('Mapa3');
-        }, 2000)
+            this.OutComplete.setVisible(true);
+            this.flechaOp.setVisible(true);
+            this.btnContinue = true;
+        }, 2500)
     }
 
     gameOver() {
         /*resta monedas*/
         this.monedasW2 -= 10;
-        if (this.monedasw2 == 0) {
+        if (this.monedasW2 <= 0) {
+            console.log(this.monedasW2);
             this.tiempo = '00';
+            this.OutMonedas.setVisible(true);
+            this.flechaOp.setVisible(true);
+            this.physics.pause();
+            this.player1.body.setEnable(false);
+            this.player1.setVisible(false);
+            this.btnReload = true;
+            if (this.isMultiPLayer) {
+                this.Jugador2.setEnable(false);
+                this.Jugador2.setVisible(false);
+            }
         }
         this.monedasW2 < 0 ? this.textoMonedas.setText(`x0`) : this.textoMonedas.setText(`x${this.monedasW2}`);
         /*Fin Resta Monedas*/
@@ -370,6 +403,17 @@ class Plano2 extends BaseScene {
             } else if (this.tiempo === 15) {
                 this.mundo.setTint(0x2d3451);
             } else if (this.tiempo === 0) {
+                this.btnReload = true;
+                this.physics.pause();
+                this.OutTime.setVisible(true);
+                this.flechaOp.setVisible(true);
+                this.player1.body.setEnable(false);
+                this.player1.setVisible(false);
+                if (this.isMultiPLayer) {
+                    this.physics.pause();
+                    this.Jugador2.body.setEnable(false);
+                    this.Jugador2.setVisible(false);
+                }
                 console.log("Se Acabo el tiempo y se muere");
             } else {
                 if (this.tiempo < 0) {
@@ -751,6 +795,40 @@ class Plano2 extends BaseScene {
         if (!control) {
             return;
         }
+
+        if (control.buttons[1].pressed && this.btnReload) {
+
+            setTimeout(() => {
+                this.scene.stop('Plano2');
+                window.location.reload();
+            }, 3500)
+
+        }
+        if (control.buttons[1].pressed && this.btnContinue) {
+
+            this.scene.stop('Plano2');
+            this.camara.fade(2500);
+            this.scene.start('Mapa3');
+
+        }
+
+        if (control.buttons[0].pressed && this.btnReload) {
+
+            setTimeout(() => {
+                this.scene.stop('Plano2');
+                window.location.reload();
+            }, 1000);
+
+        }
+
+        if (control.buttons[0].pressed && this.btnContinue) {
+
+            this.scene.stop('Plano2');
+            this.camara.fade(2500);
+            this.scene.start('Mapa3');
+
+        }
+
         if (control.buttons[1].pressed && onFloor) {
             this.estadoSuelo = false;
             this.player1.setVelocityY(-this.velocidadY * 2);
@@ -758,18 +836,18 @@ class Plano2 extends BaseScene {
         if (control.buttons[0].pressed && onFloor) {
             this.estadoSuelo = false;
             this.player1.setVelocityY(-this.velocidadY * 2);
-        
+
         }
 
-        if(control.buttons[3].pressed && this.objeto_i.body.onFloor()){
-            if(!this.infoObjeto){
-             this.objeto_i.setVelocityY(-150);
-             this.objeto_i.body.setGravityY(0);
-             Swal.close();
-             this.physics.resume();//
-             this.temporizador();
+        if (control.buttons[3].pressed && this.objeto_i.body.onFloor()) {
+            if (!this.infoObjeto) {
+                this.objeto_i.setVelocityY(-150);
+                this.objeto_i.body.setGravityY(0);
+                Swal.close();
+                this.physics.resume();//
+                this.temporizador();
             }
-         }
+        }
 
         if (control.axes.length) {
             const axisH = control.axes[0].getValue();
@@ -805,15 +883,15 @@ class Plano2 extends BaseScene {
             }
 
 
-            if(control.buttons[3].pressed && this.objeto_i.body.onFloor()){
-                if(!this.infoObjeto){
-                 this.objeto_i.setVelocityY(-150);
-                 this.objeto_i.body.setGravityY(0);
-                 Swal.close();
-                 this.physics.resume();//
-                 this.temporizador();
+            if (control.buttons[3].pressed && this.objeto_i.body.onFloor()) {
+                if (!this.infoObjeto) {
+                    this.objeto_i.setVelocityY(-150);
+                    this.objeto_i.body.setGravityY(0);
+                    Swal.close();
+                    this.physics.resume();//
+                    this.temporizador();
                 }
-             }
+            }
 
             if (control.axes.length) {
                 const axisH = control.axes[0].getValue();

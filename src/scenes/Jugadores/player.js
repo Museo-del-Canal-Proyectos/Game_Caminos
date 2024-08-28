@@ -24,7 +24,7 @@ export default (anims,data)=>{
        key:'celebrate' ,
        frames: anims.generateFrameNumbers(`${data}_C`,{start:0, end:11}),
        frameRate: 6,
-       repeat:-1, 
+       repeat:0, 
     })
 
      anims.create({

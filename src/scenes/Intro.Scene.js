@@ -6,6 +6,7 @@ class IntroScene extends BaseScene {
     activacion = false;
     player1 = null;
     player2 = null;
+    mInicio;
 
     constructor(config) {
         super('IntroScene', config);
@@ -13,6 +14,8 @@ class IntroScene extends BaseScene {
 
 
     create() {
+        this.mInicio = this.sound.add('music-inicio');
+        this.mInicio.play();
         this.cameras.main.setBounds(0, 0, 1366, 768);
         this.cameras.main.flash(1500);
         this.salto = true;
@@ -131,6 +134,7 @@ class IntroScene extends BaseScene {
             return;
         }
         if (control.buttons[3].pressed) {
+            this.mInicio.stop();
             this.scene.stop('IntroScene');
             this.scene.start('Mapa1');
         } else if (control.buttons[1].pressed && this.player1_1.body.onFloor()) {

@@ -125,12 +125,39 @@ class PreloadScene extends Phaser.Scene {
    //personajes
    this.load.spritesheet('personaje_Boy', 'assets/player1/player1 SELECCION-idle.png',{frameWidth:195.8,frameHeight:332});
    this.load.spritesheet('personaje_Girl', 'assets/player2/player2 SELECCION-idle.png',{frameWidth:206.8,frameHeight:336});
+   //Game Over Image
+   this.load.image('GameOverPlayer','assets/menu/NO-completado.png');//monedas GameOver
+   //Game Over Tiempo
+   this.load.image('GameOverTiempo','assets/menu/NO-completado-2.png');//tiempo GameOver
+   //completado
+   this.load.image('GameComplete','assets/menu/completado.png');//completadoGame
+   //Musica 
+
+   //Inico
+   this.load.audio('music-inicio','assets/Audios/inicio/8-bits.mp3');
+   //mundo1
+   this.load.audio('m-1','assets/Audios/mundo1/w1.wav');
+   //enemigos
+   this.load.audio('m-enemy','assets/Audios/enemigos/enemy.mp3');
+   //perder
+   this.load.audio('m-lose','assets/Audios/perder/Lose.wav');
+   //ganar
+   this.load.audio('m-win','assets/Audios/ganar/Win.wav');
+   //objetos
+   this.load.audio('m-obj','assets/Audios/objetos/obj.wav');
+   this.load.audio('m-obj2','assets/Audios/objetos/obj2.mp3');
+
+   //salto
+   this.load.audio('m-salto','assets/Audios/salto/salto.mp3');
+  
+
   }
 
   create() {
-    //this.scene.start('MenuScene');//enviamos la escena menu
-    this.scene.start('InicioScene');
-    //this.scene.start('FinalScene');
+     //iniciamos la Scena principal
+    // this.scene.start('InicioScene');
+    this.scene.start('Plano1');
+ 
   }
 }
 

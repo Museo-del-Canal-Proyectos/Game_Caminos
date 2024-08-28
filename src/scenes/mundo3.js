@@ -68,6 +68,11 @@ class Plano3 extends BaseScene {
     objeto3 = null;;
     objeto4 = null;
     objeto5 = null;
+    OutMonedas;
+    OutTime;
+    OutComplete;
+    btnReload = false;
+    btnContinue = false;
 
     constructor(config) {
         super('Plano3', config);
@@ -316,6 +321,23 @@ class Plano3 extends BaseScene {
         this.physics.add.collider(this.player1, this.objeto4, this.ColisionObj4, null, this);
         this.physics.add.collider(this.player1, this.objeto5, this.ColisionObj5, null, this);
         this.physics.add.collider(this.player1, this.gate, this.mundo2, null, this);
+        this.OutMonedas = this.physics.add.image(0, 0, 'GameOverPlayer').setOrigin(0).setScrollFactor(0);
+        this.OutMonedas.setVisible(false);//sin monedas
+        this.OutTime = this.physics.add.image(0, 0, 'GameOverTiempo').setOrigin(0).setScrollFactor(0);
+        this.OutTime.setVisible(false);//sin tiempo
+        this.OutComplete = this.physics.add.image(0, 0, 'GameComplete').setOrigin(0).setScrollFactor(0);
+        this.OutComplete.setVisible(false);
+        this.flechaOp = this.physics.add.sprite(616.5, 523, 'f-menu').setOrigin(0).setScrollFactor(0);//cragamos el sprite a animar previamente definido con sus caracteristicas en preload.js
+        //creamos la animacion
+        this.anims.create({
+            key: 'moveflecha',
+            frames: this.anims.generateFrameNumbers('f-menu', { start: 0, end: 2 }),
+            frameRate: 4,
+            repeat: -1
+        });
+        //iniciamos la animacion
+        this.flechaOp.play('moveflecha', true);
+        this.flechaOp.setVisible(false);
     }
 
     sonidoLLuvuia(player) {
@@ -369,13 +391,11 @@ class Plano3 extends BaseScene {
         this.physics.pause();
         sessionStorage.setItem('PuntajeActual',this.monedasW3);
         sessionStorage.setItem('HerraduraObj3', this.objeto);
-        this.camara.fade(2500);
         setTimeout(() => {
-            this.physics.resume();
-            this.game.sound.stopAll();
-            this.scene.stop('Plano3');
-            this.scene.start('Mapa4');
-        }, 2000)
+            this.OutComplete.setVisible(true);
+            this.flechaOp.setVisible(true);
+            this.btnContinue = true;
+        }, 2500)
     }
  /**/
     damagePlayer1() {
@@ -447,8 +467,19 @@ class Plano3 extends BaseScene {
     /*resta monedas*/
     gameOver() {
         this.monedasW3 -= 10;
-        if (this.monedasw3 == 0) {
+        console.log(  this.monedasW3 );
+        if (this.monedasW3 <= 0 ) {
             this.tiempo = '00';
+            this.OutMonedas.setVisible(true);
+            this.flechaOp.setVisible(true);
+            this.physics.pause();
+            this.player1.body.setEnable(false);
+            this.player1.setVisible(false);
+            this.btnReload = true;
+            if (this.isMultiPLayer) {
+                this.Jugador2.setEnable(false);
+                this.Jugador2.setVisible(false);
+            }
         }
         this.monedasW3 < 0 ? this.textoMonedas.setText(`x0`) : this.textoMonedas.setText(`x${this.monedasW3}`);
     }
@@ -461,6 +492,17 @@ class Plano3 extends BaseScene {
             } else if (this.tiempo === 15) {
                 this.mundo.setTint(0x2d3451);
             } else if (this.tiempo === 0) {
+                this.btnReload = true;
+                this.physics.pause();
+                this.OutTime.setVisible(true);
+                this.flechaOp.setVisible(true);
+                this.player1.body.setEnable(false);
+                this.player1.setVisible(false);
+                if (this.isMultiPLayer) {
+                    this.physics.pause();
+                    this.Jugador2.body.setEnable(false);
+                    this.Jugador2.setVisible(false);
+                }
                 console.log("Se Acabo el tiempo y se muere");
             } else {
                 if (this.tiempo < 0) {
@@ -791,7 +833,7 @@ class Plano3 extends BaseScene {
     }
 
     update() {
-        console.log(this.player1.x, ":", this.player1.y);
+       // console.log(this.player1.x, ":", this.player1.y);
         MosquitoACT1.MoveW3_1(this.Mosquito, this.velocidadMosquito);
         MosquitoACT1.MoveW3_1(this.Mosquito2, this.velocidadMosquito);
         MosquitoACT1.MoveW3_1(this.Mosquito3, this.velocidadMosquito);
@@ -812,6 +854,42 @@ class Plano3 extends BaseScene {
         if (!control) {
             return;
         }
+
+        
+        if (control.buttons[1].pressed && this.btnReload) {
+
+            setTimeout(() => {
+                this.scene.stop('Plano3');
+                window.location.reload();
+            }, 3500)
+
+        }
+        if (control.buttons[1].pressed && this.btnContinue) {
+
+            this.scene.stop('Plano3');
+            this.camara.fade(2500);
+            this.scene.start('Mapa4');
+
+        }
+
+        if (control.buttons[0].pressed && this.btnReload) {
+
+            setTimeout(() => {
+                this.scene.stop('Plano3');
+                window.location.reload();
+            }, 1000);
+
+        }
+
+        if (control.buttons[0].pressed && this.btnContinue) {
+
+            this.scene.stop('Plano3');
+            this.camara.fade(2500);
+            this.scene.start('Mapa4');
+
+        }
+
+
         if (control.buttons[1].pressed && onFloor) {
             this.estadoSuelo = false;
             this.player1.setVelocityY(-this.velocidadY * 2);

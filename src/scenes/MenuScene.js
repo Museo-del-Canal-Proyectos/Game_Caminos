@@ -1,51 +1,63 @@
 import BaseScene from "./BaseScene";
 
 class MenuScene extends BaseScene {
-  selector;
-  mOpening;
-  mSleccion;
+  selector;  // Imagen del selector en el menú.
+  mOpening; //Sonido de apertura del menú.
+  mSleccion; // Sonido de selección en el menú.
 
   constructor(config) {
 
-    super('MenuScene', config);
+    super('MenuScene', config); //Configuración de la escena.
 
 
 
   }
 
 
+  
+  /**
+   * Método create
+   * 
+   * Este método se ejecuta al crear la escena. Añade imágenes y sonidos, y configura el selector.
+   */
 
   create() {
-    this.mOpening = this.sound.add('op');
+    this.mOpening = this.sound.add('music-inicio');
     this.mSleccion = this.sound.add('sl');
     this.add.image(0, 0, 'MenuInicial').setOrigin(0);
     this.selector = this.physics.add.image(583, 695, 'select');
     console.log(this.selector);
     this.mOpening.loop = true;
     this.mOpening.play();
-    //posicion1 425, 693
-    //posicion2 713, 693
-    //posicion3 1000,693
 
   }
 
-
+    /**
+   * Método update
+   * 
+   * Este método se ejecuta en cada frame de la escena. Llama al método moveController para manejar la entrada del usuario.
+   */
   update() {
-    // this.positionSelect(this.selector);
     this.moveController();
-
-  }
-  positionSelect(x) {
-
-
-
   }
 
+    /**
+   * Método posiciones
+   * 
+   * Este método establece varias posiciones para el selector.
+   */
   posiciones() {
     this.selector.setPosition(870, 695,);
     this.selector.setPosition(1000, 693);
     this.selector.setPosition(583, 695,);
   }
+
+
+   /**
+   * Método moveController
+   * 
+   * Este método maneja la entrada del controlador de juego para mover el selector y realizar acciones basadas en los botones presionados.
+   */
 
   moveController() {
 
@@ -55,7 +67,6 @@ class MenuScene extends BaseScene {
     }
     if (control.buttons[3].pressed) {
       //Info por poner modal
-      console.log("por poner");
     }
 
     if (control.buttons[2].pressed) {
@@ -90,10 +101,6 @@ class MenuScene extends BaseScene {
           break;
 
         case 1000:
-
-          break;
-
-        default:
 
           break;
       }
