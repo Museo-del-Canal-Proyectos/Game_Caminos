@@ -920,6 +920,7 @@ class Plano3 extends BaseScene {
 
         }
         if (control.buttons[1].pressed && this.btnContinue) {
+            this.winSound.loop = false;
             this.winSound.stop();
             this.scene.stop('Plano3');
             this.camara.fade(2500);
@@ -939,6 +940,7 @@ class Plano3 extends BaseScene {
         }
 
         if (control.buttons[0].pressed && this.btnContinue) {
+            this.winSound.loop = false;
             this.winSound.stop();
             this.scene.stop('Plano3');
             this.camara.fade(2500);

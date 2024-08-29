@@ -682,6 +682,7 @@ class Plano1 extends BaseScene {
         if (control.buttons[1].pressed && this.btnContinue) {
             this.loseSound.stop();
             this.music.stop();
+            this.winSound.loop = false;
             this.winSound.stop();
             this.scene.stop('Plano1');
             this.camara.fade(2500);
@@ -701,6 +702,9 @@ class Plano1 extends BaseScene {
 
         if (control.buttons[0].pressed && this.btnContinue) {
             this.loseSound.stop();
+            this.music.stop();
+            this.winSound.loop = false;
+            this.winSound.stop();
             this.scene.stop('Plano1');
             this.camara.fade(2500);
             this.scene.start('Mapa2');

@@ -760,9 +760,9 @@ class Plano2 extends BaseScene {
     }
     //Activador de Objeto
     ObjetoMessage() {
-        this.music2.stop();
         this.objSound.play();
         if (this.infoObjeto) {
+            this.music2.stop();
             Swal.fire({
                 position: "center",
                 customClass: "manoDeDios",
@@ -837,6 +837,7 @@ class Plano2 extends BaseScene {
 
         }
         if (control.buttons[1].pressed && this.btnContinue) {
+            this.winSound.loop = false;
             this.winSound.stop();
             this.scene.stop('Plano2');
             this.camara.fade(2500);
@@ -856,6 +857,7 @@ class Plano2 extends BaseScene {
         }
 
         if (control.buttons[0].pressed && this.btnContinue) {
+            this.winSound.loop = false;
             this.winSound.stop();
             this.scene.stop('Plano2');
             this.camara.fade(2500);
