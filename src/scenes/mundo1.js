@@ -7,11 +7,13 @@ import AnimacionPlayer2 from "../scenes/Jugadores/player2";
 
 
 class Plano1 extends BaseScene {
-    intervaloTIEMPO=null;
+    intervaloTIEMPO = null;
     tiempo = 45;
     textoTiempo = "0:00";
     valorIntervalo = 1000;
     plataforma;
+    volteoP1 = true;
+    volteoP2 = true;
     infoObjeto = true;
     monedas = 100;
     animacionStop = 'stop';
@@ -49,16 +51,26 @@ class Plano1 extends BaseScene {
     velocidadY = 280;
     velocidadFlecha = 400;
     velocidadBala = 275;
-
+    OutMonedas;
+    OutTime;
+    OutComplete;
+    btnReload = false;
+    btnContinue = false;
+    enemySound;
+    loseSound;
+    winSound;
+    objSound;
+    obj2Sound;
+    saltoSound;
     constructor(config) {
         super('Plano1', config);
     }
 
     createPlayer2() {
         //validamos si es multiplayer
-       // this.isMultiPLayer = false;
+        // this.isMultiPLayer = false;
 
-        let r= JSON.parse(sessionStorage.getItem('multiplayer'));
+        let r = JSON.parse(sessionStorage.getItem('multiplayer'));
 
         this.isMultiPLayer = r;
 
@@ -88,12 +100,15 @@ class Plano1 extends BaseScene {
             this.physics.add.collider(this.Jugador2, this.perulera3, this.ColisionPerulera3, null, this);
             this.physics.add.collider(this.Jugador2, this.perulera4, this.ColisionPerulera4, null, this);
             this.physics.add.collider(this.Jugador2, this.perulera5, this.ColisionPerulera5, null, this);
+            this.physics.add.collider(this.Jugador2, this.gate, this.vacio, null, this);
 
         } else {
             // console.log("Jugador 2 no conectado")
         }
     }
+    vacio() {
 
+    }
     createPlayer1() {
         //cuando son dos seteo en storage jugador 1 en seleccion  
         this.storagePlayer = sessionStorage.getItem('selectPLayer');
@@ -102,20 +117,22 @@ class Plano1 extends BaseScene {
             .setOrigin(0);
         this.player1.setCollideWorldBounds(true);
         this.player1.body.setGravityY(820);
+        console.log(this.player1);
         this.player1.body.setSize(50, 120);
         AnimacionPlayer1(this.anims, this.storagePlayer /*'player2'*/);
         this.cameras.main.startFollow(this.player1, true);
     }
 
     perulerasCreate() {
-        this.perulera1 = this.physics.add.image(795, 215, 'perulera').setScale(0.7);
-        this.perulera2 = this.physics.add.image(1650, 425, 'perulera').setScale(0.7);
-        this.perulera3 = this.physics.add.image(2050, 212, 'perulera').setScale(0.7);
-        this.perulera4 = this.physics.add.image(2545, 425, 'perulera').setScale(0.7);
-        this.perulera5 = this.physics.add.image(3400, 160, 'perulera').setScale(0.7);
+        this.perulera1 = this.physics.add.image(795, 210, 'perulera').setScale(0.9);
+        this.perulera2 = this.physics.add.image(1650, 420, 'perulera').setScale(0.9);
+        this.perulera3 = this.physics.add.image(2050, 207, 'perulera').setScale(0.9);
+        this.perulera4 = this.physics.add.image(2545, 420, 'perulera').setScale(0.9);
+        this.perulera5 = this.physics.add.image(3400, 155, 'perulera').setScale(0.9);
     }
 
     countPerulera() {
+        this.obj2Sound.play();
         this.objetoPerulera++;
         this.textoObjetos.setText(`x${this.objetoPerulera}`);
     }
@@ -158,21 +175,20 @@ class Plano1 extends BaseScene {
 
     Objeto() {
         if (this.infoObjeto) {
+            this.music.stop();
+            this.objSound.play();
             Swal.fire({
-                position: "bottom",
-                imageUrl: "./assets/iconos/perulera.png",
+                position: "center",
+                customClass: "manoDeDios",
+                background: 'url(./assets/pieza-perulera.png) no-repeat center center',
                 imageWidth: 50,
                 imageHeight: 50,
-                imageAlt: "Custom image",
-                title: `<p style="font-size:20px;text-align:justify;"><center>Info por Anexar</center></p>`,
                 showConfirmButton: false,
-                backdrop: false,
-                timer: 3500
             });
             this.physics.pause();
-            setTimeout(() => {
-                this.physics.resume();
-            }, 3600)
+            clearInterval(this.intervaloTIEMPO);//
+
+            //this.textoTiempo.setText("-:--");/
         } else {
             // console.log("test no Funciona ya se activo")
         }
@@ -232,12 +248,24 @@ class Plano1 extends BaseScene {
     }
 
     create() {
-        this.music=this.sound.add('w1');
+        this.music = this.sound.add('m-1');
         this.music.play();
-        this.cameras.main.setBounds(0, 0, 4095, 768);
+        this.enemySound = this.sound.add('m-enemy');
+        this.loseSound = this.sound.add('m-lose');
+        this.winSound = this.sound.add('m-win');
+        this.objSound= this.sound.add('m-obj');
+        this.obj2Sound= this.sound.add('m-obj2');
+        this.saltoSound = this.sound.add('m-salto');
+        this.camara = this.cameras.main.setBounds(0, 0, 4095, 768);
+        this.camara.flash(2000);
+        this.objeto = this.physics.add.image(200, 157, 'block_3').setScale(0.2).setOrigin(0);
+        this.linea = this.physics.add.image(110, 170, 'block_3').setImmovable(true).setScale(5, 0).setOrigin(0);
+        this.objeto.body.setGravityY(500);
+        this.physics.add.collider(this.objeto, this.linea, null, null, this);
         this.physics.world.setBounds(0, 0, 4095, 768);
-        this.mundo=this.add.image(0, 0, 'Plano1').setOrigin(0);
+        this.mundo = this.add.image(0, 0, 'Plano1').setOrigin(0);
         this.add.image(250, 30, 'estado').setScale(1).setScrollFactor(0);
+        this.add.image(341, 27, 'perulera-estado').setScale(1).setScrollFactor(0);
         this.add.image(1048, 407, 'piedra');
         this.poligon();
         this.circulos();
@@ -255,6 +283,12 @@ class Plano1 extends BaseScene {
         this.textoMonedas = this.add.text(230, 15, 'x' + this.monedas, { fontSize: '28px', fontFamily: 'Comic Sans MS', fill: "#ffffff" }).setScrollFactor(0);
         this.textoObjetos = this.add.text(373, 15, 'x' + this.objetoPerulera, { fontSize: '28px', fontFamily: 'Comic Sans MS', fill: "#ffffff" }).setScrollFactor(0);
         this.textoTiempo = this.add.text(65, 15, `0:${this.tiempo}`, { fontSize: '28px', fontFamily: 'Comic Sans MS', fill: "#ffffff" }).setScrollFactor(0);
+        this.OutMonedas = this.physics.add.image(0, 0, 'GameOverPlayer').setOrigin(0).setScrollFactor(0);
+        this.OutMonedas.setVisible(false);//sin monedas
+        this.OutTime = this.physics.add.image(0, 0, 'GameOverTiempo').setOrigin(0).setScrollFactor(0);
+        this.OutTime.setVisible(false);//sin tiempo
+        this.OutComplete = this.physics.add.image(0, 0, 'GameComplete').setOrigin(0).setScrollFactor(0);
+        this.OutComplete.setVisible(false);
         this.physics.add.collider(this.player1, this.plataforma, this.alert, null, this);
         this.physics.add.collider(this.player1, this.poligono, this.alertCirculos, null, this);
         this.physics.add.collider(this.player1, this.circulo, this.alertCirculos, null, this);
@@ -273,34 +307,75 @@ class Plano1 extends BaseScene {
         this.physics.add.collider(this.player1, this.perulera4, this.ColisionPerulera4, null, this);
         this.physics.add.collider(this.player1, this.perulera5, this.ColisionPerulera5, null, this);
         this.physics.add.collider(this.player1, this.gate, this.mundo2, null, this);
+
+        this.flechaOp = this.physics.add.sprite(616.5, 523, 'f-menu').setOrigin(0).setScrollFactor(0);//cragamos el sprite a animar previamente definido con sus caracteristicas en preload.js
+
+        //creamos la animacion
+        this.anims.create({
+            key: 'moveflecha',
+            frames: this.anims.generateFrameNumbers('f-menu', { start: 0, end: 2 }),
+            frameRate: 4,
+            repeat: -1
+        });
+        //iniciamos la animacion
+        this.flechaOp.play('moveflecha', true);
+        this.flechaOp.setVisible(false);
         this.temporizador();
     }
 
-    gameOver(){
-      /*resta monedas*/
-         this.monedas-=10;
-         if(this.monedas==0){
-            this.tiempo='00';
-         }
-         this.monedas<0 ? this.textoMonedas.setText(`x0`) : this.textoMonedas.setText(`x${this.monedas}`);
-      /*Fin Resta Monedas*/
+    gameOver() {
+        /*resta monedas*/
+        this.enemySound.play();
+        this.monedas -= 5;
+        if (this.monedas === 0) {
+            this.tiempo = '00';
+            this.music.stop();
+            this.loseSound.loop = true;
+            this.loseSound.play();
+            this.OutMonedas.setVisible(true);
+            this.flechaOp.setVisible(true);
+            this.physics.pause();
+            this.player1.body.setEnable(false);
+            this.player1.setVisible(false);
+            this.btnReload = true;
+            if (this.isMultiPLayer) {
+                this.Jugador2.body.setEnable(false);
+                this.Jugador2.setVisible(false);
+            }
+        }
+        this.monedas < 0 ? this.textoMonedas.setText(`x0`) : this.textoMonedas.setText(`x${this.monedas}`);
+        /*Fin Resta Monedas*/
     }
 
-    temporizador(){
+    temporizador() {
         this.intervaloTIEMPO = setInterval(() => {
             --this.tiempo;
             if (this.tiempo === 30) {
                 this.mundo.setTint(0xfad6a5);
             } else if (this.tiempo === 15) {
                 this.mundo.setTint(0x2d3451);
-            }else if(this.tiempo===0){
-                console.log("Se Acabo el tiempo y se muere");
-            }else{
-                if(this.tiempo<0){
-                    this.tiempo='00';
+            } else if (this.tiempo === 0) {
+                this.btnReload = true;
+                this.music.stop();
+                this.loseSound.loop = true;
+                this.loseSound.play();
+                this.physics.pause();
+                this.OutTime.setVisible(true);
+                this.flechaOp.setVisible(true);
+                this.player1.body.setEnable(false);
+                this.player1.setVisible(false);
+                if (this.isMultiPLayer) {
+                    this.physics.pause();
+                    this.Jugador2.body.setEnable(false);
+                    this.Jugador2.setVisible(false);
                 }
-                if(this.tiempo<10 && this.tiempo>0){
-                    this.tiempo='0'+this.tiempo;
+                console.log("nos vamos de tiempo");
+            } else {
+                if (this.tiempo < 0) {
+                    this.tiempo = '00';
+                }
+                if (this.tiempo < 10 && this.tiempo > 0) {
+                    this.tiempo = '0' + this.tiempo;
                 }
                 try {
                     this.textoTiempo.setText(`0:${this.tiempo}`);
@@ -312,23 +387,37 @@ class Plano1 extends BaseScene {
     }
 
     mundo2() {
+
         clearInterval(this.intervaloTIEMPO);
         this.music.stop();
+        this.winSound.loop = true;
+        this.winSound.play();
+        this.volteoP1 = false;
         this.velocidadX = 0;
         this.velocidadY = 0;
-        this.animacionStop = 'stop';
-        this.animacionMove = 'stop';
-        this.animacionJump = 'stop';
+        this.animacionStop = 'celebrate';
+        this.animacionJump = 'celebrate';
+        this.animacionMove = 'celebrate';
+        this.animacionMoveP2 = 'celebrateP2';
+        this.animacionJumpP2 = 'celebrateP2';
+        this.animacionStopP2 = 'celebrateP2';
+        this.player1.setPosition(3915, 310);
+        if (this.isMultiPLayer) {
+            this.volteoP2 = false;
+            this.Jugador2.setPosition(3820, 310);
+        }
         this.physics.pause();
-        sessionStorage.setItem('PuntajeActual',this.monedas);
+        sessionStorage.setItem('PuntajeActual', this.monedas);
+        sessionStorage.setItem('PeruleraObj1', this.objetoPerulera);
         setTimeout(() => {
-            this.physics.resume();
-            this.scene.start('Mapa2');
-        }, 2000)
+            this.OutComplete.setVisible(true);
+            this.flechaOp.setVisible(true);
+            this.btnContinue = true;
+        }, 2500)
     }
 
-    alertCirculos(){
-        this.estadoSuelo=true;
+    alertCirculos() {
+        this.estadoSuelo = true;
     }
 
     alert() {
@@ -367,7 +456,7 @@ class Plano1 extends BaseScene {
     alert2() {
         const posiciony = Math.trunc(this.Jugador2.y);
         this.EnemigoBalaCanon
-    
+
         switch (posiciony) {
             case 56:
                 this.estadoSuelo2 = true;
@@ -396,8 +485,8 @@ class Plano1 extends BaseScene {
         }
 
     }
-    alertCirculos2(){
-        this.estadoSuelo2=true;
+    alertCirculos2() {
+        this.estadoSuelo2 = true;
     }
 
 
@@ -580,13 +669,66 @@ class Plano1 extends BaseScene {
         if (!control) {
             return;
         }
+
+        if (control.buttons[1].pressed && this.btnReload) {
+
+            setTimeout(() => {
+                this.loseSound.stop();
+                this.scene.stop('Plano1');
+                window.location.reload();
+            }, 3500)
+
+        }
+        if (control.buttons[1].pressed && this.btnContinue) {
+            this.loseSound.stop();
+            this.music.stop();
+            this.winSound.stop();
+            this.scene.stop('Plano1');
+            this.camara.fade(2500);
+            this.scene.start('Mapa2');
+
+        }
+
+        if (control.buttons[0].pressed && this.btnReload) {
+
+            setTimeout(() => {
+                this.loseSound.stop();
+                this.scene.stop('Plano1');
+                window.location.reload();
+            }, 1000);
+
+        }
+
+        if (control.buttons[0].pressed && this.btnContinue) {
+            this.loseSound.stop();
+            this.scene.stop('Plano1');
+            this.camara.fade(2500);
+            this.scene.start('Mapa2');
+
+        }
+
+
+
         if (control.buttons[1].pressed && onFloor) {
+            this.saltoSound.play();
             this.estadoSuelo = false;
             this.player1.setVelocityY(-this.velocidadY * 2);
         }
         if (control.buttons[0].pressed && onFloor) {
+            this.saltoSound.play();
             this.estadoSuelo = false;
             this.player1.setVelocityY(-this.velocidadY * 2);
+        }
+        if (control.buttons[3].pressed && this.objeto.body.onFloor()) {
+            if (!this.infoObjeto) {
+                this.objeto.setVelocityY(-150);
+                this.objeto.body.setGravityY(0);
+                this.music.play();
+                this.objSound.stop();
+                Swal.close();
+                this.physics.resume();//
+                this.temporizador();
+            }
         }
         if (control.axes.length) {
             const axisH = control.axes[0].getValue();
@@ -595,7 +737,7 @@ class Plano1 extends BaseScene {
                 this.player1.setFlipX(false);
             } else if (axisH === 1) {
                 this.player1.setVelocityX(-this.velocidadX);
-                this.player1.setFlipX(true);
+                this.player1.setFlipX(this.volteoP1);
             } else {
                 this.player1.setVelocityX(0);
             }
@@ -614,12 +756,26 @@ class Plano1 extends BaseScene {
                 return;
             }
             if (control.buttons[1].pressed && onFloor) {
+                this.saltoSound.play();
                 this.estadoSuelo2 = false;
                 this.Jugador2.setVelocityY(-this.velocidadY * 2);
             }
             if (control.buttons[0].pressed && onFloor) {
+                this.saltoSound.play();
                 this.estadoSuelo2 = false;
                 this.Jugador2.setVelocityY(-this.velocidadY * 2);
+            }
+
+            if (control.buttons[3].pressed && this.objeto.body.onFloor()) {
+                if (!this.infoObjeto) {
+                    this.objeto.setVelocityY(-150);
+                    this.objeto.body.setGravityY(0);
+                    this.music.play();
+                    this.objSound.stop();
+                    Swal.close();
+                    this.physics.resume();//
+                    this.temporizador();
+                }
             }
             if (control.axes.length) {
                 const axisH = control.axes[0].getValue();
@@ -628,7 +784,7 @@ class Plano1 extends BaseScene {
                     this.Jugador2.setFlipX(false);
                 } else if (axisH === 1) {
                     this.Jugador2.setVelocityX(-this.velocidadX);
-                    this.Jugador2.setFlipX(true);
+                    this.Jugador2.setFlipX(this.volteoP2);
                 } else {
                     this.Jugador2.setVelocityX(0);
                 }

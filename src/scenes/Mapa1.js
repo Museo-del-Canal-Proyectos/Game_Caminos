@@ -74,9 +74,10 @@ class Mapa1 extends BaseScene {
 
   cambioScenario() {
     this.physics.pause();
-    this.cameras.main.shake(500);
+    this.cameras.main.fade(2000);
     setTimeout(()=>{
-      this.scene.start('Plano1');
+      this.scene.stop('Mapa1');
+      this.scene.start('IntroCity');
     },400)
   }
 
@@ -242,12 +243,9 @@ class Mapa1 extends BaseScene {
     Swal.fire({
       position: "center",
       customClass: "manoDeDios",
-      imageUrl: "./assets/star.png",
+      background: 'url(./assets/data-nombre-de-Dios.png) no-repeat center center',
       imageWidth: 50,
       imageHeight: 50,
-      imageAlt: "Custom image",
-      title: `
-      <b style="font-size:25px;text-align:center;">Nombre de Dios</b><hr><p style="font-size:20px;text-align:justify;">Este territorio indígena fue avistado por Cristóbal Colón en su cuarto viaje en 1502, sin embargo, fue poblado en 1510 por Diego de Nicuesa y fundado oficialmente a finales de 1519 por Diego de Albítez. La ciudad de Nombre de Dios fue reemplazada por Portobelo debido a que tenía mejores condiciones comerciales, militares y agrícolas. La ciudad se muda en 1597 luego del ataque del corsario Francis Drake.</p>`,
       showConfirmButton: false,
     });
     this.physics.pause();
@@ -266,11 +264,10 @@ class Mapa1 extends BaseScene {
     this.choque.play();
     Swal.fire({
       position: "center",
-      imageUrl: "./assets/star.png",
+      customClass: "manoDeDios",
+      background: 'url(./assets/data-panama-la-vieja.png) no-repeat center center',
       imageWidth: 50,
       imageHeight: 50,
-      imageAlt: "Custom image",
-      title: `<p style="font-size:20px;text-align:justify;">Este camino se cerró en 1673 por el ataque de Morgan a <b>Panamá viejo</b>. Luego del ataque se decidió mudar la ciudad a lo que hoy conoces como Casco (Panamá) y la vieja quedó vacía</p>`,
       showConfirmButton: false,
     });
     this.physics.pause();

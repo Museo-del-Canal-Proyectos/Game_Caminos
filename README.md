@@ -1,25 +1,18 @@
-# phaser-webpack-boilerplate-new
+# Juego Rutaurum 
 
-## Setup
+## Arquitectura del Juego
 
-1. If you don’t have Node.js installed, [install it from here](https://nodejs.org/en/) (Node.js version >= 14.6.0 required)
+# index.js Crea el proyecto  contiene las configuraciones globales Tamaño de sceneas, # estilo de arte Joystick gamepad
 
-2. Clone this repository or Download
+# preload.js se declara la propiedad del elemento y se hace la referencia ejemplo  this.load.spritesheet('referencia', 'assets/player1/player1 SELECCION-idle.png',{frameWidth:195.8,frameHeight:332}); tambien contiene la escena principal del juego al abrirse hay muchas formas para cargar recursos imagenes ,json videos consultar Phaser.js load files : https://newdocs.phaser.io/docs/3.55.2/Phaser.GameObjects.Sprite
 
-3. Navigate into the project directory
+# BaseScene.js configuramos la dimesiones en pantalla y centramos los objetos y camara e la clase PHaser que extendemos en las demas escenas para llamar y usar sus propiedades de ciclo create() update() 
 
-```bash
-  $ cd phaser-webpack-boilerplate-new
-```
+# IntroGame.js video de Inicio del JUego
 
-4. Install the requirements
+# MenuScene.js 
 
-```bash
-  $ npm install
-```
+# InicioScene.js La scena principal del juego al iniciar 
 
-5. Run the app
 
-```bash
-  $ npm run dev
-```
+

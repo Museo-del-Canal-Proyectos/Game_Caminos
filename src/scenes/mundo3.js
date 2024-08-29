@@ -14,8 +14,7 @@ class Plano3 extends BaseScene {
     isMultiPLayer;
     Jugador2 = null;
     lluvia = null;
-    lluvia2 = null;
-    infoObjeto= true;
+    infoObjeto = true;
     mundo = null;
     intervaloTIEMPO = null;
     tiempo = 45;//
@@ -44,6 +43,8 @@ class Plano3 extends BaseScene {
     velocidadX = 300;
     velocidadX_P2 = 300;
     velocidadY = 280;
+    volteoP1 = true;
+    volteoP2 = true;
     Mosquito = null;
     entradaLLuvia = null;
     salidaLLuvia = null;
@@ -62,16 +63,33 @@ class Plano3 extends BaseScene {
     flechas = null;
     flechas2 = null;
     velocidadBalas = 325;
-    objeto1= null;
-    objeto2= null;
-    objeto3= null;;
-    objeto4= null;
-    objeto5= null;
+    objeto1 = null;
+    objeto2 = null;
+    objeto3 = null;;
+    objeto4 = null;
+    objeto5 = null;
+    OutMonedas;
+    OutTime;
+    OutComplete;
+    btnReload = false;
+    btnContinue = false;
+    enemySound;
+    loseSound;
+    winSound;
+    objSound;
+    obj2Sound;
+    saltoSound;
+    caidaSound;
+    redFlag=false;
 
     constructor(config) {
         super('Plano3', config);
     }
 
+    gateMundo2() {
+        this.gate = this.physics.add.staticGroup();
+        this.gate.create(3945, 300, 'block_2').setScale(0, 4).refreshBody();
+    }
     createPlayer1() {
         //cuando son dos seteo en storage jugador 1 en seleccion  
         this.storagePlayer = sessionStorage.getItem('selectPLayer');
@@ -105,8 +123,8 @@ class Plano3 extends BaseScene {
             this.physics.add.collider(this.Jugador2, this.plataformaVacio3_5, this.colisionVacio5_P2, null, this);
             this.physics.add.collider(this.Jugador2, this.Circle1, this.colisionEsfera_P2, null, this);
             this.physics.add.collider(this.Jugador2, this.Circle2, this.colisionEsfera_P2, null, this);
-            this.physics.add.collider(this.Jugador2, this.entradaLLuviaP2, this.lluviaInP2, null, this);
-            this.physics.add.collider(this.Jugador2, this.salidaLLuviaP2, this.lluviaOutP2, null, this);
+            //this.physics.add.collider(this.Jugador2, this.entradaLLuviaP2, this.lluviaInP2, null, this);
+            //this.physics.add.collider(this.Jugador2, this.salidaLLuviaP2, this.lluviaOutP2, null, this);
             this.physics.add.collider(this.Jugador2, this.Mosquito, this.mosquito1Colisionp1P2, null, this);
             this.physics.add.collider(this.Jugador2, this.Mosquito2, this.mosquito2Colisionp1P2, null, this);
             this.physics.add.collider(this.Jugador2, this.Mosquito3, this.mosquito3Colisionp1P2, null, this);
@@ -114,18 +132,23 @@ class Plano3 extends BaseScene {
             this.physics.add.collider(this.Jugador2, this.Mosquito5, this.mosquito5Colisionp1P2, null, this);
             this.physics.add.collider(this.Jugador2, this.Serpiente1, this.serpiente1Colisionp1P2, null, this);
             this.physics.add.collider(this.Jugador2, this.Serpiente2, this.serpiente2Colisionp1P2, null, this);
-            this.physics.add.overlap(this.Jugador2,this.balas,this.hitBala1P2,null,this);
-            this.physics.add.overlap(this.Jugador2,this.balas2,this.hitBala2P2,null,this);
-            this.physics.add.overlap(this.Jugador2,this.flechas,this.hitflecha1P2,null,this);
-            this.physics.add.overlap(this.Jugador2,this.flechas2,this.hitflecha2P2,null,this);
-            this.physics.add.collider(this.Jugador2,this.objeto1,this.ColisionObj1,null,this);
-            this.physics.add.collider(this.Jugador2,this.objeto2,this.ColisionObj2,null,this);
-            this.physics.add.collider(this.Jugador2,this.objeto3,this.ColisionObj3,null,this);
-            this.physics.add.collider(this.Jugador2,this.objeto4,this.ColisionObj4,null,this);
-            this.physics.add.collider(this.Jugador2,this.objeto5,this.ColisionObj5,null,this);
+            this.physics.add.overlap(this.Jugador2, this.balas, this.hitBala1P2, null, this);
+            this.physics.add.overlap(this.Jugador2, this.balas2, this.hitBala2P2, null, this);
+            this.physics.add.overlap(this.Jugador2, this.flechas, this.hitflecha1P2, null, this);
+            this.physics.add.overlap(this.Jugador2, this.flechas2, this.hitflecha2P2, null, this);
+            this.physics.add.collider(this.Jugador2, this.objeto1, this.ColisionObj1, null, this);
+            this.physics.add.collider(this.Jugador2, this.objeto2, this.ColisionObj2, null, this);
+            this.physics.add.collider(this.Jugador2, this.objeto3, this.ColisionObj3, null, this);
+            this.physics.add.collider(this.Jugador2, this.objeto4, this.ColisionObj4, null, this);
+            this.physics.add.collider(this.Jugador2, this.objeto5, this.ColisionObj5, null, this);
+            this.physics.add.collider(this.Jugador2, this.gate, this.vacio, null, this);
         } else {
             console.log("Jugador 2 no conectado en mundo 2")
         }
+    }
+
+    vacio() {
+
     }
     CirculosW3() {
         this.Circle1 = this.add.graphics();
@@ -148,10 +171,29 @@ class Plano3 extends BaseScene {
 
     create() {
         this.monedasW3 = sessionStorage.getItem('PuntajeActual');
-        this.cameras.main.setBounds(0, 0, 4095, 768);
+        this.music3 = this.sound.add('m-3');
+        this.music3.play();
+        this.enemySound = this.sound.add('m-enemy');
+        this.loseSound = this.sound.add('m-lose');
+        this.winSound = this.sound.add('m-win');
+        this.objSound = this.sound.add('m-obj');
+        this.obj2Sound = this.sound.add('m-obj2');
+        this.saltoSound = this.sound.add('m-salto');
+        this.caidaSound = this.sound.add('m-caida2');
+        this.lluviaMusic = this.sound.add('rain');
+
+        this.camara = this.cameras.main.setBounds(0, 0, 4095, 768);
+        this.camara.flash(2000);
+
+        this.objeto_i = this.physics.add.image(200, 157, 'block_3').setScale(0.2).setOrigin(0);
+        this.linea = this.physics.add.image(110, 170, 'block_3').setImmovable(true).setScale(5, 0).setOrigin(0);
+        this.objeto_i.body.setGravityY(500);
+        this.physics.add.collider(this.objeto_i, this.linea, null, null, this);
+
         this.physics.world.setBounds(0, 0, 4095, 768);
         this.mundo = this.add.image(0, 0, 'Plano3').setOrigin(0);
         this.add.image(250, 30, 'estado').setScale(1).setScrollFactor(0);
+        this.add.image(353, 24, 'herradura-estado').setScale(1).setScrollFactor(0);
         this.textoTiempo = this.add.text(65, 15, `0:${this.tiempo}`, { fontSize: '28px', fontFamily: 'Comic Sans MS', fill: "#ffffff" }).setScrollFactor(0);
         this.textoMonedas = this.add.text(230, 15, 'x' + this.monedasW3, { fontSize: '28px', fontFamily: 'Comic Sans MS', fill: "#ffffff" }).setScrollFactor(0);
         this.textoObjetos = this.add.text(373, 15, 'x' + this.objeto, { fontSize: '28px', fontFamily: 'Comic Sans MS', fill: "#ffffff" }).setScrollFactor(0);
@@ -175,7 +217,6 @@ class Plano3 extends BaseScene {
         this.Mosquito5 = this.physics.add.sprite(2490, 300, 'mosquito').setImmovable(true).setOrigin(0);
         this.Serpiente1 = this.physics.add.sprite(1400, 375, 'serpiente').setImmovable(true).setOrigin(0);
         this.Serpiente2 = this.physics.add.sprite(2600, 375, 'serpiente').setImmovable(true).setOrigin(0);
-        console.log(this.lluvia2);
         MosquitoACT1.createMosquitoW3_1(this.Mosquito, this.velocidadMosquito);
         MosquitoACT1.Animacion(this.Mosquito, this.anims);
         MosquitoACT1.createMosquitoW3_1(this.Mosquito2, this.velocidadMosquito - 130);
@@ -192,13 +233,13 @@ class Plano3 extends BaseScene {
         SerpientesACT1.Animacion(this.Serpiente1, this.anims);
         SerpientesACT1.Animacion(this.Serpiente2, this.anims);
         ////test lluvia lentitud efecto
-        this.entradaLLuvia = this.physics.add.sprite(1353, 228, 'block_2').setImmovable(true).setScale(0, 3).refreshBody();
-        this.salidaLLuvia = this.physics.add.sprite(1353, 228, 'block_2').setImmovable(true).setScale(0, 3).refreshBody();
-        this.salidaLLuvia.body.setEnable(false);
-        ///testlluvia player2
-        this.entradaLLuviaP2 = this.physics.add.sprite(1353, 228, 'block_2').setImmovable(true).setScale(0, 3).refreshBody();
-        this.salidaLLuviaP2 = this.physics.add.sprite(1353, 228, 'block_2').setImmovable(true).setScale(0, 3).refreshBody();
-        this.salidaLLuviaP2.body.setEnable(false);
+        // this.entradaLLuvia = this.physics.add.sprite(1353, 228, 'block_2').setImmovable(true).setScale(0, 3).refreshBody();
+        // this.salidaLLuvia = this.physics.add.sprite(1353, 228, 'block_2').setImmovable(true).setScale(0, 3).refreshBody();
+        // this.salidaLLuvia.body.setEnable(false);
+        // ///testlluvia player2
+        // this.entradaLLuviaP2 = this.physics.add.sprite(1353, 228, 'block_2').setImmovable(true).setScale(0, 3).refreshBody();
+        // this.salidaLLuviaP2 = this.physics.add.sprite(1353, 228, 'block_2').setImmovable(true).setScale(0, 3).refreshBody();
+        // this.salidaLLuviaP2.body.setEnable(false);
         this.balas = this.physics.add.group({
             key: 'bala1',
             frame: [0, 1, 2],
@@ -256,10 +297,19 @@ class Plano3 extends BaseScene {
         });
         this.temporizador();
         this.createObjetos();
+        this.gateMundo2();
         this.createPlayer1();
         this.createPlayer2();
-        this.lluvia = this.physics.add.sprite(1353, 0, 'lluvia').setScale(1.2, 1.7).setImmovable(true).setOrigin(0);
-        this.lluvia2 = this.physics.add.sprite(2434, 0, 'lluvia').setScale(1.2, 1.7).setImmovable(true).setOrigin(0);
+        this.lluvia = this.physics.add.sprite(1525, 0, 'lluvia').setImmovable(true).setOrigin(0);
+        this.add.image(1525, 0, 'nubes').setOrigin(0);
+        this.anims.create({
+            key: 'caer',
+            frames: this.anims.generateFrameNumbers('lluvia', { start: 0, end: 5 }),
+            frameRate: 8,
+            repeat: -1,
+        })
+        this.lluvia.play('caer', true);
+        //this.lluvia3.play('caer',true);
         this.physics.add.collider(this.player1, this.plataformaW3, this.colisionMundo, null, this);
         this.physics.add.collider(this.player1, this.plataformaVacio3, this.colisionVacio1, null, this);
         this.physics.add.collider(this.player1, this.plataformaVacio3_2, this.colisionVacio2, null, this);
@@ -268,8 +318,8 @@ class Plano3 extends BaseScene {
         this.physics.add.collider(this.player1, this.plataformaVacio3_5, this.colisionVacio5, null, this);
         this.physics.add.collider(this.player1, this.Circle1, this.colisionEsfera, null, this);
         this.physics.add.collider(this.player1, this.Circle2, this.colisionEsfera, null, this);
-        this.physics.add.collider(this.player1, this.entradaLLuvia, this.lluviaIn, null, this);
-        this.physics.add.collider(this.player1, this.salidaLLuvia, this.lluviaOut, null, this);
+        //this.physics.add.collider(this.player1, this.entradaLLuvia, this.lluviaIn, null, this);
+        // this.physics.add.collider(this.player1, this.salidaLLuvia, this.lluviaOut, null, this);
         this.physics.add.collider(this.player1, this.Mosquito, this.mosquito1Colisionp1, null, this);
         this.physics.add.collider(this.player1, this.Mosquito2, this.mosquito2Colisionp1, null, this);
         this.physics.add.collider(this.player1, this.Mosquito3, this.mosquito3Colisionp1, null, this);
@@ -277,16 +327,105 @@ class Plano3 extends BaseScene {
         this.physics.add.collider(this.player1, this.Mosquito5, this.mosquito5Colisionp1, null, this);
         this.physics.add.collider(this.player1, this.Serpiente1, this.serpiente1Colisionp1, null, this);
         this.physics.add.collider(this.player1, this.Serpiente2, this.serpiente2Colisionp1, null, this);
-        this.physics.add.overlap(this.player1,this.balas,this.hitBala1,null,this);
-        this.physics.add.overlap(this.player1,this.balas2,this.hitBala2,null,this);
-        this.physics.add.overlap(this.player1,this.flechas,this.hitflecha1,null,this);
-        this.physics.add.overlap(this.player1,this.flechas2,this.hitflecha2,null,this);
-        this.physics.add.collider(this.player1,this.objeto1,this.ColisionObj1,null,this);
-        this.physics.add.collider(this.player1,this.objeto2,this.ColisionObj2,null,this);
-        this.physics.add.collider(this.player1,this.objeto3,this.ColisionObj3,null,this);
-        this.physics.add.collider(this.player1,this.objeto4,this.ColisionObj4,null,this);
-        this.physics.add.collider(this.player1,this.objeto5,this.ColisionObj5,null,this);
+        this.physics.add.overlap(this.player1, this.balas, this.hitBala1, null, this);
+        this.physics.add.overlap(this.player1, this.balas2, this.hitBala2, null, this);
+        this.physics.add.overlap(this.player1, this.flechas, this.hitflecha1, null, this);
+        this.physics.add.overlap(this.player1, this.flechas2, this.hitflecha2, null, this);
+        this.physics.add.collider(this.player1, this.objeto1, this.ColisionObj1, null, this);
+        this.physics.add.collider(this.player1, this.objeto2, this.ColisionObj2, null, this);
+        this.physics.add.collider(this.player1, this.objeto3, this.ColisionObj3, null, this);
+        this.physics.add.collider(this.player1, this.objeto4, this.ColisionObj4, null, this);
+        this.physics.add.collider(this.player1, this.objeto5, this.ColisionObj5, null, this);
+        this.physics.add.collider(this.player1, this.gate, this.mundo2, null, this);
+        this.OutMonedas = this.physics.add.image(0, 0, 'GameOverPlayer').setOrigin(0).setScrollFactor(0);
+        this.OutMonedas.setVisible(false);//sin monedas
+        this.OutTime = this.physics.add.image(0, 0, 'GameOverTiempo').setOrigin(0).setScrollFactor(0);
+        this.OutTime.setVisible(false);//sin tiempo
+        this.OutComplete = this.physics.add.image(0, 0, 'GameComplete').setOrigin(0).setScrollFactor(0);
+        this.OutComplete.setVisible(false);
+        this.flechaOp = this.physics.add.sprite(616.5, 523, 'f-menu').setOrigin(0).setScrollFactor(0);//cragamos el sprite a animar previamente definido con sus caracteristicas en preload.js
+        //creamos la animacion
+        this.anims.create({
+            key: 'moveflecha',
+            frames: this.anims.generateFrameNumbers('f-menu', { start: 0, end: 2 }),
+            frameRate: 4,
+            repeat: -1
+        });
+        //iniciamos la animacion
+        this.flechaOp.play('moveflecha', true);
+        this.flechaOp.setVisible(false);
     }
+
+    sonidoLLuvuia(player) {
+        if (player.x > 1470 && player.x < 2280) {
+            this.velocidadX = 160;
+            if (this.lluviaMusic.isPlaying) {
+                //no hacemos nada
+                this.music3.stop();
+            } else {
+                if (this.btnReload) {
+                    //bomoblack
+                } else {
+                    this.lluviaMusic.play();
+                }
+            }
+        } else {
+            if (this.music3.isPlaying) {
+                //no hacemos nada
+                this.lluviaMusic.stop();
+            } else {
+                if(this.redFlag){
+
+                }else{
+                    this.music3.play();
+                }
+            }
+            this.velocidadX = 300;
+        }
+    }
+
+    //lentitud Player2
+    sonidoLLuvuia_P2(player) {
+        if (this.isMultiPLayer) {
+            if (player.x > 1470 && player.x < 2280) {
+                this.velocidadX_P2 = 160;
+            } else {
+                this.velocidadX_P2 = 300;
+            }
+        }
+    }
+
+    /**/
+    mundo2() {
+        this.music3.stop();
+        this.redFlag=true;
+        clearInterval(this.intervaloTIEMPO);
+        this.winSound.loop = true;
+        this.winSound.play();
+        this.volteoP1 = false;
+        this.velocidadX = 0;
+        this.velocidadY = 0;
+        this.animacionStop = 'celebrate';
+        this.animacionJump = 'celebrate';
+        this.animacionMove = 'celebrate';
+        this.animacionMoveP2 = 'celebrateP2';
+        this.animacionJumpP2 = 'celebrateP2';
+        this.animacionStopP2 = 'celebrateP2';
+        this.player1.setPosition(3790, 127);
+        if (this.isMultiPLayer) {
+            this.volteoP2 = false;
+            this.Jugador2.setPosition(3685, 127);
+        }
+        this.physics.pause();
+        sessionStorage.setItem('PuntajeActual', this.monedasW3);
+        sessionStorage.setItem('HerraduraObj3', this.objeto);
+        setTimeout(() => {
+            this.OutComplete.setVisible(true);
+            this.flechaOp.setVisible(true);
+            this.btnContinue = true;
+        }, 2500)
+    }
+    /**/
     damagePlayer1() {
         this.player1.setTint(0xff0000);
         this.player1.setAlpha(0.5);
@@ -355,9 +494,26 @@ class Plano3 extends BaseScene {
     }
     /*resta monedas*/
     gameOver() {
+        this.enemySound.play();
         this.monedasW3 -= 10;
-        if (this.monedasw3 == 0) {
+        console.log(this.monedasW3);
+        if (this.monedasW3 <= 0) {
             this.tiempo = '00';
+            this.music3.stop();
+            this.redFlag=true;
+            this.lluviaMusic.stop();
+            this.loseSound.loop = true;
+            this.loseSound.play();
+            this.OutMonedas.setVisible(true);
+            this.flechaOp.setVisible(true);
+            this.physics.pause();
+            this.player1.body.setEnable(false);
+            this.player1.setVisible(false);
+            this.btnReload = true;
+            if (this.isMultiPLayer) {
+                this.Jugador2.setEnable(false);
+                this.Jugador2.setVisible(false);
+            }
         }
         this.monedasW3 < 0 ? this.textoMonedas.setText(`x0`) : this.textoMonedas.setText(`x${this.monedasW3}`);
     }
@@ -370,6 +526,22 @@ class Plano3 extends BaseScene {
             } else if (this.tiempo === 15) {
                 this.mundo.setTint(0x2d3451);
             } else if (this.tiempo === 0) {
+                this.btnReload = true;
+                this.redFlag=true;
+                this.music3.stop();
+                this.lluviaMusic.stop();
+                this.loseSound.loop = true;
+                this.loseSound.play();
+                this.physics.pause();
+                this.OutTime.setVisible(true);
+                this.flechaOp.setVisible(true);
+                this.player1.body.setEnable(false);
+                this.player1.setVisible(false);
+                if (this.isMultiPLayer) {
+                    this.physics.pause();
+                    this.Jugador2.body.setEnable(false);
+                    this.Jugador2.setVisible(false);
+                }
                 console.log("Se Acabo el tiempo y se muere");
             } else {
                 if (this.tiempo < 0) {
@@ -409,27 +581,32 @@ class Plano3 extends BaseScene {
             case 158:
                 this.estadoSuelo = true;
                 break;
-            default:
-                this.estadoSuelo = false;
         }
     }
     colisionEsfera() {
         this.estadoSuelo = true;
     }
     colisionVacio1() {
-        this.player1.setPosition(338, 317);
+        this.caidaSound.play();
+        this.player1.setPosition(327, 300);
     }
     colisionVacio2() {
-        this.player1.setPosition(695, 480);
+        this.caidaSound.play();
+        this.player1.setPosition(695, 477);
     }
     colisionVacio3() {
-        this.player1.setPosition(938, 420);
+        this.caidaSound.play();
+        this.player1.setVelocityX(0);
+        this.player1.setVelocityY(0);
+        this.player1.setPosition(920, 417);
     }
     colisionVacio4() {
-        this.player1.setPosition(1198, 318);
+        this.caidaSound.play();
+        this.player1.setPosition(1179, 306);
     }
     colisionVacio5() {
-        this.player1.setPosition(2358, 317);
+        this.caidaSound.play();
+        this.player1.setPosition(2358, 305);
     }
     //player2
     colisionMundo2() {
@@ -453,27 +630,30 @@ class Plano3 extends BaseScene {
             case 158:
                 this.estadoSueloP2 = true;
                 break;
-            default:
-                this.estadoSueloP2 = false;
         }
     }
     colisionEsfera_P2() {
         this.estadoSueloP2 = true;
     }
     colisionVacio1_P2() {
-        this.Jugador2.setPosition(338, 317);
+        this.caidaSound.play();
+        this.Jugador2.setPosition(327, 300);
     }
     colisionVacio2_P2() {
-        this.Jugador2.setPosition(695, 480);
+        this.caidaSound.play();
+        this.Jugador2.setPosition(695, 477);
     }
     colisionVacio3_P2() {
-        this.Jugador2.setPosition(938, 420);
+        this.caidaSound.play();
+        this.Jugador2.setPosition(920, 417);
     }
     colisionVacio4_P2() {
-        this.Jugador2.setPosition(1198, 318);
+        this.caidaSound.play();
+        this.Jugador2.setPosition(1179, 304);
     }
     colisionVacio5_P2() {
-        this.Jugador2.setPosition(2358, 317);
+        this.caidaSound.play();
+        this.Jugador2.setPosition(2358, 303);
     }
 
     lluviaIn() {
@@ -515,56 +695,56 @@ class Plano3 extends BaseScene {
     mosquito1Colisionp1() {
         this.gameOver();
         this.damagePlayer1();
-        MosquitoACT1.EstadoMosquitos(this.Mosquito,430,300);
+        MosquitoACT1.EstadoMosquitos(this.Mosquito, 430, 300);
     }
     mosquito1Colisionp1P2() {
         this.gameOver();
         this.damagePlayer2();
-        MosquitoACT1.EstadoMosquitos(this.Mosquito,430,300);
+        MosquitoACT1.EstadoMosquitos(this.Mosquito, 430, 300);
     }
 
     mosquito2Colisionp1() {
         this.gameOver();
         this.damagePlayer1();
-        MosquitoACT1.EstadoMosquitos(this.Mosquito2,745,300);
+        MosquitoACT1.EstadoMosquitos(this.Mosquito2, 745, 300);
     }
     mosquito2Colisionp1P2() {
         this.gameOver();
         this.damagePlayer2();
-        MosquitoACT1.EstadoMosquitos(this.Mosquito2,745,300);
+        MosquitoACT1.EstadoMosquitos(this.Mosquito2, 745, 300);
     }
 
     mosquito3Colisionp1() {
         this.gameOver();
         this.damagePlayer1();
-        MosquitoACT1.EstadoMosquitos(this.Mosquito3,1010,300);
+        MosquitoACT1.EstadoMosquitos(this.Mosquito3, 1010, 300);
     }
     mosquito3Colisionp1P2() {
         this.gameOver();
         this.damagePlayer2();
-        MosquitoACT1.EstadoMosquitos(this.Mosquito3,1010,300);
+        MosquitoACT1.EstadoMosquitos(this.Mosquito3, 1010, 300);
     }
 
     mosquito4Colisionp1() {
         this.gameOver();
         this.damagePlayer1();
-        MosquitoACT1.EstadoMosquitos(this.Mosquito4,1272,300);
+        MosquitoACT1.EstadoMosquitos(this.Mosquito4, 1272, 300);
     }
     mosquito4Colisionp1P2() {
         this.gameOver();
         this.damagePlayer2();
-        MosquitoACT1.EstadoMosquitos(this.Mosquito4,1272,300);
+        MosquitoACT1.EstadoMosquitos(this.Mosquito4, 1272, 300);
     }
 
     mosquito5Colisionp1() {
         this.gameOver();
         this.damagePlayer1();
-        MosquitoACT1.EstadoMosquitos(this.Mosquito5,2490,300);
+        MosquitoACT1.EstadoMosquitos(this.Mosquito5, 2490, 300);
     }
     mosquito5Colisionp1P2() {
         this.gameOver();
         this.damagePlayer2();
-        MosquitoACT1.EstadoMosquitos(this.Mosquito5,2490,300);
+        MosquitoACT1.EstadoMosquitos(this.Mosquito5, 2490, 300);
     }
 
     serpiente1Colisionp1() {
@@ -636,42 +816,41 @@ class Plano3 extends BaseScene {
     }
     //contador de objetos 
     countObjetos() {
+        this.obj2Sound.play();
         this.objeto++;
         this.textoObjetos.setText(`x${this.objeto}`);
     }
     //Activador de Objeto
     ObjetoMessage() {
+        this.objSound.play();
         if (this.infoObjeto) {
+            this.music3.stop();
+            this.redFlag=true;
             Swal.fire({
-                position: "bottom",
-                imageUrl: "./assets/iconos/dineroBolsa.png",
+                position: "center",
+                customClass: "manoDeDios",
+                background: 'url(./assets/pieza-herradura.png) no-repeat center center',
                 imageWidth: 50,
                 imageHeight: 50,
-                imageAlt: "Custom image",
-                title: `<p style="font-size:20px;text-align:justify;"><center>Info por Anexar</center></p>`,
                 showConfirmButton: false,
-                backdrop: false,
-                timer: 3500
             });
             this.physics.pause();
-            setTimeout(() => {
-                this.physics.resume();
-            }, 3600)
+            clearInterval(this.intervaloTIEMPO);//limpio intervalo
         } else {
             // console.log("test no Funciona ya se activo")
         }
     }
 
     createObjetos() {
-        this.objeto1 = this.physics.add.image(608, 595, 'bolsa').setScale(0.8);
-        this.objeto2 = this.physics.add.image(900, 525, 'bolsa').setScale(0.8);
-        this.objeto3 = this.physics.add.image(1175, 425, 'bolsa').setScale(0.8);
-        this.objeto4 = this.physics.add.image(1976, 425, 'bolsa').setScale(0.8);
-        this.objeto5 = this.physics.add.image(3145, 425, 'bolsa').setScale(0.8);
+        this.objeto1 = this.physics.add.image(608, 590, 'herradura').setScale(0.9);
+        this.objeto2 = this.physics.add.image(900, 520, 'herradura').setScale(0.9);
+        this.objeto3 = this.physics.add.image(1175, 420, 'herradura').setScale(0.9);
+        this.objeto4 = this.physics.add.image(1976, 420, 'herradura').setScale(0.9);
+        this.objeto5 = this.physics.add.image(3145, 420, 'herradura').setScale(0.9);
     }
     //colision Objetos Suma
     //OBJ1
-     ColisionObj1() {
+    ColisionObj1() {
         this.objeto1.disableBody(true, true);
         this.countObjetos();
         this.ObjetoMessage();
@@ -707,7 +886,7 @@ class Plano3 extends BaseScene {
     }
 
     update() {
-        console.log(this.player1.x,":",this.player1.y);
+        // console.log(this.player1.x, ":", this.player1.y);
         MosquitoACT1.MoveW3_1(this.Mosquito, this.velocidadMosquito);
         MosquitoACT1.MoveW3_1(this.Mosquito2, this.velocidadMosquito);
         MosquitoACT1.MoveW3_1(this.Mosquito3, this.velocidadMosquito);
@@ -715,6 +894,8 @@ class Plano3 extends BaseScene {
         MosquitoACT1.MoveW3_1(this.Mosquito5, this.velocidadMosquito + 120);
         SerpientesACT1.MoveW3_1(this.Serpiente1, this.velocidadSerpiente);
         SerpientesACT1.MoveW3_2(this.Serpiente2, this.velocidadSerpiente);
+        this.sonidoLLuvuia(this.player1);
+        this.sonidoLLuvuia_P2(this.Jugador2);
         this.moveController(this.estadoSuelo);
         this.moveController2(this.estadoSueloP2);
         //console.log(this.Serpiente1.x);
@@ -726,14 +907,69 @@ class Plano3 extends BaseScene {
         if (!control) {
             return;
         }
+
+
+        if (control.buttons[1].pressed && this.btnReload) {
+
+            setTimeout(() => {
+                this.lluviaMusic.stop();
+                this.loseSound.stop();
+                this.scene.stop('Plano3');
+                window.location.reload();
+            }, 3500)
+
+        }
+        if (control.buttons[1].pressed && this.btnContinue) {
+            this.winSound.stop();
+            this.scene.stop('Plano3');
+            this.camara.fade(2500);
+            this.scene.start('Mapa4');
+
+        }
+
+        if (control.buttons[0].pressed && this.btnReload) {
+
+            setTimeout(() => {
+                this.lluviaMusic.stop();
+                this.loseSound.stop();
+                this.scene.stop('Plano3');
+                window.location.reload();
+            }, 1000);
+
+        }
+
+        if (control.buttons[0].pressed && this.btnContinue) {
+            this.winSound.stop();
+            this.scene.stop('Plano3');
+            this.camara.fade(2500);
+            this.scene.start('Mapa4');
+
+        }
+
+
         if (control.buttons[1].pressed && onFloor) {
+            this.saltoSound.play();
             this.estadoSuelo = false;
             this.player1.setVelocityY(-this.velocidadY * 2);
         }
         if (control.buttons[0].pressed && onFloor) {
+            this.saltoSound.play();
             this.estadoSuelo = false;
             this.player1.setVelocityY(-this.velocidadY * 2);
         }
+
+        if (control.buttons[3].pressed && this.objeto_i.body.onFloor()) {
+            if (!this.infoObjeto) {
+                this.objeto_i.setVelocityY(-150);
+                this.objeto_i.body.setGravityY(0);
+                this.music3.play();
+                Swal.close();
+                this.redFlag=false;
+                this.physics.resume();//
+                this.temporizador();
+            }
+        }
+
         if (control.axes.length) {
             const axisH = control.axes[0].getValue();
             if (axisH === -1) {
@@ -741,7 +977,7 @@ class Plano3 extends BaseScene {
                 this.player1.setFlipX(false);
             } else if (axisH === 1) {
                 this.player1.setVelocityX(-this.velocidadX);
-                this.player1.setFlipX(true);
+                this.player1.setFlipX(this.volteoP1);
             } else {
                 this.player1.setVelocityX(0);
             }
@@ -759,10 +995,23 @@ class Plano3 extends BaseScene {
                 return;
             }
             if (control.buttons[1].pressed && onFloor) {
+                this.saltoSound.play();
                 this.estadoSueloP2 = false;
                 this.Jugador2.setVelocityY(-this.velocidadY * 2);
             }
+
+            if (control.buttons[3].pressed && this.objeto_i.body.onFloor()) {
+                if (!this.infoObjeto) {
+                    this.objeto_i.setVelocityY(-150);
+                    this.objeto_i.body.setGravityY(0);
+                    Swal.close();
+                    this.physics.resume();//
+                    this.temporizador();
+                }
+            }
+
             if (control.buttons[0].pressed && onFloor) {
+                this.saltoSound.play();
                 this.estadoSueloP2 = false;
                 this.Jugador2.setVelocityY(-this.velocidadY * 2);
             }
@@ -773,7 +1022,7 @@ class Plano3 extends BaseScene {
                     this.Jugador2.setFlipX(false);
                 } else if (axisH === 1) {
                     this.Jugador2.setVelocityX(-this.velocidadX_P2);
-                    this.Jugador2.setFlipX(true);
+                    this.Jugador2.setFlipX(this.volteoP2);
                 } else {
                     this.Jugador2.setVelocityX(0);
                 }
