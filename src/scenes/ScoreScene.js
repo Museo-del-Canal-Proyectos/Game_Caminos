@@ -34,7 +34,9 @@ class ScoreScene extends BaseScene {
   }
 
   create() {
-
+    this.soundT=this.sound.add('m-trofeos');
+    this.soundT.loop=true;
+    this.soundT.play();
     this.mundo = this.add.image(0, 0, 'MP').setOrigin(0); 
 
     this.dataPlayer();
@@ -113,6 +115,8 @@ class ScoreScene extends BaseScene {
 
     if (control.buttons[3].pressed) {
       console.log("Botones Programando 0");
+      this.soundT.loop=false;
+      this.soundT.stop();
       this.scene.stop('ScoreScene');
       window.location.reload();
     }

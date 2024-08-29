@@ -14,6 +14,7 @@ class FinalScene extends BaseScene {
     }
 
     create() {
+        this.musicFinal=this.sound.add('m-final');
         this.puntajeActual= sessionStorage.getItem("PuntajeActual");
         this.multiplayer = sessionStorage.getItem("multiplayer");
         this.PeruleraObj1 = sessionStorage.getItem("PeruleraObj1");
@@ -86,7 +87,10 @@ class FinalScene extends BaseScene {
             this.player1.setVelocityX(100);
             this.player2.setVelocityX(100);
         },1000)
-
+        
+        setTimeout(()=>{
+          this.musicFinal.play();
+        },3500)
 
         setTimeout(()=>{
             this.alerta();

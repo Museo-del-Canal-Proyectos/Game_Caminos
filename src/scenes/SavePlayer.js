@@ -108,6 +108,9 @@ class SavePlayer extends BaseScene {
     }
 
     create() {
+        this.musicP= this.sound.add('music-inicio');
+        this.musicP.loop=true;
+        this.musicP.play();
         this.valorActual = 'selector-letras';
         this.add.image(0, 0, 'teclado').setOrigin(0);
         this.selector = this.physics.add.image(310, 380, this.valorActual).setOrigin(0);
@@ -185,6 +188,8 @@ class SavePlayer extends BaseScene {
         localStorage.setItem(`${this.key}`, dataJugador);
         sessionStorage.clear();
         this.scene.stop('SavePlayer');
+        this.musicP.loop=false;
+        this.musicP.stop();
         this.scene.start("ScoreScene");
     }
 

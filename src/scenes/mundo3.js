@@ -43,8 +43,8 @@ class Plano3 extends BaseScene {
     velocidadX = 300;
     velocidadX_P2 = 300;
     velocidadY = 280;
-    volteoP1= true;
-    volteoP2= true;
+    volteoP1 = true;
+    volteoP2 = true;
     Mosquito = null;
     entradaLLuvia = null;
     salidaLLuvia = null;
@@ -73,6 +73,14 @@ class Plano3 extends BaseScene {
     OutComplete;
     btnReload = false;
     btnContinue = false;
+    enemySound;
+    loseSound;
+    winSound;
+    objSound;
+    obj2Sound;
+    saltoSound;
+    caidaSound;
+    redFlag=false;
 
     constructor(config) {
         super('Plano3', config);
@@ -133,13 +141,13 @@ class Plano3 extends BaseScene {
             this.physics.add.collider(this.Jugador2, this.objeto3, this.ColisionObj3, null, this);
             this.physics.add.collider(this.Jugador2, this.objeto4, this.ColisionObj4, null, this);
             this.physics.add.collider(this.Jugador2, this.objeto5, this.ColisionObj5, null, this);
-            this.physics.add.collider(this.Jugador2, this.gate, this.vacio,null,this);
+            this.physics.add.collider(this.Jugador2, this.gate, this.vacio, null, this);
         } else {
             console.log("Jugador 2 no conectado en mundo 2")
         }
     }
 
-    vacio(){
+    vacio() {
 
     }
     CirculosW3() {
@@ -163,9 +171,17 @@ class Plano3 extends BaseScene {
 
     create() {
         this.monedasW3 = sessionStorage.getItem('PuntajeActual');
-        this.music3 = this.sound.add('w3');
-        this.lluviaMusic = this.sound.add('rain');
+        this.music3 = this.sound.add('m-3');
         this.music3.play();
+        this.enemySound = this.sound.add('m-enemy');
+        this.loseSound = this.sound.add('m-lose');
+        this.winSound = this.sound.add('m-win');
+        this.objSound = this.sound.add('m-obj');
+        this.obj2Sound = this.sound.add('m-obj2');
+        this.saltoSound = this.sound.add('m-salto');
+        this.caidaSound = this.sound.add('m-caida2');
+        this.lluviaMusic = this.sound.add('rain');
+
         this.camara = this.cameras.main.setBounds(0, 0, 4095, 768);
         this.camara.flash(2000);
 
@@ -347,49 +363,61 @@ class Plano3 extends BaseScene {
                 //no hacemos nada
                 this.music3.stop();
             } else {
-                this.lluviaMusic.play();
+                if (this.btnReload) {
+                    //bomoblack
+                } else {
+                    this.lluviaMusic.play();
+                }
             }
         } else {
             if (this.music3.isPlaying) {
                 //no hacemos nada
                 this.lluviaMusic.stop();
             } else {
-                this.music3.play();
+                if(this.redFlag){
+
+                }else{
+                    this.music3.play();
+                }
             }
             this.velocidadX = 300;
         }
     }
-    
+
     //lentitud Player2
     sonidoLLuvuia_P2(player) {
-       if(this.isMultiPLayer){
-        if (player.x > 1470 && player.x < 2280) {
-            this.velocidadX_P2 = 160;
-        }else{
-            this.velocidadX_P2 = 300;
+        if (this.isMultiPLayer) {
+            if (player.x > 1470 && player.x < 2280) {
+                this.velocidadX_P2 = 160;
+            } else {
+                this.velocidadX_P2 = 300;
+            }
         }
-       }
     }
 
     /**/
     mundo2() {
+        this.music3.stop();
+        this.redFlag=true;
         clearInterval(this.intervaloTIEMPO);
-        this.volteoP1=false;
+        this.winSound.loop = true;
+        this.winSound.play();
+        this.volteoP1 = false;
         this.velocidadX = 0;
         this.velocidadY = 0;
-        this.animacionStop='celebrate';
-        this.animacionJump='celebrate';
-        this.animacionMove='celebrate';
-        this.animacionMoveP2='celebrateP2';
-        this.animacionJumpP2='celebrateP2';
-        this.animacionStopP2='celebrateP2';
-        this.player1.setPosition(3790,127);
-        if(this.isMultiPLayer){
-            this.volteoP2=false;
-            this.Jugador2.setPosition(3685,127);
+        this.animacionStop = 'celebrate';
+        this.animacionJump = 'celebrate';
+        this.animacionMove = 'celebrate';
+        this.animacionMoveP2 = 'celebrateP2';
+        this.animacionJumpP2 = 'celebrateP2';
+        this.animacionStopP2 = 'celebrateP2';
+        this.player1.setPosition(3790, 127);
+        if (this.isMultiPLayer) {
+            this.volteoP2 = false;
+            this.Jugador2.setPosition(3685, 127);
         }
         this.physics.pause();
-        sessionStorage.setItem('PuntajeActual',this.monedasW3);
+        sessionStorage.setItem('PuntajeActual', this.monedasW3);
         sessionStorage.setItem('HerraduraObj3', this.objeto);
         setTimeout(() => {
             this.OutComplete.setVisible(true);
@@ -397,7 +425,7 @@ class Plano3 extends BaseScene {
             this.btnContinue = true;
         }, 2500)
     }
- /**/
+    /**/
     damagePlayer1() {
         this.player1.setTint(0xff0000);
         this.player1.setAlpha(0.5);
@@ -466,10 +494,16 @@ class Plano3 extends BaseScene {
     }
     /*resta monedas*/
     gameOver() {
+        this.enemySound.play();
         this.monedasW3 -= 10;
-        console.log(  this.monedasW3 );
-        if (this.monedasW3 <= 0 ) {
+        console.log(this.monedasW3);
+        if (this.monedasW3 <= 0) {
             this.tiempo = '00';
+            this.music3.stop();
+            this.redFlag=true;
+            this.lluviaMusic.stop();
+            this.loseSound.loop = true;
+            this.loseSound.play();
             this.OutMonedas.setVisible(true);
             this.flechaOp.setVisible(true);
             this.physics.pause();
@@ -493,6 +527,11 @@ class Plano3 extends BaseScene {
                 this.mundo.setTint(0x2d3451);
             } else if (this.tiempo === 0) {
                 this.btnReload = true;
+                this.redFlag=true;
+                this.music3.stop();
+                this.lluviaMusic.stop();
+                this.loseSound.loop = true;
+                this.loseSound.play();
                 this.physics.pause();
                 this.OutTime.setVisible(true);
                 this.flechaOp.setVisible(true);
@@ -548,20 +587,25 @@ class Plano3 extends BaseScene {
         this.estadoSuelo = true;
     }
     colisionVacio1() {
+        this.caidaSound.play();
         this.player1.setPosition(327, 300);
     }
     colisionVacio2() {
+        this.caidaSound.play();
         this.player1.setPosition(695, 477);
     }
     colisionVacio3() {
+        this.caidaSound.play();
         this.player1.setVelocityX(0);
         this.player1.setVelocityY(0);
         this.player1.setPosition(920, 417);
     }
     colisionVacio4() {
+        this.caidaSound.play();
         this.player1.setPosition(1179, 306);
     }
     colisionVacio5() {
+        this.caidaSound.play();
         this.player1.setPosition(2358, 305);
     }
     //player2
@@ -592,18 +636,23 @@ class Plano3 extends BaseScene {
         this.estadoSueloP2 = true;
     }
     colisionVacio1_P2() {
+        this.caidaSound.play();
         this.Jugador2.setPosition(327, 300);
     }
     colisionVacio2_P2() {
+        this.caidaSound.play();
         this.Jugador2.setPosition(695, 477);
     }
     colisionVacio3_P2() {
+        this.caidaSound.play();
         this.Jugador2.setPosition(920, 417);
     }
     colisionVacio4_P2() {
+        this.caidaSound.play();
         this.Jugador2.setPosition(1179, 304);
     }
     colisionVacio5_P2() {
+        this.caidaSound.play();
         this.Jugador2.setPosition(2358, 303);
     }
 
@@ -767,12 +816,16 @@ class Plano3 extends BaseScene {
     }
     //contador de objetos 
     countObjetos() {
+        this.obj2Sound.play();
         this.objeto++;
         this.textoObjetos.setText(`x${this.objeto}`);
     }
     //Activador de Objeto
     ObjetoMessage() {
+        this.objSound.play();
         if (this.infoObjeto) {
+            this.music3.stop();
+            this.redFlag=true;
             Swal.fire({
                 position: "center",
                 customClass: "manoDeDios",
@@ -833,7 +886,7 @@ class Plano3 extends BaseScene {
     }
 
     update() {
-       // console.log(this.player1.x, ":", this.player1.y);
+        // console.log(this.player1.x, ":", this.player1.y);
         MosquitoACT1.MoveW3_1(this.Mosquito, this.velocidadMosquito);
         MosquitoACT1.MoveW3_1(this.Mosquito2, this.velocidadMosquito);
         MosquitoACT1.MoveW3_1(this.Mosquito3, this.velocidadMosquito);
@@ -855,17 +908,19 @@ class Plano3 extends BaseScene {
             return;
         }
 
-        
+
         if (control.buttons[1].pressed && this.btnReload) {
 
             setTimeout(() => {
+                this.lluviaMusic.stop();
+                this.loseSound.stop();
                 this.scene.stop('Plano3');
                 window.location.reload();
             }, 3500)
 
         }
         if (control.buttons[1].pressed && this.btnContinue) {
-
+            this.winSound.stop();
             this.scene.stop('Plano3');
             this.camara.fade(2500);
             this.scene.start('Mapa4');
@@ -875,6 +930,8 @@ class Plano3 extends BaseScene {
         if (control.buttons[0].pressed && this.btnReload) {
 
             setTimeout(() => {
+                this.lluviaMusic.stop();
+                this.loseSound.stop();
                 this.scene.stop('Plano3');
                 window.location.reload();
             }, 1000);
@@ -882,7 +939,7 @@ class Plano3 extends BaseScene {
         }
 
         if (control.buttons[0].pressed && this.btnContinue) {
-
+            this.winSound.stop();
             this.scene.stop('Plano3');
             this.camara.fade(2500);
             this.scene.start('Mapa4');
@@ -891,23 +948,27 @@ class Plano3 extends BaseScene {
 
 
         if (control.buttons[1].pressed && onFloor) {
+            this.saltoSound.play();
             this.estadoSuelo = false;
             this.player1.setVelocityY(-this.velocidadY * 2);
         }
         if (control.buttons[0].pressed && onFloor) {
+            this.saltoSound.play();
             this.estadoSuelo = false;
             this.player1.setVelocityY(-this.velocidadY * 2);
         }
 
-        if(control.buttons[3].pressed && this.objeto_i.body.onFloor()){
-            if(!this.infoObjeto){
-             this.objeto_i.setVelocityY(-150);
-             this.objeto_i.body.setGravityY(0);
-             Swal.close();
-             this.physics.resume();//
-             this.temporizador();
+        if (control.buttons[3].pressed && this.objeto_i.body.onFloor()) {
+            if (!this.infoObjeto) {
+                this.objeto_i.setVelocityY(-150);
+                this.objeto_i.body.setGravityY(0);
+                this.music3.play();
+                Swal.close();
+                this.redFlag=false;
+                this.physics.resume();//
+                this.temporizador();
             }
-         }
+        }
 
         if (control.axes.length) {
             const axisH = control.axes[0].getValue();
@@ -934,21 +995,23 @@ class Plano3 extends BaseScene {
                 return;
             }
             if (control.buttons[1].pressed && onFloor) {
+                this.saltoSound.play();
                 this.estadoSueloP2 = false;
                 this.Jugador2.setVelocityY(-this.velocidadY * 2);
             }
 
-            if(control.buttons[3].pressed && this.objeto_i.body.onFloor()){
-                if(!this.infoObjeto){
-                 this.objeto_i.setVelocityY(-150);
-                 this.objeto_i.body.setGravityY(0);
-                 Swal.close();
-                 this.physics.resume();//
-                 this.temporizador();
+            if (control.buttons[3].pressed && this.objeto_i.body.onFloor()) {
+                if (!this.infoObjeto) {
+                    this.objeto_i.setVelocityY(-150);
+                    this.objeto_i.body.setGravityY(0);
+                    Swal.close();
+                    this.physics.resume();//
+                    this.temporizador();
                 }
-             }
+            }
 
             if (control.buttons[0].pressed && onFloor) {
+                this.saltoSound.play();
                 this.estadoSueloP2 = false;
                 this.Jugador2.setVelocityY(-this.velocidadY * 2);
             }

@@ -19,7 +19,7 @@ class PreloadScene extends Phaser.Scene {
     this.load.audio('w1', [ 'assets/Audios/WarioSound/world1.mp3']);
     this.load.audio('w2', [ 'assets/Audios/WarioSound/world2.mp3']);
     this.load.audio('w3', [ 'assets/Audios/WarioSound/mz3.mp3']);
-    this.load.audio('rain', [ 'assets/Audios/WarioSound/lluvia.mp3']);
+    this.load.audio('rain', [ 'assets/Audios/enemigos/lluvia.wav']);
     /*Music*/
     /*menu*/
     this.load.image('MenuInicial','assets/menu/Inicio-2.png');
@@ -131,12 +131,16 @@ class PreloadScene extends Phaser.Scene {
    this.load.image('GameOverTiempo','assets/menu/NO-completado-2.png');//tiempo GameOver
    //completado
    this.load.image('GameComplete','assets/menu/completado.png');//completadoGame
+ 
    //Musica 
-
    //Inico
    this.load.audio('music-inicio','assets/Audios/inicio/8-bits.mp3');
    //mundo1
    this.load.audio('m-1','assets/Audios/mundo1/w1.wav');
+   //mundo2
+   this.load.audio('m-2','assets/Audios/mundo1/w2.wav');
+   //mundo3
+   this.load.audio('m-3','assets/Audios/mundo1/w3.wav');
    //enemigos
    this.load.audio('m-enemy','assets/Audios/enemigos/enemy.mp3');
    //perder
@@ -146,17 +150,22 @@ class PreloadScene extends Phaser.Scene {
    //objetos
    this.load.audio('m-obj','assets/Audios/objetos/obj.wav');
    this.load.audio('m-obj2','assets/Audios/objetos/obj2.mp3');
-
    //salto
    this.load.audio('m-salto','assets/Audios/salto/salto.mp3');
-  
+   //caida
+   this.load.audio('m-caida','assets/Audios/caida/caida.wav');
+   this.load.audio('m-caida2','assets/Audios/caida/Drop.wav');
+  //FinalScene
+  this.load.audio('m-final','assets/Audios/ganar/FinaWin.mp3');
+  //trofeos
+  this.load.audio('m-trofeos','assets/Audios/ganar/Winner.wav');
 
   }
 
   create() {
      //iniciamos la Scena principal
-    // this.scene.start('InicioScene');
-    this.scene.start('Plano1');
+     this.scene.start('InicioScene');
+    //this.scene.start('SavePlayer');
  
   }
 }
