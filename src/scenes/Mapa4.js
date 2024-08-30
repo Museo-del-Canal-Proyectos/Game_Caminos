@@ -80,6 +80,7 @@ class Mapa4 extends BaseScene {
   cambioScenario() {
     this.physics.pause();
     this.cameras.main.fade(2000);
+    this.mapaSound.stop();
     setTimeout(()=>{
       this.scene.stop('Mapa4');
       this.scene.start('FinalScene');

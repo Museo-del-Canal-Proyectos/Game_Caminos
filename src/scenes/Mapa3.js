@@ -80,6 +80,7 @@ class Mapa3 extends BaseScene {
   cambioScenario() {
     this.physics.pause();
     this.cameras.main.fade(2000);
+    this.mapaSound.stop();
     setTimeout(()=>{
       this.scene.stop('Mapa3');
       this.scene.start('IntroBoqueron');

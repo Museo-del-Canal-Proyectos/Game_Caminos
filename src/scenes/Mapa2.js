@@ -78,6 +78,7 @@ class Mapa2 extends BaseScene {
   cambioScenario() {
     this.physics.pause();
     this.cameras.main.fade(1500);
+    this.mapaSound.stop();
     setTimeout(() => {
       this.scene.stop('Mapa2');
       this.scene.start('IntroCruces');

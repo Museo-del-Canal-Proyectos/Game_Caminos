@@ -78,6 +78,7 @@ class Mapa1 extends BaseScene {
     this.physics.pause();
     this.cameras.main.fade(2000);
     setTimeout(()=>{
+      this.mapaSound.stop();
       this.scene.stop('Mapa1');
       this.scene.start('IntroCity');
     },400)
