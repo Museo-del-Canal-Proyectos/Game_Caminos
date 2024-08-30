@@ -162,14 +162,16 @@ class PreloadScene extends Phaser.Scene {
     this.load.audio('mv-intro', 'assets/Audios/introvideo/videosIntro.mp3');
     //golpeBoton
     this.load.audio('m-golpe', 'assets/Audios/golpe/golpe.mp3');
+    //mapa
+    this.load.audio('m-mapa','assets/Audios/mapa/mapa.mp3');
 
   }
 
   create() {
 
     //iniciamos la Scena principal
-    this.scene.start('InicioScene');
-    // this.scene.start('IntroBoqueron');
+   // this.scene.start('InicioScene');
+   this.scene.start('Mapa4');
 
   }
 }

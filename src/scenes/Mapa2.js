@@ -36,7 +36,8 @@ class Mapa2 extends BaseScene {
     this.colisionChangeWorld();
     this.choque = this.sound.add('choque');
     this.choque_plat = this.sound.add('choque_plat');
-
+    this.mapaSound= this.sound.add('m-mapa');
+    this.mapaSound.play();
 
   }
 

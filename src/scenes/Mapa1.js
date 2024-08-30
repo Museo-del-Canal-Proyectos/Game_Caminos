@@ -34,6 +34,8 @@ class Mapa1 extends BaseScene {
     this.colisionChangeWorld();
     this.choque = this.sound.add('choque');
     this.choque_plat = this.sound.add('choque_plat');
+    this.mapaSound= this.sound.add('m-mapa');
+    this.mapaSound.play();
 
 
   }
@@ -68,7 +70,7 @@ class Mapa1 extends BaseScene {
     //  this.personaje.setRotation(0);
     //  this.personaje.setPosition(824,384);
     // },500)
-    this.choque_plat.play();
+    //this.choque_plat.play();
 
   }
 
@@ -277,6 +279,7 @@ class Mapa1 extends BaseScene {
   }
 
   update() {
+    
     const control = this.input.gamepad.getPad(0);
     if (!control) {
       return;
@@ -288,22 +291,26 @@ class Mapa1 extends BaseScene {
       const axisV = control.axes[1].getValue();
 
       if (axisH === -1) {
+        
         this.personaje.setVelocityX(105);
         this.personaje.setFlipX(false);
         console.log(this.personaje.body.x);
         this.move();
       } else if (axisH === 1) {
+        
         this.personaje.setVelocityX(-105);
         this.personaje.setFlipX(true);
         console.log(this.personaje.body.x);
         this.move();
       }
       else if (axisV === 1) {
+        
         this.personaje.setVelocityY(-105);
         console.log(this.personaje.body.y);
         this.move();
         //this.moveUp();
       } else if (axisV === -1) {
+        
         this.personaje.setVelocityY(105);
         console.log(this.personaje.body.y);
         this.move();
