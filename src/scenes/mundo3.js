@@ -421,6 +421,10 @@ class Plano3 extends BaseScene {
         sessionStorage.setItem('HerraduraObj3', this.objeto);
         setTimeout(() => {
             this.OutComplete.setVisible(true);
+            this.player1.setVisible(false);
+            if (this.isMultiPLayer) {
+                this.Jugador2.setVisible(false);
+            }
             this.flechaOp.setVisible(true);
             this.btnContinue = true;
         }, 2500)

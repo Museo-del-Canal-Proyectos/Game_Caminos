@@ -5,12 +5,17 @@ class IntroCruces extends BaseScene {
 
     video=null;
     activacion = false;
+    musicaIntro;
+    musicaCachazo;
     constructor(config) {
         super('IntroCruces', config);
     }
 
     create() {
         this.storagePlayer = sessionStorage.getItem('selectPLayer');
+        this.musicaIntro = this.sound.add('mv-intro');
+        this.musicaIntro.play();
+        this.musicaCachazo= this.sound.add('m-golpe');
         this.video =  this.add.video(0, 0, 'videoVentas').setOrigin(0);
         this.video.play();
         this.video.on('complete', () => {
@@ -39,22 +44,31 @@ class IntroCruces extends BaseScene {
             return;
         }
         if (control.buttons[1].pressed) {
+            this.musicaIntro.stop();
             this.player1 = this.physics.add.sprite(450, 450,this.storagePlayer).setOrigin(0);
             this.player1.setScale(0.5);
             this.btn.setVisible(false);
             this.player1.play('celebrateV', true);
             this.activacion=false;
+
+            setTimeout(()=>{  this.musicaCachazo.play();},700)
+    
+
             setTimeout(()=>{
                 this.scene.stop('IntroCruces');
                 this.scene.start('Plano2');
             },1500)
         }
         if(control.buttons[0].pressed){
+            this.musicaIntro.stop();
             this.player1 = this.physics.add.sprite(450, 450,this.storagePlayer).setOrigin(0);
             this.player1.setScale(0.5);
             this.btn.setVisible(false);
             this.player1.play('celebrateV', true);
             this.activacion=false;
+            
+            setTimeout(()=>{  this.musicaCachazo.play();},700)
+           
             setTimeout(()=>{
                 this.scene.stop('IntroCruces');
                 this.scene.start('Plano2');

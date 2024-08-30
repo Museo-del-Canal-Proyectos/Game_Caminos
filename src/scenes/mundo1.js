@@ -253,8 +253,8 @@ class Plano1 extends BaseScene {
         this.enemySound = this.sound.add('m-enemy');
         this.loseSound = this.sound.add('m-lose');
         this.winSound = this.sound.add('m-win');
-        this.objSound= this.sound.add('m-obj');
-        this.obj2Sound= this.sound.add('m-obj2');
+        this.objSound = this.sound.add('m-obj');
+        this.obj2Sound = this.sound.add('m-obj2');
         this.saltoSound = this.sound.add('m-salto');
         this.camara = this.cameras.main.setBounds(0, 0, 4095, 768);
         this.camara.flash(2000);
@@ -411,6 +411,10 @@ class Plano1 extends BaseScene {
         sessionStorage.setItem('PeruleraObj1', this.objetoPerulera);
         setTimeout(() => {
             this.OutComplete.setVisible(true);
+            this.player1.setVisible(false);
+            if (this.isMultiPLayer) {
+                this.Jugador2.setVisible(false);
+            }
             this.flechaOp.setVisible(true);
             this.btnContinue = true;
         }, 2500)

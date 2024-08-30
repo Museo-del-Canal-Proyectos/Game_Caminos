@@ -375,7 +375,6 @@ class Plano2 extends BaseScene {
         this.animacionJumpP2 = 'celebrateP2';
         this.animacionStopP2 = 'celebrateP2';
         this.player1.setPosition(3910, 320);
-
         if (this.isMultiPLayer) {
             this.volteoP2 = false;
             this.Jugador2.setPosition(3820, 320);
@@ -385,6 +384,10 @@ class Plano2 extends BaseScene {
         sessionStorage.setItem('CruzObj2', this.objeto);
         setTimeout(() => {
             this.OutComplete.setVisible(true);
+            this.player1.setVisible(false);
+            if (this.isMultiPLayer) {
+                this.Jugador2.setVisible(false);
+            }
             this.flechaOp.setVisible(true);
             this.btnContinue = true;
         }, 2500)

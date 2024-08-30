@@ -9,6 +9,7 @@ class InicioScene extends BaseScene { //clase Inicio
 
     create() {
         this.mInicio = this.sound.add('music-inicio');
+        this.mInicio.loop=true;
         this.mInicio.play();
         this.add.image(0, 0, 'startInicio').setOrigin(0); //imagen cargada en preload.js pantalla de scena
         this.flechaOp = this.physics.add.sprite(616.5, 576, 'f-menu').setOrigin(0);//cragamos el sprite a animar previamente definido con sus caracteristicas en preload.js
@@ -40,14 +41,16 @@ class InicioScene extends BaseScene { //clase Inicio
             //paramos la scena actual
             this.scene.stop('InicioScene');
             //cargamos la siguiente scena
+            this.mInicio.loop=false;
             this.mInicio.stop();
             this.scene.start('IntroGame');
         }
         //si el boton 1 es precionado 
         if (control.buttons[1].pressed) {
-           //paramos la scena actual
+            //paramos la scena actual
             this.scene.stop('InicioScene');
             //cargamos la siguiente Scena
+            this.mInicio.loop=false;
             this.mInicio.stop();
             this.scene.start('IntroGame');
         }

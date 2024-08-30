@@ -4,6 +4,8 @@ import AnimacionPlayer1 from "../scenes/Jugadores/player";
 class IntroCity extends BaseScene {
     video=null;
     activacion = false;
+    musicaIntro;
+    musicaCachazo;
     constructor(config) {
         super('IntroCity', config);
     }
@@ -11,6 +13,9 @@ class IntroCity extends BaseScene {
 
     create() {
         //this.storagePlayer = sessionStorage.getItem('selectPLayer');
+        this.musicaIntro = this.sound.add('mv-intro');
+        this.musicaIntro.play();
+        this.musicaCachazo= this.sound.add('m-golpe');
         this.video =  this.add.video(0, 0, 'videoCity').setOrigin(0);
         this.video.play();
         this.video.on('complete', () => {
@@ -40,22 +45,30 @@ class IntroCity extends BaseScene {
             return;
         }
         if (control.buttons[1].pressed) {
+            this.musicaIntro.stop();
             this.player1 = this.physics.add.sprite(450, 450,'player1').setOrigin(0);
             this.player1.setScale(0.5);
             this.btn.setVisible(false);
             this.player1.play('celebrateV', true);
             this.activacion=false;
+
+            setTimeout(()=>{  this.musicaCachazo.play();},700)
+           
             setTimeout(()=>{
                 this.scene.stop('IntroCity');
                 this.scene.start('Plano1');
             },1500);
         }
         if(control.buttons[0].pressed){
+            this.musicaIntro.stop();
             this.player1 = this.physics.add.sprite(450, 450,'player1').setOrigin(0);
             this.player1.setScale(0.5);
             this.btn.setVisible(false);
             this.player1.play('celebrateV', true);
             this.activacion=false;
+
+            setTimeout(()=>{  this.musicaCachazo.play();},700)
+
             setTimeout(()=>{
                 this.scene.stop('IntroCity');
                 this.scene.start('Plano1');
