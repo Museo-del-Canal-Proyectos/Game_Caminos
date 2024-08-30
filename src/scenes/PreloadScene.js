@@ -170,8 +170,8 @@ class PreloadScene extends Phaser.Scene {
   create() {
 
     //iniciamos la Scena principal
-   // this.scene.start('InicioScene');
-   this.scene.start('Mapa4');
+    this.scene.start('InicioScene');
+   //this.scene.start('Mapa4');
 
   }
 }
