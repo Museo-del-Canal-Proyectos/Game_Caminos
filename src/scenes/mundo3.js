@@ -515,7 +515,7 @@ class Plano3 extends BaseScene {
             this.player1.setVisible(false);
             this.btnReload = true;
             if (this.isMultiPLayer) {
-                this.Jugador2.setEnable(false);
+                this.Jugador2.body.setEnable(false);
                 this.Jugador2.setVisible(false);
             }
         }

@@ -55,7 +55,7 @@ const config = {
     default: 'arcade',
     arcade: {
       //gravity:{y: 400 },
-     //debug: true //linea verde de velocidad PARA VER DISTANCIA DE OBJETOS
+      //debug: true //linea verde de velocidad PARA VER DISTANCIA DE OBJETOS
     },
   },
   //iniciamos todas las scenas en el arreglo declarado anteriormente
