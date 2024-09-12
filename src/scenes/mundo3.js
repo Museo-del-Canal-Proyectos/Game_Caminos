@@ -357,7 +357,7 @@ class Plano3 extends BaseScene {
     }
 
     sonidoLLuvuia(player) {
-        if (Math.floor(player.x) > 1470 && Math.floor(player.x) < 2280) {
+        if (Math.trunc(player.x) > 1470 && Math.trunc(player.x) < 2280) {
             this.velocidadX = 160;
             if (this.lluviaMusic.isPlaying) {
                 //no hacemos nada
@@ -903,7 +903,7 @@ class Plano3 extends BaseScene {
         this.moveController(this.estadoSuelo);
         this.moveController2(this.estadoSueloP2);
         //console.log(this.Serpiente1.x);
-        console.log(this.player1.x,": ",this.player1.y);
+      //  console.log(this.player1.x,": ",this.player1.y);
     }
 
     moveController(onFloor) {
@@ -1012,6 +1012,7 @@ class Plano3 extends BaseScene {
                     this.objeto_i.body.setGravityY(0);
                     this.music3.play();
                     Swal.close();
+                    this.redFlag=false;
                     this.physics.resume();//
                     this.temporizador();
                 }
