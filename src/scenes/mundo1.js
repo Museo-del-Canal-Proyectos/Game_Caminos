@@ -8,6 +8,7 @@ import AnimacionPlayer2 from "../scenes/Jugadores/player2";
 
 class Plano1 extends BaseScene {
     intervaloTIEMPO = null;
+    intervaloPerdida = null;
     tiempo = 45;
     textoTiempo = "0:00";
     valorIntervalo = 1000;
@@ -821,7 +822,7 @@ class Plano1 extends BaseScene {
             this.flecha3.setPosition(5298, 190);
         }
     }
-
+leng
     canonAtaque(x1, x2,) {
         this.bolcanon1.setVelocityX(-this.velocidadBala);
         if (Math.trunc(x1.x) < 0) {
@@ -832,6 +833,8 @@ class Plano1 extends BaseScene {
             this.bolcanon2.setPosition(4898, 340);
         }
     }
+
+    
 
     teclado() {
         // this.cursors = this.input.keyboard.createCursorKeys();

@@ -374,7 +374,7 @@ class Plano2 extends BaseScene {
         this.animacionMoveP2 = 'celebrateP2';
         this.animacionJumpP2 = 'celebrateP2';
         this.animacionStopP2 = 'celebrateP2';
-        this.player1.setPosition(3910, 320);
+        this.player1.setPosition(3910, 321);
         if (this.isMultiPLayer) {
             this.volteoP2 = false;
             this.Jugador2.setPosition(3820, 320);

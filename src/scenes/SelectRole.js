@@ -55,7 +55,7 @@ class SelectRole extends BaseScene {
         if (!control) {
             return;
         }
-        if (control.buttons[0].pressed) {
+        if (control.buttons[3].pressed) {
 
             if(this.role.x===750){
                 sessionStorage.setItem('selectPLayer','player2');
