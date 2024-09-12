@@ -171,7 +171,7 @@ class PreloadScene extends Phaser.Scene {
 
     //iniciamos la Scena principal
      this.scene.start('InicioScene');
-    //this.scene.start('Plano1');
+    //this.scene.start('Plano3');
 
   }
 }
