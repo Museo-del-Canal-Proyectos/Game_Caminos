@@ -1010,6 +1010,7 @@ class Plano3 extends BaseScene {
                 if (!this.infoObjeto) {
                     this.objeto_i.setVelocityY(-150);
                     this.objeto_i.body.setGravityY(0);
+                    this.music3.play();
                     Swal.close();
                     this.physics.resume();//
                     this.temporizador();
