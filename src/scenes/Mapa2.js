@@ -88,8 +88,17 @@ class Mapa2 extends BaseScene {
 
 
   createPlatform() {
-    //bloque1 Horizontal 1
     this.plat = this.physics.add.group();
+    this.plat.create(80, 580, 'block_1')
+      .setScale(0.4)
+      .setImmovable(true)
+      .setOrigin(0, 0);
+      this.plat.create(465, 220, 'block_2')
+      .setScale(0.6)
+      .setImmovable(true)
+      .setOrigin(0, 0)
+       /*parche*/
+    //bloque1 Horizontal 1
     this.plat.create(274, 580, 'block_1')
       .setScale(0.4)
       .setImmovable(true)

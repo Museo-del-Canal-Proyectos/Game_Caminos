@@ -29,7 +29,22 @@ class IntroGame extends BaseScene {
      */
 
     update() {
-    
+      this.control();
+    }
+
+
+
+    control(){
+        const control = this.input.gamepad.getPad(0);
+        if (!control) {
+            return;
+        }
+
+        if (control.buttons[3].pressed) {
+            this.video.stop();
+            this.scene.stop('IntroGame');
+            this.scene.start('MenuScene');
+        }
     }
    
 }
